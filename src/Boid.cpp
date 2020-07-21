@@ -16,8 +16,6 @@ Boid::Boid(): direction(Pos2D(std::rand() % 2 - 1, std::rand() % 2 - 1)), positi
     this->speed = 100;
     this->maxForce = 0.5;
     this->maxSpeed = 3.5;
-
-    this->display = 'a' + std::rand() % 26;
 }
 
 char Boid::getDisplay() const {
@@ -143,6 +141,11 @@ void Boid::update(float elapsedTimeSec, const Pos2D &dimensions) {
 
     direction = direction + acceleration;
     direction.limitToMaxMagnitude(maxSpeed);
+
+    /* TODO
+     * Draw an line between pos and next pos.
+     * if line intersects with any obstacle, do nothing
+     */
     position = position + direction * elapsedTimeSec * 150;
     acceleration = acceleration * 0;
 
