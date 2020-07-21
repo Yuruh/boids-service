@@ -40,7 +40,7 @@ void HttpServer::handle_post(http_request message) {
 
         // 600 frames generated
         int refreshRate = 60;
-        int secondsOfSimulation = 30;
+        int secondsOfSimulation = 60;
         float timePerFrame = 1.0f / refreshRate;
 
         float elapsedSec = 0;

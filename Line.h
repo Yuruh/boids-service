@@ -8,12 +8,21 @@
 
 #include "include/Pos2D.h"
 
+// Represents a line going from a to b
 class Line {
 private:
     Pos2D a;
     Pos2D b;
 public:
-    float distanceToPoint(const Pos2D& point);
+    Line(Pos2D a, Pos2D b);
+    float distanceToPoint(const Pos2D& point) const;
+    double angleWithVector(const Pos2D& vector) const;
+    Pos2D getNormalVector() const;
+    Pos2D reflectedVector(const Pos2D& vector) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Line& line);
+
+
 };
 
 

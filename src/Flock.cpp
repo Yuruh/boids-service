@@ -44,8 +44,6 @@ const std::vector<Boid> Flock::getBoids() const {
 // TODO take map as input or smth
 void Flock::update(float elapsedTimeSec, const Map &map) {
 
-    float reactiveness = 0.1;
-
     for (Boid &boid : this->boids) {
         Pos2D dir = boid.getDirection();
         dir.normalize();
@@ -64,12 +62,9 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         Pos2D alignment = boid.getAlignment(boids) * 0.1;
         boid.addAcceleration(alignment);
 
-//        Pos2D nextDirection = cohesion + separation + alignment;
-  //      nextDirection.normalize();
-
-//        nextDirection = nextDirection * reactiveness;
-
-//        boid.setDirection(boid.getDirection() + cohesion + separation + alignment);
+        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
+        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * 0.1;
+        boid.addAcceleration(avoidObstacle);
 
         boid.update(elapsedTimeSec);
 /*

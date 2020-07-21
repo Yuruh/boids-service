@@ -67,6 +67,15 @@ void Pos2D::limitToMaxMagnitude(float max) {
     }
 }
 
+// Dot operation
+float Pos2D::operator*(const Pos2D &other) const {
+    return x * other.x + y * other.y;
+}
+
+float Pos2D::getCrossProduct(const Pos2D &other) const {
+    return x * other.y - y * other.x;
+}
+
 
 std::ostream& operator<<(std::ostream &os, const Pos2D &pos) {
     os << pos.x << " " << pos.y;

@@ -8,6 +8,7 @@
 #include <vector>
 #include "Pos2D.h"
 #include "../map.pb.h"
+#include "../Line.h"
 
 /*
  * Comme input on va avoir:
@@ -21,6 +22,7 @@
 class Map {
 private:
     Pos2D dimensions;
+    std::vector<Line> obstacles;
 
     bool isBoid(int x, int y) const;
     int getBoidIndex(int x, int y) const;
@@ -35,6 +37,9 @@ public:
 
 
     Pos2D getDimensions() const;
+    const std::vector<Line> &getObstacles() const;
+    const Line &closestObstacle(const Pos2D& pos) const;
+    const std::vector<Line> closeObstacles(const Pos2D& pos) const;
     friend Map& operator<<(Map &out, const Protobuf::Map &protobufMap);
 };
 

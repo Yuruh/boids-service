@@ -94,6 +94,16 @@ int Map::getBoidIndex(int x, int y) const {
 
 Map &operator<<(Map &out, const Protobuf::Map &protobufMap) {
     out.dimensions << protobufMap.dimensions();
+
+    Line left(Pos2D(0, 0), Pos2D(0, out.dimensions.y));
+    Line right(Pos2D(out.dimensions.x, 0), Pos2D(out.dimensions.x, out.dimensions.y));
+    Line top(Pos2D(0, 0), Pos2D(out.dimensions.x, 0));
+    Line bottom(Pos2D(0, out.dimensions.y), Pos2D(out.dimensions.x, out.dimensions.y));
+
+    out.obstacles.push_back(left);
+    out.obstacles.push_back(right);
+    out.obstacles.push_back(top);
+    out.obstacles.push_back(bottom);
     return out;
 }
 
@@ -103,4 +113,36 @@ Pos2D Map::getDimensions() const {
 
 Map::Map(): dimensions(Pos2D()) {
 
+}
+
+const std::vector<Line> &Map::getObstacles() const {
+    return obstacles;
+}
+
+const Line &Map::closestObstacle(const Pos2D &pos) const {
+    int idx = -1;
+    float closest = -1;
+    for (int i = 0; i < obstacles.size(); ++i) {
+        float distance = obstacles[i].distanceToPoint(pos);
+        if (distance < closest || closest < -EPSILON) {
+            closest = distance;
+            idx = i;
+        }
+    }
+    if (idx == -1) {
+        throw std::runtime_error("No obstacle in map");
+    }
+    return obstacles[idx];
+}
+
+const std::vector<Line> Map::closeObstacles(const Pos2D &pos) const {
+    std::vector<Line> ret;
+
+    for (auto obstacle : obstacles) {
+        float distance = obstacle.distanceToPoint(pos);
+        if (distance < OBSTACLE_DISTANCE) {
+            ret.push_back(obstacle);
+        }
+    }
+    return ret;
 }

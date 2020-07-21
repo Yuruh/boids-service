@@ -7,6 +7,7 @@
 
 
 #include "Pos2D.h"
+#include "../Line.h"
 
 // resources:
 
@@ -44,6 +45,7 @@ public:
     Pos2D getCohesion(const std::vector<Boid> &boids) const;
     Pos2D getAlignment(const std::vector<Boid> &boids) const;
     Pos2D getSeparation(const std::vector<Boid> &boids) const;
+    Pos2D getSteerFromObstacles(const std::vector<Line> &obstacles) const;
 
     bool operator==(const Boid &boid) const;
     bool operator!=(const Boid &boid) const;

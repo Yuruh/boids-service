@@ -162,10 +162,30 @@ void Boid::update(float elapsedTimeSec) {
 
     direction = direction + acceleration;
     direction.limitToMaxMagnitude(maxSpeed);
-    position = position + direction * elapsedTimeSec * 100;
+    position = position + direction * elapsedTimeSec * 200;
     acceleration = acceleration * 0;
 }
 
 void Boid::addAcceleration(const Pos2D &acc) {
     acceleration = acceleration + acc;
+}
+
+Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
+    Pos2D ret;
+
+    for (const auto obstacle: obstacles) {
+        ret = ret + obstacle.reflectedVector(direction);
+    }
+    if (!obstacles.empty()) {
+        ret = ret / obstacles.size();
+        ret.normalize();
+        ret = ret * maxSpeed;
+
+        Pos2D steer(ret.x, ret.y);
+        steer = ret - direction;
+        steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
+        return steer;
+    }
+    return Pos2D();
+
 }
