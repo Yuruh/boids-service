@@ -88,14 +88,7 @@ Pos2D Boid::getCohesion(const std::vector<Boid> &boids) const {
         // Vector from location to target
         Pos2D goal = res - position;
 
-        // Scale to max speed
-        goal.normalize();
-        goal = goal * maxSpeed;
-
-        Pos2D steer(goal.x, goal.y);
-        steer = goal - direction;
-        steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
-        return steer;
+        return this->steerToGoal(goal);
     }
     return Pos2D();
 }
@@ -115,13 +108,7 @@ Pos2D Boid::getAlignment(const std::vector<Boid> &boids) const {
         res = res / count;
 
         // Scale to max speed
-        res.normalize();
-        res = res * maxSpeed;
-
-        Pos2D steer(res.x, res.y);
-        steer = res - direction;
-        steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
-        return steer;
+        return this->steerToGoal(res);
     }
     return res;
 }
@@ -146,24 +133,31 @@ Pos2D Boid::getSeparation(const std::vector<Boid> &boids) const {
     if (count > 0) {
         ret = ret / count;
 
-        // Scale to max speed
-        ret.normalize();
-        ret = ret * maxSpeed;
-
-        Pos2D steer(ret.x, ret.y);
-        steer = ret - direction;
-        steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
+        return this->steerToGoal(ret);
     }
     return ret;
 }
 
-void Boid::update(float elapsedTimeSec) {
+void Boid::update(float elapsedTimeSec, const Pos2D &dimensions) {
     //acceleration = acceleration * 0.4;
 
     direction = direction + acceleration;
     direction.limitToMaxMagnitude(maxSpeed);
-    position = position + direction * elapsedTimeSec * 200;
+    position = position + direction * elapsedTimeSec * 150;
     acceleration = acceleration * 0;
+
+    if (position.x < 0) {
+        position.x += dimensions.x;
+    }
+    if (position.x >= dimensions.x) {
+        position.x -= dimensions.x;
+    }
+    if (position.y < 0) {
+        position.y += dimensions.y;
+    }
+    if (position.y >= dimensions.y) {
+        position.y -= dimensions.y;
+    }
 }
 
 void Boid::addAcceleration(const Pos2D &acc) {
@@ -173,19 +167,31 @@ void Boid::addAcceleration(const Pos2D &acc) {
 Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     Pos2D ret;
 
+//    std::cout << "Steering from obstacles, nb = " << obstacles.size() << std::endl;
     for (const auto obstacle: obstacles) {
-        ret = ret + obstacle.reflectedVector(direction);
+  //      std::cout << position << " " << direction << " " << acceleration << std::endl;
+    //    std::cout << obstacle << std::endl;
+        Pos2D reflected = obstacle.reflectedVector(direction);
+        reflected.normalize();
+        reflected = reflected / obstacle.distanceToPoint(position); // The closer the obstacle is, the more we want to steer
+
+        ret = ret + reflected;
     }
     if (!obstacles.empty()) {
         ret = ret / obstacles.size();
-        ret.normalize();
-        ret = ret * maxSpeed;
-
-        Pos2D steer(ret.x, ret.y);
-        steer = ret - direction;
-        steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
-        return steer;
+        return this->steerToGoal(ret);
     }
     return Pos2D();
 
+}
+
+Pos2D Boid::steerToGoal(Pos2D goal) const {
+// Scale to max speed
+    goal.normalize();
+    goal = goal * maxSpeed;
+
+    Pos2D steer(goal.x, goal.y);
+    steer = goal - direction;
+    steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
+    return steer;
 }

@@ -76,6 +76,12 @@ float Pos2D::getCrossProduct(const Pos2D &other) const {
     return x * other.y - y * other.x;
 }
 
+double Pos2D::angleWithVector(const Pos2D &other) const {
+    double dot = *this * other;
+    double det = this->getCrossProduct(other);
+    return std::atan2(det, dot);
+}
+
 
 std::ostream& operator<<(std::ostream &os, const Pos2D &pos) {
     os << pos.x << " " << pos.y;

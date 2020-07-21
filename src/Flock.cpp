@@ -55,7 +55,7 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         boid.addAcceleration(cohesion);
 
         // steer to avoid crowding local flockmates
-        Pos2D separation = boid.getSeparation(boids) * 0.1;
+        Pos2D separation = boid.getSeparation(boids) * 0.13;
         boid.addAcceleration(separation);
 
         // steer towards the average heading of local flockmates
@@ -63,45 +63,12 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         boid.addAcceleration(alignment);
 
         std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
-        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * 0.1;
+        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * 0.15;
+
+        //std::cout << "avoid direction: " << avoidObstacle << std::endl;
         boid.addAcceleration(avoidObstacle);
 
-        boid.update(elapsedTimeSec);
-/*
-        float nextPosX = (boid.getPosition().x + boid.getDirection().x * elapsedTimeSec * boid.getSpeed());
-        float nextPosY = (boid.getPosition().y + boid.getDirection().y * elapsedTimeSec * boid.getSpeed());
-
-         * To do : handle obstacles, turn around, and no multiple boids on same case
-        if (nextPosX < 0) {
-            nextPosX += map.getDimensions().x;
-        }
-        if (nextPosX >= map.getDimensions().x) {
-            nextPosX -= map.getDimensions().x;
-        }
-        if (nextPosY < 0) {
-            nextPosY += map.getDimensions().y;
-        }
-        if (nextPosY >= map.getDimensions().y) {
-            nextPosY -= map.getDimensions().y;
-        }
-
-        struct Predicate {
-            int x;
-            int y;
-
-            explicit Predicate(int x, int y): x(x), y(y) {}
-
-            bool operator()(Boid boid) const {
-                return static_cast<int>(boid.getPosition().x) == x && static_cast<int>(boid.getPosition().y) == y;
-            }
-        };
-
-        if (std::any_of(this->boids.cbegin(), this->boids.cend(), Predicate(static_cast<int>(nextPosX),
-                                                                            static_cast<int>(nextPosY)))) {
-            std::cout << "Cannot go there, there's already a boid" << std::endl;
-        } else {
-            boid.setPosition(Pos2D(nextPosX, nextPosY));
-        }*/
+        boid.update(elapsedTimeSec, map.getDimensions());
     }
 }
 

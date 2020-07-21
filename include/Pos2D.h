@@ -25,6 +25,7 @@ struct Pos2D {
     float operator*(const Pos2D& other) const;
 
     void normalize();
+    double angleWithVector(const Pos2D &other) const;
     float getMagnitude() const;
     float distanceWith(const Pos2D& other) const;
     float getCrossProduct(const Pos2D &other) const;

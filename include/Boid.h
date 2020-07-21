@@ -36,6 +36,7 @@ private:
     float speed;
 
 
+    Pos2D steerToGoal(Pos2D goal) const;
 public:
 
     Boid();
@@ -54,7 +55,7 @@ public:
     void addAcceleration(const Pos2D &acc);
     void setPosition(Pos2D pos);
 
-    void update(float elapsedTimeSec);
+    void update(float elapsedTimeSec, const Pos2D &dimensions);
 
     char getDisplay() const;
 
