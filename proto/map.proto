@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package Protobuf;
+
+message Map {
+  Pos2D dimensions = 1;
+}
+
+message Pos2D {
+    float x = 1;
+    float y = 2;
+}
+
+message Boid {
+  Pos2D position = 1;
+  Pos2D direction = 2;
+}
+
+message Flock {
+    repeated Boid boids = 1;
+}
+
+message Input {
+    Map map = 1;
+    Flock flock = 2;
+    int32 refreshRate = 3; // Max 60
+    int32 secondsOfSimulation = 4; // Max 10
+}
+
+message Simulation {
+    Flock flock = 1;
+    float elapsedTimeSecond = 2;
+}
+
+message Output {
+    repeated Simulation simulations = 1;
+}
