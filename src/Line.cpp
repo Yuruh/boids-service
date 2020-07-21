@@ -3,8 +3,8 @@
 //
 
 #include <cmath>
-#include "Line.h"
-#include "include/Macros.h"
+#include "../include/Line.h"
+#include "../include/Macros.h"
 
 float Line::distanceToPoint(const Pos2D &point) const {
 

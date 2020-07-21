@@ -6,7 +6,7 @@
 #define BOIDS_LINE_H
 
 
-#include "include/Pos2D.h"
+#include "Pos2D.h"
 
 // Represents a line going from a to b
 class Line {

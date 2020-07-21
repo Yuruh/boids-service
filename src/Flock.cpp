@@ -36,7 +36,7 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         boid.addAcceleration(alignment);
 
         std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
-        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * 0.15;
+        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * 0.16;
 
         //std::cout << "avoid direction: " << avoidObstacle << std::endl;
         boid.addAcceleration(avoidObstacle);

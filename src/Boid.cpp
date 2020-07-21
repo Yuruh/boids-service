@@ -144,7 +144,7 @@ void Boid::update(float elapsedTimeSec, const Pos2D &dimensions) {
 
     /* TODO
      * Draw an line between pos and next pos.
-     * if line intersects with any obstacle, do nothing
+     * if line intersects with any obstacle, do nothing or rotate around itself
      */
     position = position + direction * elapsedTimeSec * 150;
     acceleration = acceleration * 0;

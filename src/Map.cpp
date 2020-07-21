@@ -92,6 +92,7 @@ int Map::getBoidIndex(int x, int y) const {
     return -1;
 }
 
+//TODO either build corneer automatically or improve steering obstacles
 Map &operator<<(Map &out, const Protobuf::Map &protobufMap) {
     out.dimensions << protobufMap.dimensions();
 
@@ -100,10 +101,30 @@ Map &operator<<(Map &out, const Protobuf::Map &protobufMap) {
     Line top(Pos2D(0, 0), Pos2D(out.dimensions.x, 0));
     Line bottom(Pos2D(0, out.dimensions.y), Pos2D(out.dimensions.x, out.dimensions.y));
 
+    Line corner1(Pos2D(-1, 0), Pos2D(0, -1));
+    Line corner2(Pos2D(out.dimensions.x + 1, 0), Pos2D(out.dimensions.x, -1));
+    Line corner3(Pos2D(-1, out.dimensions.y), Pos2D(0, out.dimensions.y + 1));
+    Line corner4(Pos2D(out.dimensions.x  + 1, out.dimensions.y), Pos2D(out.dimensions.x, out.dimensions.y + 1));
+
+    Line square1(Pos2D(300, 300), Pos2D(600, 300));
+    Line square2(Pos2D(600, 300), Pos2D(600, 600));
+    Line square3(Pos2D(600, 600), Pos2D(300, 600));
+    Line square4(Pos2D(300, 600), Pos2D(300, 300));
+
+    out.obstacles.push_back(square1);
+    out.obstacles.push_back(square2);
+    out.obstacles.push_back(square3);
+    out.obstacles.push_back(square4);
+
     out.obstacles.push_back(left);
     out.obstacles.push_back(right);
     out.obstacles.push_back(top);
     out.obstacles.push_back(bottom);
+
+    out.obstacles.push_back(corner1);
+    out.obstacles.push_back(corner2);
+    out.obstacles.push_back(corner3);
+    out.obstacles.push_back(corner4);
     return out;
 }
 

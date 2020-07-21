@@ -39,7 +39,7 @@ void HttpServer::handle_post(http_request message) {
 //        map.display();
 
         // 600 frames generated
-        int refreshRate = 60;
+        int refreshRate = 30;
         int secondsOfSimulation = 60;
         float timePerFrame = 1.0f / refreshRate;
 

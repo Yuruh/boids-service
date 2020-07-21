@@ -7,7 +7,7 @@
 
 
 #include "Pos2D.h"
-#include "../Line.h"
+#include "Line.h"
 
 // resources:
 
