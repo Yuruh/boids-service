@@ -31,6 +31,7 @@ protected:
 private:
     void handle_get(http_request message);
     void handle_post(http_request message);
+    void handle_options(http_request message);
     void handle_error(pplx::task<void>& t);
     http_listener m_listener;
 };

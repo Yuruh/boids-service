@@ -28,7 +28,7 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         boid.addAcceleration(cohesion);
 
         // steer to avoid crowding local flockmates
-        Pos2D separation = boid.getSeparation(boids) * 0.15;
+        Pos2D separation = boid.getSeparation(boids) * 0.18;
         boid.addAcceleration(separation);
 
         // steer towards the average heading of local flockmates

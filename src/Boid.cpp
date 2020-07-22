@@ -7,6 +7,10 @@
 #include "../include/Macros.h"
 
 
+/*
+ * todo
+ * quadtree optimization: chaque case de la taille de la distance de vision, et on ne check que notre case et les cases aux alentours.
+ */
 Pos2D Boid::getPosition() const {
     return this->position;
 }
@@ -50,7 +54,7 @@ bool Boid::operator!=(const Boid &boid) const {
 Boid &operator<<(Boid &out, const Protobuf::Boid &protobufBoid) {
     out.direction << protobufBoid.direction();
     out.position << protobufBoid.position();
-    std::cout << "Boid pos " << out.position << std::endl;
+ //   std::cout << "Boid pos " << out.position << std::endl;
 
     return out;
 }
