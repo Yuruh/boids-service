@@ -164,7 +164,7 @@ void Boid::addAcceleration(const Pos2D &acc) {
 Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     Pos2D ret;
 
-    std::cout << "Steering from obstacle" << std::endl;
+//    std::cout << "Steering from obstacle" << std::endl;
     for (const auto obstacle: obstacles) {
         Pos2D reflected = obstacle.reflectedVector(direction);
 
@@ -180,10 +180,10 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
 
 //        Pos2D steer = this->steerToGoal(reflected);
 
-        std::cout << "obstacle = " << obstacle << std::endl;
+/*        std::cout << "obstacle = " << obstacle << std::endl;
         std::cout << "direction = " << direction << std::endl;
         std::cout << "angle = " << static_cast<int>(RAD_TO_DEG(obstacle.angleWithVector(direction))) << std::endl;
-        std::cout << "reflect vec = " << reflected << std::endl;
+        std::cout << "reflect vec = " << reflected << std::endl;*/
   //      std::cout << "steer = " << steer << std::endl;
 
 
@@ -194,8 +194,8 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     }
     if (!obstacles.empty()) {
         ret = ret / obstacles.size();
-        std::cout << "Overall reflect = " << ret << std::endl;
-        std::cout << "final steer = " << this->steerToGoal(ret) << std::endl << std::endl;
+/*        std::cout << "Overall reflect = " << ret << std::endl;
+        std::cout << "final steer = " << this->steerToGoal(ret) << std::endl << std::endl;*/
         return this->steerToGoal(ret);
     }
     return ret;
@@ -207,7 +207,7 @@ Pos2D Boid::steerToGoal(Pos2D goal) const {
     goal.normalize();
     goal = goal * maxSpeed;
 
-    std::cout << "Goal normalized = " << goal << std::endl;
+//    std::cout << "Goal normalized = " << goal << std::endl;
     Pos2D steer;
     // Steering = Desired minus Velocity
     steer = goal - direction;

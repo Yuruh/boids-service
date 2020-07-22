@@ -23,7 +23,7 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         boid.setDirection(dir);
 
         // steer to move towards the average position (center of mass) of local flockmates
-/*        Pos2D cohesion = boid.getCohesion(boids) * 0.1;
+        Pos2D cohesion = boid.getCohesion(boids) * 0.1;
 
         boid.addAcceleration(cohesion);
 
@@ -33,10 +33,10 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
 
         // steer towards the average heading of local flockmates
         Pos2D alignment = boid.getAlignment(boids) * 0.1;
-        boid.addAcceleration(alignment);*/
+        boid.addAcceleration(alignment);
 
         std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
-        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * 0.1;
+        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * 0.2;
 
         //std::cout << "avoid direction: " << avoidObstacle << std::endl;
         boid.addAcceleration(avoidObstacle);
