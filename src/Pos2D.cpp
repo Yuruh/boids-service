@@ -4,9 +4,11 @@
 
 #include <cmath>
 #include "../include/Pos2D.h"
+#include "../include/Macros.h"
 
 bool Pos2D::operator==(const Pos2D &pos) const {
-    return pos.x == this->x && pos.y == this->y;
+    return pos.x > this->x - EPSILON && pos.x < this->x + EPSILON &&
+    pos.y > this->y - EPSILON && pos.y < this->y + EPSILON;
 }
 
 Pos2D::Pos2D(float x, float y): x(x), y(y) {
@@ -60,10 +62,13 @@ Pos2D Pos2D::operator*(float n) const {
 //Normalize vector if deemed too strong
 //Todo is it ok ?
 void Pos2D::limitToMaxMagnitude(float max) {
-    double size = getMagnitude();
+   double size = getMagnitude();
+    //std::cout << "mag " << size << std::endl;
 
+    // The magnitude computed is bigger than the maximum allowed
     if (size > max) {
         this->normalize();
+        *this = *this * max;
     }
 }
 

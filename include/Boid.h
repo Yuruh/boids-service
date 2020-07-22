@@ -28,6 +28,8 @@ private:
     Pos2D acceleration;
 
     float maxSpeed;
+
+    // The maximum magnitude of steering vectors
     float maxForce;
 
     char display;
@@ -55,7 +57,7 @@ public:
     void addAcceleration(const Pos2D &acc);
     void setPosition(Pos2D pos);
 
-    void update(float elapsedTimeSec, const Pos2D &dimensions);
+    void update(float elapsedTimeSec, const std::vector<Line> &obstacles);
 
     char getDisplay() const;
 

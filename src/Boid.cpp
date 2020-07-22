@@ -11,10 +11,10 @@ Pos2D Boid::getPosition() const {
     return this->position;
 }
 
-Boid::Boid(): direction(Pos2D(std::rand() % 2 - 1, std::rand() % 2 - 1)), position(std::rand() % WIDTH, std::rand() % HEIGHT)
+Boid::Boid(): direction(Pos2D(std::rand() % 2 - 1, std::rand() % 2 - 1)), position(0, 0)
 {
     this->speed = 100;
-    this->maxForce = 0.5;
+    this->maxForce = 0.7;
     this->maxSpeed = 3.5;
 }
 
@@ -136,31 +136,25 @@ Pos2D Boid::getSeparation(const std::vector<Boid> &boids) const {
     return ret;
 }
 
-void Boid::update(float elapsedTimeSec, const Pos2D &dimensions) {
+void Boid::update(float elapsedTimeSec, const std::vector<Line> &obstacles) {
     //acceleration = acceleration * 0.4;
 
     direction = direction + acceleration;
+    acceleration = acceleration * 0;
     direction.limitToMaxMagnitude(maxSpeed);
 
-    /* TODO
-     * Draw an line between pos and next pos.
-     * if line intersects with any obstacle, do nothing or rotate around itself
-     */
-    position = position + direction * elapsedTimeSec * 150;
-    acceleration = acceleration * 0;
+    Pos2D posBefore = position;
+    Pos2D posAfter = position + direction * elapsedTimeSec * 250;
 
-    if (position.x < 0) {
-        position.x += dimensions.x;
+    Line mvt(posBefore, posAfter);
+    for (const auto obstacle: obstacles) {
+        // If we intersect with any obstacle, we stay still
+        if (mvt.intersectsWith(obstacle)) {
+            return;
+        }
     }
-    if (position.x >= dimensions.x) {
-        position.x -= dimensions.x;
-    }
-    if (position.y < 0) {
-        position.y += dimensions.y;
-    }
-    if (position.y >= dimensions.y) {
-        position.y -= dimensions.y;
-    }
+
+    position = posAfter;
 }
 
 void Boid::addAcceleration(const Pos2D &acc) {
@@ -170,21 +164,41 @@ void Boid::addAcceleration(const Pos2D &acc) {
 Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     Pos2D ret;
 
-//    std::cout << "Steering from obstacles, nb = " << obstacles.size() << std::endl;
+    std::cout << "Steering from obstacle" << std::endl;
     for (const auto obstacle: obstacles) {
-  //      std::cout << position << " " << direction << " " << acceleration << std::endl;
-    //    std::cout << obstacle << std::endl;
         Pos2D reflected = obstacle.reflectedVector(direction);
+
+        // We'll use the normal vector instead of the reflexion if we are parallel to the obstacle
+        if (!(reflected == Pos2D())) {
+            reflected = obstacle.getNormalVector(position) * 0.5;
+        }
+
         reflected.normalize();
+//        reflected = reflected + obstacle.getNormalVector(direction) * 0.5; // So boids don't lean against the fence
+        //reflected.normalize();
         reflected = reflected / obstacle.distanceToPoint(position); // The closer the obstacle is, the more we want to steer
 
+//        Pos2D steer = this->steerToGoal(reflected);
+
+        std::cout << "obstacle = " << obstacle << std::endl;
+        std::cout << "direction = " << direction << std::endl;
+        std::cout << "angle = " << static_cast<int>(RAD_TO_DEG(obstacle.angleWithVector(direction))) << std::endl;
+        std::cout << "reflect vec = " << reflected << std::endl;
+  //      std::cout << "steer = " << steer << std::endl;
+
+
         ret = ret + reflected;
+
+        // We steer away from each obstacle
+    //    ret = ret + steer;
     }
     if (!obstacles.empty()) {
         ret = ret / obstacles.size();
+        std::cout << "Overall reflect = " << ret << std::endl;
+        std::cout << "final steer = " << this->steerToGoal(ret) << std::endl << std::endl;
         return this->steerToGoal(ret);
     }
-    return Pos2D();
+    return ret;
 
 }
 
@@ -193,8 +207,11 @@ Pos2D Boid::steerToGoal(Pos2D goal) const {
     goal.normalize();
     goal = goal * maxSpeed;
 
-    Pos2D steer(goal.x, goal.y);
+    std::cout << "Goal normalized = " << goal << std::endl;
+    Pos2D steer;
+    // Steering = Desired minus Velocity
     steer = goal - direction;
+
     steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
     return steer;
 }

@@ -40,7 +40,7 @@ void HttpServer::handle_post(http_request message) {
 
         // 600 frames generated
         int refreshRate = 30;
-        int secondsOfSimulation = 60;
+        int secondsOfSimulation = 30;
         float timePerFrame = 1.0f / refreshRate;
 
         float elapsedSec = 0;
@@ -73,35 +73,6 @@ void HttpServer::handle_post(http_request message) {
 void HttpServer::handle_get(http_request message) {
     std::cout << message.to_string() << std::endl;
     message.reply(status_codes::OK,message.to_string());
-
-//    message.body();
-
-/*    auto paths = http::uri::split_path(http::uri::decode(message.relative_uri().path()));
-
-    message.relative_uri().path();
-
-    concurrency::streams::fstream::open_istream(U("static/index.html"), std::ios::in).then([=](concurrency::streams::istream is)
-                                                                                           {
-                                                                                               message.reply(status_codes::OK, is,  U("text/html"))
-                                                                                                       .then([](pplx::task<void> t)
-                                                                                                             {
-                                                                                                                 try{
-                                                                                                                     t.get();
-                                                                                                                 }
-                                                                                                                 catch(...){
-                                                                                                                     //
-                                                                                                                 }
-                                                                                                             });
-                                                                                           }).then([=](pplx::task<void>t)
-                                                                                                                                                                                        {
-                                                                                                                                                                                            try{
-                                                                                                                                                                                                t.get();
-                                                                                                                                                                                            }
-                                                                                                                                                                                            catch(...){
-                                                                                                                                                                                                message.reply(status_codes::InternalError,U("INTERNAL ERROR "));
-                                                                                                                                                                                            }
-                                                                                                                                                                                        });
-*/
 }
 
 void HttpServer::handle_error(pplx::task<void> &t) {

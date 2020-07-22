@@ -111,20 +111,20 @@ Map &operator<<(Map &out, const Protobuf::Map &protobufMap) {
     Line square3(Pos2D(600, 600), Pos2D(300, 600));
     Line square4(Pos2D(300, 600), Pos2D(300, 300));
 
-    out.obstacles.push_back(square1);
+/*    out.obstacles.push_back(square1);
     out.obstacles.push_back(square2);
     out.obstacles.push_back(square3);
-    out.obstacles.push_back(square4);
+    out.obstacles.push_back(square4);*/
 
     out.obstacles.push_back(left);
     out.obstacles.push_back(right);
     out.obstacles.push_back(top);
     out.obstacles.push_back(bottom);
 
-    out.obstacles.push_back(corner1);
+/*    out.obstacles.push_back(corner1);
     out.obstacles.push_back(corner2);
     out.obstacles.push_back(corner3);
-    out.obstacles.push_back(corner4);
+    out.obstacles.push_back(corner4);*/
     return out;
 }
 
