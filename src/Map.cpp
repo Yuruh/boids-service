@@ -101,6 +101,12 @@ Map &operator<<(Map &out, const Protobuf::Map &protobufMap) {
     Line top(Pos2D(0, 0), Pos2D(out.dimensions.x, 0));
     Line bottom(Pos2D(0, out.dimensions.y), Pos2D(out.dimensions.x, out.dimensions.y));
 
+
+    for (const auto &obstacle: protobufMap.obstacles()) {
+        Line line(Pos2D(obstacle.a().x(), obstacle.a().y()), Pos2D(obstacle.b().x(), obstacle.b().y()));
+        out.obstacles.push_back(line);
+    }
+
     Line corner1(Pos2D(-1, 0), Pos2D(0, -1));
     Line corner2(Pos2D(out.dimensions.x + 1, 0), Pos2D(out.dimensions.x, -1));
     Line corner3(Pos2D(-1, out.dimensions.y), Pos2D(0, out.dimensions.y + 1));

@@ -47,7 +47,7 @@ struct TableStruct_map_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[7]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -64,6 +64,9 @@ extern FlockDefaultTypeInternal _Flock_default_instance_;
 class Input;
 class InputDefaultTypeInternal;
 extern InputDefaultTypeInternal _Input_default_instance_;
+class Line;
+class LineDefaultTypeInternal;
+extern LineDefaultTypeInternal _Line_default_instance_;
 class Map;
 class MapDefaultTypeInternal;
 extern MapDefaultTypeInternal _Map_default_instance_;
@@ -81,6 +84,7 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::Protobuf::Boid* Arena::CreateMaybeMessage<::Protobuf::Boid>(Arena*);
 template<> ::Protobuf::Flock* Arena::CreateMaybeMessage<::Protobuf::Flock>(Arena*);
 template<> ::Protobuf::Input* Arena::CreateMaybeMessage<::Protobuf::Input>(Arena*);
+template<> ::Protobuf::Line* Arena::CreateMaybeMessage<::Protobuf::Line>(Arena*);
 template<> ::Protobuf::Map* Arena::CreateMaybeMessage<::Protobuf::Map>(Arena*);
 template<> ::Protobuf::Output* Arena::CreateMaybeMessage<::Protobuf::Output>(Arena*);
 template<> ::Protobuf::Pos2D* Arena::CreateMaybeMessage<::Protobuf::Pos2D>(Arena*);
@@ -203,8 +207,27 @@ class Map PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kObstaclesFieldNumber = 2,
     kDimensionsFieldNumber = 1,
   };
+  // repeated .Protobuf.Line obstacles = 2;
+  int obstacles_size() const;
+  private:
+  int _internal_obstacles_size() const;
+  public:
+  void clear_obstacles();
+  ::Protobuf::Line* mutable_obstacles(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line >*
+      mutable_obstacles();
+  private:
+  const ::Protobuf::Line& _internal_obstacles(int index) const;
+  ::Protobuf::Line* _internal_add_obstacles();
+  public:
+  const ::Protobuf::Line& obstacles(int index) const;
+  ::Protobuf::Line* add_obstacles();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line >&
+      obstacles() const;
+
   // .Protobuf.Pos2D dimensions = 1;
   bool has_dimensions() const;
   private:
@@ -230,7 +253,174 @@ class Map PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line > obstacles_;
   ::Protobuf::Pos2D* dimensions_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_map_2eproto;
+};
+// -------------------------------------------------------------------
+
+class Line PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protobuf.Line) */ {
+ public:
+  inline Line() : Line(nullptr) {};
+  virtual ~Line();
+
+  Line(const Line& from);
+  Line(Line&& from) noexcept
+    : Line() {
+    *this = ::std::move(from);
+  }
+
+  inline Line& operator=(const Line& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Line& operator=(Line&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const Line& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Line* internal_default_instance() {
+    return reinterpret_cast<const Line*>(
+               &_Line_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(Line& a, Line& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Line* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Line* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Line* New() const final {
+    return CreateMaybeMessage<Line>(nullptr);
+  }
+
+  Line* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Line>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const Line& from);
+  void MergeFrom(const Line& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Line* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protobuf.Line";
+  }
+  protected:
+  explicit Line(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_map_2eproto);
+    return ::descriptor_table_map_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAFieldNumber = 1,
+    kBFieldNumber = 2,
+  };
+  // .Protobuf.Pos2D a = 1;
+  bool has_a() const;
+  private:
+  bool _internal_has_a() const;
+  public:
+  void clear_a();
+  const ::Protobuf::Pos2D& a() const;
+  ::Protobuf::Pos2D* release_a();
+  ::Protobuf::Pos2D* mutable_a();
+  void set_allocated_a(::Protobuf::Pos2D* a);
+  private:
+  const ::Protobuf::Pos2D& _internal_a() const;
+  ::Protobuf::Pos2D* _internal_mutable_a();
+  public:
+  void unsafe_arena_set_allocated_a(
+      ::Protobuf::Pos2D* a);
+  ::Protobuf::Pos2D* unsafe_arena_release_a();
+
+  // .Protobuf.Pos2D b = 2;
+  bool has_b() const;
+  private:
+  bool _internal_has_b() const;
+  public:
+  void clear_b();
+  const ::Protobuf::Pos2D& b() const;
+  ::Protobuf::Pos2D* release_b();
+  ::Protobuf::Pos2D* mutable_b();
+  void set_allocated_b(::Protobuf::Pos2D* b);
+  private:
+  const ::Protobuf::Pos2D& _internal_b() const;
+  ::Protobuf::Pos2D* _internal_mutable_b();
+  public:
+  void unsafe_arena_set_allocated_b(
+      ::Protobuf::Pos2D* b);
+  ::Protobuf::Pos2D* unsafe_arena_release_b();
+
+  // @@protoc_insertion_point(class_scope:Protobuf.Line)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::Protobuf::Pos2D* a_;
+  ::Protobuf::Pos2D* b_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_map_2eproto;
 };
@@ -278,7 +468,7 @@ class Pos2D PROTOBUF_FINAL :
                &_Pos2D_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(Pos2D& a, Pos2D& b) {
     a.Swap(&b);
@@ -426,7 +616,7 @@ class Boid PROTOBUF_FINAL :
                &_Boid_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(Boid& a, Boid& b) {
     a.Swap(&b);
@@ -592,7 +782,7 @@ class Flock PROTOBUF_FINAL :
                &_Flock_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(Flock& a, Flock& b) {
     a.Swap(&b);
@@ -738,7 +928,7 @@ class Input PROTOBUF_FINAL :
                &_Input_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(Input& a, Input& b) {
     a.Swap(&b);
@@ -811,8 +1001,8 @@ class Input PROTOBUF_FINAL :
   enum : int {
     kMapFieldNumber = 1,
     kFlockFieldNumber = 2,
-    kRefreshRateFieldNumber = 3,
-    kSecondsOfSimulationFieldNumber = 4,
+    kSimulationDurationSecFieldNumber = 3,
+    kImagesPerSecondFieldNumber = 4,
   };
   // .Protobuf.Map map = 1;
   bool has_map() const;
@@ -850,22 +1040,22 @@ class Input PROTOBUF_FINAL :
       ::Protobuf::Flock* flock);
   ::Protobuf::Flock* unsafe_arena_release_flock();
 
-  // int32 refreshRate = 3;
-  void clear_refreshrate();
-  ::PROTOBUF_NAMESPACE_ID::int32 refreshrate() const;
-  void set_refreshrate(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 simulationDurationSec = 3;
+  void clear_simulationdurationsec();
+  ::PROTOBUF_NAMESPACE_ID::int32 simulationdurationsec() const;
+  void set_simulationdurationsec(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_refreshrate() const;
-  void _internal_set_refreshrate(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_simulationdurationsec() const;
+  void _internal_set_simulationdurationsec(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 secondsOfSimulation = 4;
-  void clear_secondsofsimulation();
-  ::PROTOBUF_NAMESPACE_ID::int32 secondsofsimulation() const;
-  void set_secondsofsimulation(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 imagesPerSecond = 4;
+  void clear_imagespersecond();
+  ::PROTOBUF_NAMESPACE_ID::int32 imagespersecond() const;
+  void set_imagespersecond(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_secondsofsimulation() const;
-  void _internal_set_secondsofsimulation(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_imagespersecond() const;
+  void _internal_set_imagespersecond(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protobuf.Input)
@@ -877,8 +1067,8 @@ class Input PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::Protobuf::Map* map_;
   ::Protobuf::Flock* flock_;
-  ::PROTOBUF_NAMESPACE_ID::int32 refreshrate_;
-  ::PROTOBUF_NAMESPACE_ID::int32 secondsofsimulation_;
+  ::PROTOBUF_NAMESPACE_ID::int32 simulationdurationsec_;
+  ::PROTOBUF_NAMESPACE_ID::int32 imagespersecond_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_map_2eproto;
 };
@@ -926,7 +1116,7 @@ class Simulation PROTOBUF_FINAL :
                &_Simulation_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(Simulation& a, Simulation& b) {
     a.Swap(&b);
@@ -1083,7 +1273,7 @@ class Output PROTOBUF_FINAL :
                &_Output_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(Output& a, Output& b) {
     a.Swap(&b);
@@ -1275,6 +1465,211 @@ inline void Map::set_allocated_dimensions(::Protobuf::Pos2D* dimensions) {
   }
   dimensions_ = dimensions;
   // @@protoc_insertion_point(field_set_allocated:Protobuf.Map.dimensions)
+}
+
+// repeated .Protobuf.Line obstacles = 2;
+inline int Map::_internal_obstacles_size() const {
+  return obstacles_.size();
+}
+inline int Map::obstacles_size() const {
+  return _internal_obstacles_size();
+}
+inline void Map::clear_obstacles() {
+  obstacles_.Clear();
+}
+inline ::Protobuf::Line* Map::mutable_obstacles(int index) {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Map.obstacles)
+  return obstacles_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line >*
+Map::mutable_obstacles() {
+  // @@protoc_insertion_point(field_mutable_list:Protobuf.Map.obstacles)
+  return &obstacles_;
+}
+inline const ::Protobuf::Line& Map::_internal_obstacles(int index) const {
+  return obstacles_.Get(index);
+}
+inline const ::Protobuf::Line& Map::obstacles(int index) const {
+  // @@protoc_insertion_point(field_get:Protobuf.Map.obstacles)
+  return _internal_obstacles(index);
+}
+inline ::Protobuf::Line* Map::_internal_add_obstacles() {
+  return obstacles_.Add();
+}
+inline ::Protobuf::Line* Map::add_obstacles() {
+  // @@protoc_insertion_point(field_add:Protobuf.Map.obstacles)
+  return _internal_add_obstacles();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line >&
+Map::obstacles() const {
+  // @@protoc_insertion_point(field_list:Protobuf.Map.obstacles)
+  return obstacles_;
+}
+
+// -------------------------------------------------------------------
+
+// Line
+
+// .Protobuf.Pos2D a = 1;
+inline bool Line::_internal_has_a() const {
+  return this != internal_default_instance() && a_ != nullptr;
+}
+inline bool Line::has_a() const {
+  return _internal_has_a();
+}
+inline void Line::clear_a() {
+  if (GetArena() == nullptr && a_ != nullptr) {
+    delete a_;
+  }
+  a_ = nullptr;
+}
+inline const ::Protobuf::Pos2D& Line::_internal_a() const {
+  const ::Protobuf::Pos2D* p = a_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::Protobuf::Pos2D*>(
+      &::Protobuf::_Pos2D_default_instance_);
+}
+inline const ::Protobuf::Pos2D& Line::a() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Line.a)
+  return _internal_a();
+}
+inline void Line::unsafe_arena_set_allocated_a(
+    ::Protobuf::Pos2D* a) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(a_);
+  }
+  a_ = a;
+  if (a) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protobuf.Line.a)
+}
+inline ::Protobuf::Pos2D* Line::release_a() {
+  auto temp = unsafe_arena_release_a();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protobuf::Pos2D* Line::unsafe_arena_release_a() {
+  // @@protoc_insertion_point(field_release:Protobuf.Line.a)
+  
+  ::Protobuf::Pos2D* temp = a_;
+  a_ = nullptr;
+  return temp;
+}
+inline ::Protobuf::Pos2D* Line::_internal_mutable_a() {
+  
+  if (a_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protobuf::Pos2D>(GetArena());
+    a_ = p;
+  }
+  return a_;
+}
+inline ::Protobuf::Pos2D* Line::mutable_a() {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Line.a)
+  return _internal_mutable_a();
+}
+inline void Line::set_allocated_a(::Protobuf::Pos2D* a) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete a_;
+  }
+  if (a) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(a);
+    if (message_arena != submessage_arena) {
+      a = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, a, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  a_ = a;
+  // @@protoc_insertion_point(field_set_allocated:Protobuf.Line.a)
+}
+
+// .Protobuf.Pos2D b = 2;
+inline bool Line::_internal_has_b() const {
+  return this != internal_default_instance() && b_ != nullptr;
+}
+inline bool Line::has_b() const {
+  return _internal_has_b();
+}
+inline void Line::clear_b() {
+  if (GetArena() == nullptr && b_ != nullptr) {
+    delete b_;
+  }
+  b_ = nullptr;
+}
+inline const ::Protobuf::Pos2D& Line::_internal_b() const {
+  const ::Protobuf::Pos2D* p = b_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::Protobuf::Pos2D*>(
+      &::Protobuf::_Pos2D_default_instance_);
+}
+inline const ::Protobuf::Pos2D& Line::b() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Line.b)
+  return _internal_b();
+}
+inline void Line::unsafe_arena_set_allocated_b(
+    ::Protobuf::Pos2D* b) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(b_);
+  }
+  b_ = b;
+  if (b) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protobuf.Line.b)
+}
+inline ::Protobuf::Pos2D* Line::release_b() {
+  auto temp = unsafe_arena_release_b();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protobuf::Pos2D* Line::unsafe_arena_release_b() {
+  // @@protoc_insertion_point(field_release:Protobuf.Line.b)
+  
+  ::Protobuf::Pos2D* temp = b_;
+  b_ = nullptr;
+  return temp;
+}
+inline ::Protobuf::Pos2D* Line::_internal_mutable_b() {
+  
+  if (b_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protobuf::Pos2D>(GetArena());
+    b_ = p;
+  }
+  return b_;
+}
+inline ::Protobuf::Pos2D* Line::mutable_b() {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Line.b)
+  return _internal_mutable_b();
+}
+inline void Line::set_allocated_b(::Protobuf::Pos2D* b) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete b_;
+  }
+  if (b) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(b);
+    if (message_arena != submessage_arena) {
+      b = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, b, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  b_ = b;
+  // @@protoc_insertion_point(field_set_allocated:Protobuf.Line.b)
 }
 
 // -------------------------------------------------------------------
@@ -1696,44 +2091,44 @@ inline void Input::set_allocated_flock(::Protobuf::Flock* flock) {
   // @@protoc_insertion_point(field_set_allocated:Protobuf.Input.flock)
 }
 
-// int32 refreshRate = 3;
-inline void Input::clear_refreshrate() {
-  refreshrate_ = 0;
+// int32 simulationDurationSec = 3;
+inline void Input::clear_simulationdurationsec() {
+  simulationdurationsec_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Input::_internal_refreshrate() const {
-  return refreshrate_;
+inline ::PROTOBUF_NAMESPACE_ID::int32 Input::_internal_simulationdurationsec() const {
+  return simulationdurationsec_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Input::refreshrate() const {
-  // @@protoc_insertion_point(field_get:Protobuf.Input.refreshRate)
-  return _internal_refreshrate();
+inline ::PROTOBUF_NAMESPACE_ID::int32 Input::simulationdurationsec() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Input.simulationDurationSec)
+  return _internal_simulationdurationsec();
 }
-inline void Input::_internal_set_refreshrate(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void Input::_internal_set_simulationdurationsec(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  refreshrate_ = value;
+  simulationdurationsec_ = value;
 }
-inline void Input::set_refreshrate(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_refreshrate(value);
-  // @@protoc_insertion_point(field_set:Protobuf.Input.refreshRate)
+inline void Input::set_simulationdurationsec(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_simulationdurationsec(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Input.simulationDurationSec)
 }
 
-// int32 secondsOfSimulation = 4;
-inline void Input::clear_secondsofsimulation() {
-  secondsofsimulation_ = 0;
+// int32 imagesPerSecond = 4;
+inline void Input::clear_imagespersecond() {
+  imagespersecond_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Input::_internal_secondsofsimulation() const {
-  return secondsofsimulation_;
+inline ::PROTOBUF_NAMESPACE_ID::int32 Input::_internal_imagespersecond() const {
+  return imagespersecond_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 Input::secondsofsimulation() const {
-  // @@protoc_insertion_point(field_get:Protobuf.Input.secondsOfSimulation)
-  return _internal_secondsofsimulation();
+inline ::PROTOBUF_NAMESPACE_ID::int32 Input::imagespersecond() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Input.imagesPerSecond)
+  return _internal_imagespersecond();
 }
-inline void Input::_internal_set_secondsofsimulation(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void Input::_internal_set_imagespersecond(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  secondsofsimulation_ = value;
+  imagespersecond_ = value;
 }
-inline void Input::set_secondsofsimulation(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_secondsofsimulation(value);
-  // @@protoc_insertion_point(field_set:Protobuf.Input.secondsOfSimulation)
+inline void Input::set_imagespersecond(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_imagespersecond(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Input.imagesPerSecond)
 }
 
 // -------------------------------------------------------------------
@@ -1887,6 +2282,8 @@ Output::simulations() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -4,6 +4,12 @@ package Protobuf;
 
 message Map {
   Pos2D dimensions = 1;
+  repeated Line obstacles = 2;
+}
+
+message Line {
+    Pos2D a = 1;
+    Pos2D b = 2;
 }
 
 message Pos2D {
@@ -17,14 +23,14 @@ message Boid {
 }
 
 message Flock {
-    repeated Boid boids = 1;
+    repeated Boid boids = 1; // max 1000
 }
 
 message Input {
     Map map = 1;
     Flock flock = 2;
-    int32 refreshRate = 3; // Max 60
-    int32 secondsOfSimulation = 4; // Max 10
+    int32 simulationDurationSec = 3; // max 10
+    int32 imagesPerSecond = 4; // max 60
 }
 
 message Simulation {

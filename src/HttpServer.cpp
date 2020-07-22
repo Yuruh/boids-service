@@ -22,11 +22,12 @@ void HttpServer::handle_post(http_request message) {
 //    std::cout << message.body().extract() << std::endl;
 
     message.extract_vector().then([=](std::vector<unsigned char> c) {
-
         std::string s(c.begin(), c.end());
         Protobuf::Input input;
 
         input.ParseFromString(s);
+
+        std::cout << input.flock().boids().at(0).position().x() << std::endl;
 //        std::cout <<  input.map().dimensions().x() << std::endl;
 
         Flock flock;
@@ -39,8 +40,8 @@ void HttpServer::handle_post(http_request message) {
 //        map.display();
 
         // 600 frames generated
-        int refreshRate = 30;
-        int secondsOfSimulation = 30;
+        int refreshRate = input.imagespersecond();
+        int secondsOfSimulation = input.simulationdurationsec();
         float timePerFrame = 1.0f / refreshRate;
 
         float elapsedSec = 0;
@@ -63,6 +64,7 @@ void HttpServer::handle_post(http_request message) {
         response.headers().add(U("Access-Control-Allow-Origin"), U("*"));
         response.set_body(output.SerializeAsString());
         response.headers().set_content_type("application/octet-stream");
+        response.headers().set_cache_control("no-cache");
         message.reply(response);         // reply is done here
 
 

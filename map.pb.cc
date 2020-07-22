@@ -16,7 +16,8 @@
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Boid_map_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Flock_map_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Map_map_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Line_map_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Map_map_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Pos2D_map_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Simulation_map_2eproto;
 namespace Protobuf {
@@ -24,6 +25,10 @@ class MapDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Map> _instance;
 } _Map_default_instance_;
+class LineDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Line> _instance;
+} _Line_default_instance_;
 class Pos2DDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Pos2D> _instance;
@@ -95,6 +100,21 @@ static void InitDefaultsscc_info_Input_map_2eproto() {
       &scc_info_Map_map_2eproto.base,
       &scc_info_Flock_map_2eproto.base,}};
 
+static void InitDefaultsscc_info_Line_map_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::Protobuf::_Line_default_instance_;
+    new (ptr) ::Protobuf::Line();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::Protobuf::Line::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Line_map_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_Line_map_2eproto}, {
+      &scc_info_Pos2D_map_2eproto.base,}};
+
 static void InitDefaultsscc_info_Map_map_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -106,9 +126,10 @@ static void InitDefaultsscc_info_Map_map_2eproto() {
   ::Protobuf::Map::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Map_map_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_Map_map_2eproto}, {
-      &scc_info_Pos2D_map_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Map_map_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_Map_map_2eproto}, {
+      &scc_info_Pos2D_map_2eproto.base,
+      &scc_info_Line_map_2eproto.base,}};
 
 static void InitDefaultsscc_info_Output_map_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -154,7 +175,7 @@ static void InitDefaultsscc_info_Simulation_map_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_Simulation_map_2eproto}, {
       &scc_info_Flock_map_2eproto.base,}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_map_2eproto[7];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_map_2eproto[8];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_map_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_map_2eproto = nullptr;
 
@@ -165,6 +186,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_map_2eproto::offsets[] PROTOBU
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Protobuf::Map, dimensions_),
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Map, obstacles_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Line, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Line, a_),
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Line, b_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protobuf::Pos2D, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -192,8 +221,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_map_2eproto::offsets[] PROTOBU
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Protobuf::Input, map_),
   PROTOBUF_FIELD_OFFSET(::Protobuf::Input, flock_),
-  PROTOBUF_FIELD_OFFSET(::Protobuf::Input, refreshrate_),
-  PROTOBUF_FIELD_OFFSET(::Protobuf::Input, secondsofsimulation_),
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Input, simulationdurationsec_),
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Input, imagespersecond_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protobuf::Simulation, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -210,16 +239,18 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_map_2eproto::offsets[] PROTOBU
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::Protobuf::Map)},
-  { 6, -1, sizeof(::Protobuf::Pos2D)},
-  { 13, -1, sizeof(::Protobuf::Boid)},
-  { 20, -1, sizeof(::Protobuf::Flock)},
-  { 26, -1, sizeof(::Protobuf::Input)},
-  { 35, -1, sizeof(::Protobuf::Simulation)},
-  { 42, -1, sizeof(::Protobuf::Output)},
+  { 7, -1, sizeof(::Protobuf::Line)},
+  { 14, -1, sizeof(::Protobuf::Pos2D)},
+  { 21, -1, sizeof(::Protobuf::Boid)},
+  { 28, -1, sizeof(::Protobuf::Flock)},
+  { 34, -1, sizeof(::Protobuf::Input)},
+  { 43, -1, sizeof(::Protobuf::Simulation)},
+  { 50, -1, sizeof(::Protobuf::Output)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protobuf::_Map_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protobuf::_Line_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protobuf::_Pos2D_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protobuf::_Boid_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Protobuf::_Flock_default_instance_),
@@ -229,25 +260,29 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_map_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\tmap.proto\022\010Protobuf\"*\n\003Map\022#\n\ndimensio"
-  "ns\030\001 \001(\0132\017.Protobuf.Pos2D\"\035\n\005Pos2D\022\t\n\001x\030"
-  "\001 \001(\002\022\t\n\001y\030\002 \001(\002\"M\n\004Boid\022!\n\010position\030\001 \001"
-  "(\0132\017.Protobuf.Pos2D\022\"\n\tdirection\030\002 \001(\0132\017"
-  ".Protobuf.Pos2D\"&\n\005Flock\022\035\n\005boids\030\001 \003(\0132"
-  "\016.Protobuf.Boid\"u\n\005Input\022\032\n\003map\030\001 \001(\0132\r."
-  "Protobuf.Map\022\036\n\005flock\030\002 \001(\0132\017.Protobuf.F"
-  "lock\022\023\n\013refreshRate\030\003 \001(\005\022\033\n\023secondsOfSi"
-  "mulation\030\004 \001(\005\"G\n\nSimulation\022\036\n\005flock\030\001 "
-  "\001(\0132\017.Protobuf.Flock\022\031\n\021elapsedTimeSecon"
-  "d\030\002 \001(\002\"3\n\006Output\022)\n\013simulations\030\001 \003(\0132\024"
-  ".Protobuf.Simulationb\006proto3"
+  "\n\tmap.proto\022\010Protobuf\"M\n\003Map\022#\n\ndimensio"
+  "ns\030\001 \001(\0132\017.Protobuf.Pos2D\022!\n\tobstacles\030\002"
+  " \003(\0132\016.Protobuf.Line\">\n\004Line\022\032\n\001a\030\001 \001(\0132"
+  "\017.Protobuf.Pos2D\022\032\n\001b\030\002 \001(\0132\017.Protobuf.P"
+  "os2D\"\035\n\005Pos2D\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\"M\n\004B"
+  "oid\022!\n\010position\030\001 \001(\0132\017.Protobuf.Pos2D\022\""
+  "\n\tdirection\030\002 \001(\0132\017.Protobuf.Pos2D\"&\n\005Fl"
+  "ock\022\035\n\005boids\030\001 \003(\0132\016.Protobuf.Boid\"{\n\005In"
+  "put\022\032\n\003map\030\001 \001(\0132\r.Protobuf.Map\022\036\n\005flock"
+  "\030\002 \001(\0132\017.Protobuf.Flock\022\035\n\025simulationDur"
+  "ationSec\030\003 \001(\005\022\027\n\017imagesPerSecond\030\004 \001(\005\""
+  "G\n\nSimulation\022\036\n\005flock\030\001 \001(\0132\017.Protobuf."
+  "Flock\022\031\n\021elapsedTimeSecond\030\002 \001(\002\"3\n\006Outp"
+  "ut\022)\n\013simulations\030\001 \003(\0132\024.Protobuf.Simul"
+  "ationb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_map_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_map_2eproto_sccs[7] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_map_2eproto_sccs[8] = {
   &scc_info_Boid_map_2eproto.base,
   &scc_info_Flock_map_2eproto.base,
   &scc_info_Input_map_2eproto.base,
+  &scc_info_Line_map_2eproto.base,
   &scc_info_Map_map_2eproto.base,
   &scc_info_Output_map_2eproto.base,
   &scc_info_Pos2D_map_2eproto.base,
@@ -255,10 +290,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_map
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_map_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_map_2eproto = {
-  false, false, descriptor_table_protodef_map_2eproto, "map.proto", 468,
-  &descriptor_table_map_2eproto_once, descriptor_table_map_2eproto_sccs, descriptor_table_map_2eproto_deps, 7, 0,
+  false, false, descriptor_table_protodef_map_2eproto, "map.proto", 573,
+  &descriptor_table_map_2eproto_once, descriptor_table_map_2eproto_sccs, descriptor_table_map_2eproto_deps, 8, 0,
   schemas, file_default_instances, TableStruct_map_2eproto::offsets,
-  file_level_metadata_map_2eproto, 7, file_level_enum_descriptors_map_2eproto, file_level_service_descriptors_map_2eproto,
+  file_level_metadata_map_2eproto, 8, file_level_enum_descriptors_map_2eproto, file_level_service_descriptors_map_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -281,13 +316,15 @@ Map::_Internal::dimensions(const Map* msg) {
   return *msg->dimensions_;
 }
 Map::Map(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
+  obstacles_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:Protobuf.Map)
 }
 Map::Map(const Map& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      obstacles_(from.obstacles_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_dimensions()) {
     dimensions_ = new ::Protobuf::Pos2D(*from.dimensions_);
@@ -334,6 +371,7 @@ void Map::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  obstacles_.Clear();
   if (GetArena() == nullptr && dimensions_ != nullptr) {
     delete dimensions_;
   }
@@ -354,6 +392,18 @@ const char* Map::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::intern
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_dimensions(), ptr);
           CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated .Protobuf.Line obstacles = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_obstacles(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -392,6 +442,14 @@ failure:
         1, _Internal::dimensions(this), target, stream);
   }
 
+  // repeated .Protobuf.Line obstacles = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_obstacles_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, this->_internal_obstacles(i), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -407,6 +465,13 @@ size_t Map::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // repeated .Protobuf.Line obstacles = 2;
+  total_size += 1UL * this->_internal_obstacles_size();
+  for (const auto& msg : this->obstacles_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
 
   // .Protobuf.Pos2D dimensions = 1;
   if (this->has_dimensions()) {
@@ -446,6 +511,7 @@ void Map::MergeFrom(const Map& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  obstacles_.MergeFrom(from.obstacles_);
   if (from.has_dimensions()) {
     _internal_mutable_dimensions()->::Protobuf::Pos2D::MergeFrom(from._internal_dimensions());
   }
@@ -472,10 +538,275 @@ bool Map::IsInitialized() const {
 void Map::InternalSwap(Map* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  obstacles_.InternalSwap(&other->obstacles_);
   swap(dimensions_, other->dimensions_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Map::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void Line::InitAsDefaultInstance() {
+  ::Protobuf::_Line_default_instance_._instance.get_mutable()->a_ = const_cast< ::Protobuf::Pos2D*>(
+      ::Protobuf::Pos2D::internal_default_instance());
+  ::Protobuf::_Line_default_instance_._instance.get_mutable()->b_ = const_cast< ::Protobuf::Pos2D*>(
+      ::Protobuf::Pos2D::internal_default_instance());
+}
+class Line::_Internal {
+ public:
+  static const ::Protobuf::Pos2D& a(const Line* msg);
+  static const ::Protobuf::Pos2D& b(const Line* msg);
+};
+
+const ::Protobuf::Pos2D&
+Line::_Internal::a(const Line* msg) {
+  return *msg->a_;
+}
+const ::Protobuf::Pos2D&
+Line::_Internal::b(const Line* msg) {
+  return *msg->b_;
+}
+Line::Line(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:Protobuf.Line)
+}
+Line::Line(const Line& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_a()) {
+    a_ = new ::Protobuf::Pos2D(*from.a_);
+  } else {
+    a_ = nullptr;
+  }
+  if (from._internal_has_b()) {
+    b_ = new ::Protobuf::Pos2D(*from.b_);
+  } else {
+    b_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:Protobuf.Line)
+}
+
+void Line::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Line_map_2eproto.base);
+  ::memset(&a_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&b_) -
+      reinterpret_cast<char*>(&a_)) + sizeof(b_));
+}
+
+Line::~Line() {
+  // @@protoc_insertion_point(destructor:Protobuf.Line)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void Line::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  if (this != internal_default_instance()) delete a_;
+  if (this != internal_default_instance()) delete b_;
+}
+
+void Line::ArenaDtor(void* object) {
+  Line* _this = reinterpret_cast< Line* >(object);
+  (void)_this;
+}
+void Line::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void Line::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const Line& Line::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_Line_map_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void Line::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protobuf.Line)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArena() == nullptr && a_ != nullptr) {
+    delete a_;
+  }
+  a_ = nullptr;
+  if (GetArena() == nullptr && b_ != nullptr) {
+    delete b_;
+  }
+  b_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Line::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // .Protobuf.Pos2D a = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_a(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .Protobuf.Pos2D b = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_b(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* Line::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protobuf.Line)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .Protobuf.Pos2D a = 1;
+  if (this->has_a()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::a(this), target, stream);
+  }
+
+  // .Protobuf.Pos2D b = 2;
+  if (this->has_b()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::b(this), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protobuf.Line)
+  return target;
+}
+
+size_t Line::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protobuf.Line)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .Protobuf.Pos2D a = 1;
+  if (this->has_a()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *a_);
+  }
+
+  // .Protobuf.Pos2D b = 2;
+  if (this->has_b()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *b_);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void Line::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:Protobuf.Line)
+  GOOGLE_DCHECK_NE(&from, this);
+  const Line* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Line>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Protobuf.Line)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Protobuf.Line)
+    MergeFrom(*source);
+  }
+}
+
+void Line::MergeFrom(const Line& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Protobuf.Line)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.has_a()) {
+    _internal_mutable_a()->::Protobuf::Pos2D::MergeFrom(from._internal_a());
+  }
+  if (from.has_b()) {
+    _internal_mutable_b()->::Protobuf::Pos2D::MergeFrom(from._internal_b());
+  }
+}
+
+void Line::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Protobuf.Line)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void Line::CopyFrom(const Line& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protobuf.Line)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Line::IsInitialized() const {
+  return true;
+}
+
+void Line::InternalSwap(Line* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Line, b_)
+      + sizeof(Line::b_)
+      - PROTOBUF_FIELD_OFFSET(Line, a_)>(
+          reinterpret_cast<char*>(&a_),
+          reinterpret_cast<char*>(&other->a_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Line::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -1215,17 +1546,17 @@ Input::Input(const Input& from)
   } else {
     flock_ = nullptr;
   }
-  ::memcpy(&refreshrate_, &from.refreshrate_,
-    static_cast<size_t>(reinterpret_cast<char*>(&secondsofsimulation_) -
-    reinterpret_cast<char*>(&refreshrate_)) + sizeof(secondsofsimulation_));
+  ::memcpy(&simulationdurationsec_, &from.simulationdurationsec_,
+    static_cast<size_t>(reinterpret_cast<char*>(&imagespersecond_) -
+    reinterpret_cast<char*>(&simulationdurationsec_)) + sizeof(imagespersecond_));
   // @@protoc_insertion_point(copy_constructor:Protobuf.Input)
 }
 
 void Input::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Input_map_2eproto.base);
   ::memset(&map_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&secondsofsimulation_) -
-      reinterpret_cast<char*>(&map_)) + sizeof(secondsofsimulation_));
+      reinterpret_cast<char*>(&imagespersecond_) -
+      reinterpret_cast<char*>(&map_)) + sizeof(imagespersecond_));
 }
 
 Input::~Input() {
@@ -1269,9 +1600,9 @@ void Input::Clear() {
     delete flock_;
   }
   flock_ = nullptr;
-  ::memset(&refreshrate_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&secondsofsimulation_) -
-      reinterpret_cast<char*>(&refreshrate_)) + sizeof(secondsofsimulation_));
+  ::memset(&simulationdurationsec_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&imagespersecond_) -
+      reinterpret_cast<char*>(&simulationdurationsec_)) + sizeof(imagespersecond_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1297,17 +1628,17 @@ const char* Input::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inte
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 refreshRate = 3;
+      // int32 simulationDurationSec = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          refreshrate_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          simulationdurationsec_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 secondsOfSimulation = 4;
+      // int32 imagesPerSecond = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
-          secondsofsimulation_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          imagespersecond_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1355,16 +1686,16 @@ failure:
         2, _Internal::flock(this), target, stream);
   }
 
-  // int32 refreshRate = 3;
-  if (this->refreshrate() != 0) {
+  // int32 simulationDurationSec = 3;
+  if (this->simulationdurationsec() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_refreshrate(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_simulationdurationsec(), target);
   }
 
-  // int32 secondsOfSimulation = 4;
-  if (this->secondsofsimulation() != 0) {
+  // int32 imagesPerSecond = 4;
+  if (this->imagespersecond() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_secondsofsimulation(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_imagespersecond(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1397,18 +1728,18 @@ size_t Input::ByteSizeLong() const {
         *flock_);
   }
 
-  // int32 refreshRate = 3;
-  if (this->refreshrate() != 0) {
+  // int32 simulationDurationSec = 3;
+  if (this->simulationdurationsec() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_refreshrate());
+        this->_internal_simulationdurationsec());
   }
 
-  // int32 secondsOfSimulation = 4;
-  if (this->secondsofsimulation() != 0) {
+  // int32 imagesPerSecond = 4;
+  if (this->imagespersecond() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_secondsofsimulation());
+        this->_internal_imagespersecond());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1448,11 +1779,11 @@ void Input::MergeFrom(const Input& from) {
   if (from.has_flock()) {
     _internal_mutable_flock()->::Protobuf::Flock::MergeFrom(from._internal_flock());
   }
-  if (from.refreshrate() != 0) {
-    _internal_set_refreshrate(from._internal_refreshrate());
+  if (from.simulationdurationsec() != 0) {
+    _internal_set_simulationdurationsec(from._internal_simulationdurationsec());
   }
-  if (from.secondsofsimulation() != 0) {
-    _internal_set_secondsofsimulation(from._internal_secondsofsimulation());
+  if (from.imagespersecond() != 0) {
+    _internal_set_imagespersecond(from._internal_imagespersecond());
   }
 }
 
@@ -1478,8 +1809,8 @@ void Input::InternalSwap(Input* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Input, secondsofsimulation_)
-      + sizeof(Input::secondsofsimulation_)
+      PROTOBUF_FIELD_OFFSET(Input, imagespersecond_)
+      + sizeof(Input::imagespersecond_)
       - PROTOBUF_FIELD_OFFSET(Input, map_)>(
           reinterpret_cast<char*>(&map_),
           reinterpret_cast<char*>(&other->map_));
@@ -1943,6 +2274,9 @@ void Output::InternalSwap(Output* other) {
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::Protobuf::Map* Arena::CreateMaybeMessage< ::Protobuf::Map >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protobuf::Map >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protobuf::Line* Arena::CreateMaybeMessage< ::Protobuf::Line >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protobuf::Line >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Protobuf::Pos2D* Arena::CreateMaybeMessage< ::Protobuf::Pos2D >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protobuf::Pos2D >(arena);

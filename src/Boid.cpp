@@ -50,6 +50,8 @@ bool Boid::operator!=(const Boid &boid) const {
 Boid &operator<<(Boid &out, const Protobuf::Boid &protobufBoid) {
     out.direction << protobufBoid.direction();
     out.position << protobufBoid.position();
+    std::cout << "Boid pos " << out.position << std::endl;
+
     return out;
 }
 
@@ -59,6 +61,7 @@ Protobuf::Boid &operator>>(const Boid &in, Protobuf::Boid &protobufBoid) {
 
     in.direction >> *direction;
     in.position >> *position;
+
 
     protobufBoid.set_allocated_direction(direction);
     protobufBoid.set_allocated_position(position);
