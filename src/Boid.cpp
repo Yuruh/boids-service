@@ -10,6 +10,8 @@
 /*
  * todo
  * quadtree optimization: chaque case de la taille de la distance de vision, et on ne check que notre case et les cases aux alentours.
+ * radius vision, and don't see across obstacles
+ *
  */
 Pos2D Boid::getPosition() const {
     return this->position;
