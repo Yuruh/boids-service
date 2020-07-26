@@ -6,6 +6,7 @@
 #include "../include/HttpServer.h"
 #include "../include/Map.h"
 #include "../include/Flock.h"
+#include "../include/Macros.h"
 
 HttpServer::HttpServer() = default;
 
@@ -21,8 +22,6 @@ HttpServer::~HttpServer() = default;
 // Todo handle errors and sanitize inputs
 void HttpServer::handle_post(http_request message) {
 
-//    std::cout << message.body().extract() << std::endl;
-std::cout << message.method() << std::endl;
 
     message.extract_vector().then([=](std::vector<unsigned char> c) {
         std::string s(c.begin(), c.end());
@@ -30,8 +29,6 @@ std::cout << message.method() << std::endl;
 
         input.ParseFromString(s);
 
-//        std::cout << input.flock().boids().at(0).position().x() << std::endl;
-//        std::cout <<  input.map().dimensions().x() << std::endl;
 
         Flock flock;
         flock << input.flock();
@@ -42,11 +39,16 @@ std::cout << message.method() << std::endl;
 
         std::cout << input.flock().boids().size() << " boids" << std::endl;
         std::cout << input.map().obstacles().size() + 4 << " obstacles" << std::endl;
-//        map.display();
 
-        // 600 frames generated
-        int refreshRate = input.imagespersecond();
-        int secondsOfSimulation = input.simulationdurationsec();
+
+        auto refreshRate = static_cast<unsigned int>(input.imagespersecond());
+        if (refreshRate > MAX_FPS) {
+            refreshRate = MAX_FPS;
+        }
+        auto secondsOfSimulation = static_cast<unsigned int>(input.simulationdurationsec());
+        if (secondsOfSimulation > MAX_SIM_SECONDS) {
+            secondsOfSimulation = MAX_SIM_SECONDS;
+        }
         float timePerFrame = 1.0f / refreshRate;
 
         float elapsedSec = 0;

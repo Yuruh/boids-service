@@ -48,7 +48,7 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
 Flock &operator<<(Flock &out, const Protobuf::Flock &protobufFlock) {
     protobufFlock.boids().size();
 
-    for (int i = 0; i < protobufFlock.boids().size(); ++i) {
+    for (int i = 0; i < protobufFlock.boids().size() && i < MAX_NUMBER_BOIDS; ++i) {
         Boid boid;
         boid << protobufFlock.boids(i);
         out.boids.push_back(boid);

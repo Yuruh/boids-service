@@ -13,6 +13,10 @@
 #define OBSTACLE_DISTANCE 100
 #define VISION_DISTANCE 200
 
+#define MAX_NUMBER_BOIDS 1000
+#define MAX_FPS 60
+#define MAX_SIM_SECONDS 30
+
 
 // Converts degrees to radians.
 #define DEG_TO_RAD(angleDegrees) (angleDegrees * M_PI / 180.0)
