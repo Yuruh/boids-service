@@ -8,7 +8,7 @@
 // Adapted from https://www.geeksforgeeks.org/quad-tree/
 // and https://editor.p5js.org/TheTastefulToastie/sketches/BJNaRITyE
 
-#include "include/Pos2D.h"
+#include "Pos2D.h"
 
 
 template <class T>

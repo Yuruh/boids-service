@@ -1,0 +1,5 @@
+deploy.sh
+.git
+showcase
+cmake-build-debug
+*.sh

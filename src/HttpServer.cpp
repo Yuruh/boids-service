@@ -11,6 +11,7 @@
 HttpServer::HttpServer() = default;
 
 HttpServer::HttpServer(std::string url): m_listener(url) {
+    std::cout << "Listening to " << url << std::endl;
     m_listener.support(methods::GET, std::bind(&HttpServer::handle_get, this, std::placeholders::_1));
     m_listener.support(methods::POST, std::bind(&HttpServer::handle_post, this, std::placeholders::_1));
 

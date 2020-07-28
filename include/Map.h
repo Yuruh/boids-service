@@ -7,7 +7,7 @@
 
 #include <vector>
 #include "Pos2D.h"
-#include "../map.pb.h"
+#include "map.pb.h"
 #include "Line.h"
 
 /*

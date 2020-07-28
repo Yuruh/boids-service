@@ -7,7 +7,7 @@
 
 
 #include <iostream>
-#include "../map.pb.h"
+#include "map.pb.h"
 
 struct Pos2D {
     Pos2D();
