@@ -50,6 +50,8 @@ public:
     Pos2D getSeparation(const std::vector<Boid> &boids) const;
     Pos2D getSteerFromObstacles(const std::vector<Line> &obstacles) const;
 
+    const std::vector<Boid> getCloseBoids(const std::vector<Boid> &boids) const;
+
     bool operator==(const Boid &boid) const;
     bool operator!=(const Boid &boid) const;
 

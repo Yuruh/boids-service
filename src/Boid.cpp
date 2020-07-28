@@ -17,11 +17,11 @@ Pos2D Boid::getPosition() const {
     return this->position;
 }
 
-Boid::Boid(): direction(Pos2D(std::rand() % 2 - 1, std::rand() % 2 - 1)), position(0, 0)
+Boid::Boid(): direction(Pos2D(1, 1)), position(0, 0)
 {
     this->speed = 100;
-    this->maxForce = 0.7;
-    this->maxSpeed = 3.5;
+    this->maxForce = 0.6;
+    this->maxSpeed = 2;
 }
 
 char Boid::getDisplay() const {
@@ -80,17 +80,11 @@ float Boid::getSpeed() const {
 
 Pos2D Boid::getCohesion(const std::vector<Boid> &boids) const {
     Pos2D res;
-    int count = 0;
     for (const Boid &boid : boids) {
-        float distance = boid.getPosition().distanceWith(this->getPosition());
-
-        if ((distance > EPSILON) && (distance < VISION_DISTANCE)) {
-            res = res + boid.position;
-            count++;
-        }
+        res = res + boid.position;
     }
-    if (count > 0) {
-        res = res / count;
+    if (!boids.empty()) {
+        res = res / boids.size();
 
         // Vector from location to target
         Pos2D goal = res - position;
@@ -102,19 +96,13 @@ Pos2D Boid::getCohesion(const std::vector<Boid> &boids) const {
 
 Pos2D Boid::getAlignment(const std::vector<Boid> &boids) const {
     Pos2D res;
-    int count = 0;
     for (const Boid &boid : boids) {
-        float distance = boid.getPosition().distanceWith(this->getPosition());
-
-        if ((distance > EPSILON) && (distance < VISION_DISTANCE)) {
-            res = res + boid.direction;
-            count++;
-        }
+        res = res + boid.direction;
     }
-    if (count > 0) {
-        res = res / count;
 
-        // Scale to max speed
+    if (!boids.empty()) {
+        res = res / boids.size();
+
         return this->steerToGoal(res);
     }
     return res;
@@ -122,38 +110,44 @@ Pos2D Boid::getAlignment(const std::vector<Boid> &boids) const {
 
 Pos2D Boid::getSeparation(const std::vector<Boid> &boids) const {
     Pos2D ret;
-    int count = 0;
+
     for (const Boid &boid : boids) {
         float distance = boid.getPosition().distanceWith(this->getPosition());
 
-        if ((distance > EPSILON) && (distance < SEPARATION_DISTANCE)) {
-            Pos2D oppositeWay = ret - (boid.getPosition() - this->getPosition());
+        Pos2D diff = this->position - boid.getPosition();
 
-            oppositeWay.normalize();
-            oppositeWay = oppositeWay / distance; // The closer the other boid is, the more we want to steer
-            ret += oppositeWay;
-
-            count++;
-
+        if (distance > EPSILON) {
+            diff = diff / distance;
         }
+        ret += diff;
+//        Pos2D oppositeWay = ret - (boid.getPosition() - this->getPosition());
+
+//        oppositeWay.normalize();
+//        oppositeWay = oppositeWay / distance; // The closer the other boid is, the more we want to steer
+ //       ret += oppositeWay;
+
     }
-    if (count > 0) {
-        ret = ret / count;
+
+    if (!boids.empty()) {
+
+        ret = ret / boids.size();
 
         return this->steerToGoal(ret);
     }
+
     return ret;
 }
 
 void Boid::update(float elapsedTimeSec, const std::vector<Line> &obstacles) {
     //acceleration = acceleration * 0.4;
 
-    direction = direction + acceleration;
-    acceleration = acceleration * 0;
-    direction.limitToMaxMagnitude(maxSpeed);
 
     Pos2D posBefore = position;
     Pos2D posAfter = position + direction * elapsedTimeSec * 250;
+
+    direction = direction + acceleration;
+    acceleration = acceleration * 0;
+    direction.limitToMaxMagnitude(maxSpeed);
 
     Line mvt(posBefore, posAfter);
     for (const auto obstacle: obstacles) {
@@ -183,18 +177,8 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
         }
 
         reflected.normalize();
-//        reflected = reflected + obstacle.getNormalVector(direction) * 0.5; // So boids don't lean against the fence
-        //reflected.normalize();
+
         reflected = reflected / obstacle.distanceToPoint(position); // The closer the obstacle is, the more we want to steer
-
-//        Pos2D steer = this->steerToGoal(reflected);
-
-/*        std::cout << "obstacle = " << obstacle << std::endl;
-        std::cout << "direction = " << direction << std::endl;
-        std::cout << "angle = " << static_cast<int>(RAD_TO_DEG(obstacle.angleWithVector(direction))) << std::endl;
-        std::cout << "reflect vec = " << reflected << std::endl;*/
-  //      std::cout << "steer = " << steer << std::endl;
-
 
         ret = ret + reflected;
 
@@ -203,8 +187,7 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     }
     if (!obstacles.empty()) {
         ret = ret / obstacles.size();
-/*        std::cout << "Overall reflect = " << ret << std::endl;
-        std::cout << "final steer = " << this->steerToGoal(ret) << std::endl << std::endl;*/
+
         return this->steerToGoal(ret);
     }
     return ret;
@@ -212,15 +195,32 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
 }
 
 Pos2D Boid::steerToGoal(Pos2D goal) const {
-// Scale to max speed
-    goal.normalize();
-    goal = goal * maxSpeed;
+    // Scale to max speed
+    goal.setMagnitude(this->maxSpeed);
 
-//    std::cout << "Goal normalized = " << goal << std::endl;
     Pos2D steer;
+
     // Steering = Desired minus Velocity
     steer = goal - direction;
+
 
     steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
     return steer;
 }
+
+const std::vector<Boid> Boid::getCloseBoids(const std::vector<Boid> &boids) const {
+    std::vector<Boid> closeBoids;
+    for (const Boid &boid : boids) {
+        float distance = boid.getPosition().distanceWith(this->getPosition());
+
+        if ((distance > EPSILON) && (distance < VISION_DISTANCE)) {
+            closeBoids.push_back(boid);
+        }
+        if (closeBoids.size() >= MAX_LOCAL_FLOCKMATES) {
+            return closeBoids;
+        }
+    }
+    return closeBoids;
+
+}
+

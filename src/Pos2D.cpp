@@ -59,16 +59,10 @@ Pos2D Pos2D::operator*(float n) const {
 }
 
 
-//Normalize vector if deemed too strong
-//Todo is it ok ?
 void Pos2D::limitToMaxMagnitude(float max) {
-   double size = getMagnitude();
-    //std::cout << "mag " << size << std::endl;
-
-    // The magnitude computed is bigger than the maximum allowed
-    if (size > max) {
-        this->normalize();
-        *this = *this * max;
+    float mag = this->getMagnitude();
+    if (mag > max) {
+        this->setMagnitude(max);
     }
 }
 
@@ -85,6 +79,13 @@ double Pos2D::angleWithVector(const Pos2D &other) const {
     double dot = *this * other;
     double det = this->getCrossProduct(other);
     return std::atan2(det, dot);
+}
+
+void Pos2D::setMagnitude(float mag) {
+    float magnitude = getMagnitude();
+
+    x = x * mag / magnitude;
+    y = y * mag / magnitude;
 }
 
 

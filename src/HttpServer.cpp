@@ -19,6 +19,15 @@ HttpServer::HttpServer(std::string url): m_listener(url) {
 
 HttpServer::~HttpServer() = default;
 
+void limitInteger(int min, int max, int *value) {
+    if (*value > max) {
+        *value = max;
+    }
+    if (*value < min) {
+        *value = min;
+    }
+}
+
 // Todo handle errors and sanitize inputs
 void HttpServer::handle_post(http_request message) {
 
@@ -41,14 +50,12 @@ void HttpServer::handle_post(http_request message) {
         std::cout << input.map().obstacles().size() + 4 << " obstacles" << std::endl;
 
 
-        auto refreshRate = static_cast<unsigned int>(input.imagespersecond());
-        if (refreshRate > MAX_FPS) {
-            refreshRate = MAX_FPS;
-        }
-        auto secondsOfSimulation = static_cast<unsigned int>(input.simulationdurationsec());
-        if (secondsOfSimulation > MAX_SIM_SECONDS) {
-            secondsOfSimulation = MAX_SIM_SECONDS;
-        }
+        int refreshRate = input.imagespersecond();
+        limitInteger(1, MAX_FPS, &refreshRate);
+
+        int secondsOfSimulation = input.simulationdurationsec();
+        limitInteger(1, MAX_SIM_SECONDS, &secondsOfSimulation);
+
         float timePerFrame = 1.0f / refreshRate;
 
         float elapsedSec = 0;
