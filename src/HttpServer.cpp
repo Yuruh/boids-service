@@ -63,6 +63,13 @@ void HttpServer::handle_post(http_request message) {
         Protobuf::Output output;
 
         std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+        /*
+         * Simulation every tick
+         * This leads to boids deciding about their next movement every tick, so the less FPS the more dumb they are, which doesn't make sense.
+         * To change this, we could set a variable "decisionRate", run the update every tick, and set the simulation at the appropriate interval
+         * Additionally, how long it takes to compute would not be based on the FPS anymore
+         */
         for (int i = 0; i < refreshRate * secondsOfSimulation; ++i) {
             elapsedSec += timePerFrame;
             flock.update(timePerFrame, map);
@@ -72,8 +79,8 @@ void HttpServer::handle_post(http_request message) {
             flock >> *protoFlock;
             simulation->set_allocated_flock(protoFlock);
             simulation->set_elapsedtimesecond(elapsedSec);
-
         }
+
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         std::cout << "Simulation generated in " << std::chrono::duration_cast<std::chrono::seconds>(end - begin).count() << "[s]" << std::endl;
 

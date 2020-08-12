@@ -36,7 +36,6 @@ Pos2D Line::reflectedVector(const Pos2D &vector) const {
     if ((angle > -EPSILON && angle < EPSILON) ||
         (angle > M_PI - EPSILON && angle < M_PI + EPSILON) ||
         (angle > -M_PI - EPSILON && angle < -M_PI + EPSILON)) {
-        std::cout << "longe un mur" << std::endl;
         return Pos2D();
     }
     // The direction of the normal vector doesn't affect reflection

@@ -22,7 +22,7 @@ class Boid {
 private:
     Pos2D position;
 
-    // acts as direction and velocity
+    // the magnitude of this vector is the boid's velocity
     Pos2D direction;
 
     Pos2D acceleration;
@@ -32,7 +32,10 @@ private:
     // The maximum magnitude of steering vectors
     float maxForce;
 
-    char display;
+    // The weight of the boids. A heavy beard has a harder time steering
+    float weight;
+
+
 
     // In units per second
     float speed;
@@ -50,7 +53,8 @@ public:
     Pos2D getSeparation(const std::vector<Boid> &boids) const;
     Pos2D getSteerFromObstacles(const std::vector<Line> &obstacles) const;
 
-    const std::vector<Boid> getCloseBoids(const std::vector<Boid> &boids) const;
+//    const std::vector<Boid> getCloseBoids(const std::vector<Boid> &boids) const;
+    const std::vector<Boid> getClosestBoids(const std::vector<Boid> &boids, float maxDistance, float maxQty) const;
 
     bool operator==(const Boid &boid) const;
     bool operator!=(const Boid &boid) const;
@@ -61,7 +65,6 @@ public:
 
     void update(float elapsedTimeSec, const std::vector<Line> &obstacles);
 
-    char getDisplay() const;
 
     float getSpeed() const;
 

@@ -20,12 +20,9 @@ Pos2D Boid::getPosition() const {
 Boid::Boid(): direction(Pos2D(1, 1)), position(0, 0)
 {
     this->speed = 100;
-    this->maxForce = 0.6;
-    this->maxSpeed = 2;
-}
-
-char Boid::getDisplay() const {
-    return this->display;
+    this->maxForce = 0.1;
+    this->maxSpeed = 1;
+    this->weight = 1;
 }
 
 /*
@@ -166,27 +163,39 @@ void Boid::addAcceleration(const Pos2D &acc) {
 
 Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     Pos2D ret;
+    int count = 0;
+    Line currentMovement(this->position, this->position + this->direction * OBSTACLE_DISTANCE);
 
 //    std::cout << "Steering from obstacle" << std::endl;
     for (const auto obstacle: obstacles) {
-        Pos2D reflected = obstacle.reflectedVector(direction);
 
-        // We'll use the normal vector instead of the reflexion if we are parallel to the obstacle
-        if (!(reflected == Pos2D())) {
-            reflected = obstacle.getNormalVector(position) * 0.5;
+        /*
+         * We trace a virutal line from the position to the direction + the distance to find obstacles
+         * If it collides with an obstacles, we try to steer away from it
+         * This code could be in the close obstacles function
+         */
+        if (currentMovement.intersectsWith(obstacle)) {
+            count++;
+
+            Pos2D reflected = obstacle.reflectedVector(direction);
+
+            // We'll use the normal vector instead of the reflexion if we are parallel to the obstacle
+            if (!(reflected == Pos2D())) {
+                reflected = obstacle.getNormalVector(position) * 0.5;
+            }
+
+            reflected.normalize();
+
+            reflected = reflected / obstacle.distanceToPoint(position); // The closer the obstacle is, the more we want to steer
+
+            ret = ret + reflected;
+
+            // We steer away from each obstacle
+            //    ret = ret + steer;
         }
-
-        reflected.normalize();
-
-        reflected = reflected / obstacle.distanceToPoint(position); // The closer the obstacle is, the more we want to steer
-
-        ret = ret + reflected;
-
-        // We steer away from each obstacle
-    //    ret = ret + steer;
     }
-    if (!obstacles.empty()) {
-        ret = ret / obstacles.size();
+    if (count > 0) {
+        ret = ret / count;
 
         return this->steerToGoal(ret);
     }
@@ -208,17 +217,27 @@ Pos2D Boid::steerToGoal(Pos2D goal) const {
     return steer;
 }
 
-const std::vector<Boid> Boid::getCloseBoids(const std::vector<Boid> &boids) const {
+//todo should be closest boids
+const std::vector<Boid> Boid::getClosestBoids(const std::vector<Boid> &boids, float maxDistance, float maxQty) const {
+
     std::vector<Boid> closeBoids;
+    std::map<float, Boid> distanceToBoids;
     for (const Boid &boid : boids) {
         float distance = boid.getPosition().distanceWith(this->getPosition());
 
-        if ((distance > EPSILON) && (distance < VISION_DISTANCE)) {
-            closeBoids.push_back(boid);
+        if ((distance > EPSILON) && (distance < maxDistance)) {
+            distanceToBoids[distance] = boid;
+//            closeBoids.push_back(boid);
         }
-        if (closeBoids.size() >= MAX_LOCAL_FLOCKMATES) {
+/*        if (closeBoids.size() >= MAX_LOCAL_FLOCKMATES) {
             return closeBoids;
-        }
+        }*/
+    }
+
+
+    for (int i = 0; i < maxQty && i < distanceToBoids.size(); ++i) {
+        closeBoids.push_back(distanceToBoids.begin()->second);
+        distanceToBoids.erase(distanceToBoids.begin());
     }
     return closeBoids;
 
