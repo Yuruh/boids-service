@@ -15,7 +15,7 @@ add_executable(unit_tests include/map.pb.h src/map.pb.cc src/Map.cpp include/Map
         src/Core.cpp include/Core.h src/Boid.cpp include/Boid.h src/Flock.cpp include/Flock.h
         include/Macros.h src/HttpServer.cpp include/HttpServer.h src/Line.cpp include/Line.h
         tests/catch.hpp tests/Line_test.cpp
-        )
+        tests/Boid_test.cpp)
 
 TARGET_LINK_LIBRARIES(boids ${Casablanca_LIBRARIES} ${PROTOBUF_LIBRARY})
 TARGET_LINK_LIBRARIES(unit_tests ${Casablanca_LIBRARIES} ${PROTOBUF_LIBRARY})

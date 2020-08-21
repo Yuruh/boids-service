@@ -27,23 +27,27 @@ private:
 
     Pos2D acceleration;
 
+    float minSpeed;
+
     float maxSpeed;
 
     // The maximum magnitude of steering vectors
     float maxForce;
 
-    // The weight of the boids. A heavy beard has a harder time steering
+    // The weight of the boids. A heavy boid has a harder time steering
     float weight;
 
+    // How much can a boid steer during one frame
+    double maxSteerAngle;
 
 
-    // In units per second
-    float speed;
+    // We store result for boid rules so we can send them to the client on each simulation frame
+    Pos2D currentCohesion;
+    Pos2D currentAlignment;
+    Pos2D currentSeparation;
+    Pos2D currentAvoidance;
 
-
-    Pos2D steerToGoal(Pos2D goal) const;
 public:
-
     Boid();
     Pos2D getPosition() const;
     Pos2D getDirection() const;
@@ -52,6 +56,8 @@ public:
     Pos2D getAlignment(const std::vector<Boid> &boids) const;
     Pos2D getSeparation(const std::vector<Boid> &boids) const;
     Pos2D getSteerFromObstacles(const std::vector<Line> &obstacles) const;
+
+    void setRulesResult(const Pos2D &cohesion, const Pos2D &alignment, const Pos2D &separation, const Pos2D &avoidance);
 
 //    const std::vector<Boid> getCloseBoids(const std::vector<Boid> &boids) const;
     const std::vector<Boid> getClosestBoids(const std::vector<Boid> &boids, float maxDistance, float maxQty) const;
@@ -66,10 +72,10 @@ public:
     void update(float elapsedTimeSec, const std::vector<Line> &obstacles);
 
 
-    float getSpeed() const;
-
     friend Boid& operator<<(Boid &out, const Protobuf::Boid &protobufBoid);
     friend Protobuf::Boid& operator>>(const Boid &out, Protobuf::Boid &protobufBoid);
+
+    Pos2D steerToGoal(Pos2D goal) const;
 
 };
 

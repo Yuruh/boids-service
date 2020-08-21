@@ -58,6 +58,14 @@ Pos2D Pos2D::operator*(float n) const {
 
 }
 
+void Pos2D::limitToMinMagnitude(float min) {
+    float mag = this->getMagnitude();
+    if (mag < min) {
+        this->setMagnitude(min);
+    }
+}
+
+
 
 void Pos2D::limitToMaxMagnitude(float max) {
     float mag = this->getMagnitude();

@@ -19,9 +19,6 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
 
     for (Boid &boid : this->boids) {
         std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
-/*        Pos2D dir = boid.getDirection();
-        dir.normalize();
-        boid.setDirection(dir);*/
 
         auto closeBoids = boid.getClosestBoids(boids, VISION_DISTANCE, MAX_LOCAL_FLOCKMATES);
 
@@ -29,6 +26,8 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         // steer to avoid obstacle
         Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * OBSTACLES_COEFF;
         boid.addAcceleration(avoidObstacle);
+
+
 
 
         // If we meet an obstacle, it becomes priority to avoid it
@@ -42,9 +41,12 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         boid.addAcceleration(separation);
 
 
+
         // steer towards the average heading of local flockmates
         Pos2D alignment = boid.getAlignment(closeBoids) * ALIGNMENT_COEFF;
         boid.addAcceleration(alignment);
+
+        boid.setRulesResult(cohesion, alignment, separation, avoidObstacle);
 
         // Boids always try to speed up to their max speed
         auto dir = boid.getDirection();
@@ -53,7 +55,8 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
 
         boid.update(elapsedTimeSec, closeObstacles);
     }
-}
+}        // If We are avoiding an obstacle, other rules should matter less
+
 
 Flock &operator<<(Flock &out, const Protobuf::Flock &protobufFlock) {
     protobufFlock.boids().size();
@@ -75,4 +78,25 @@ Protobuf::Flock &operator>>(const Flock &out, Protobuf::Flock &protobufFlock) {
         i >> *boid;
     }
     return protobufFlock;
+}
+
+std::vector<Pos2D> Flock::getCloseObstaclesNormalVectors(const Map &map) const {
+    std::vector<Pos2D> ret;
+
+    for (const Boid &boid : this->boids) {
+        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
+
+        for (const auto obstacle: closeObstacles) {
+
+            // TODO got to also send the point in the middle of the line
+            Pos2D normalVector = obstacle.getNormalVector(boid.getPosition());
+
+            normalVector = normalVector / std::sqrt(std::sqrt(obstacle.distanceToPoint(boid.getPosition()))); // The closer the obstacle is, the more we want to steer
+//            normalVector = normalVector / (obstacle.distanceToPoint(position) * obstacle.distanceToPoint(position)); // The closer the obstacle is, the more we want to steer
+
+            ret.push_back(normalVector);
+        }
+    }
+
+    return ret;
 }

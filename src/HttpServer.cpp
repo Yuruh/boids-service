@@ -72,6 +72,8 @@ void HttpServer::handle_post(http_request message) {
          */
         for (int i = 0; i < refreshRate * secondsOfSimulation; ++i) {
             elapsedSec += timePerFrame;
+
+            std::vector<Pos2D> obstaclesVectors = flock.getCloseObstaclesNormalVectors(map);
             flock.update(timePerFrame, map);
 
             Protobuf::Simulation *simulation = output.add_simulations();
@@ -79,6 +81,12 @@ void HttpServer::handle_post(http_request message) {
             flock >> *protoFlock;
             simulation->set_allocated_flock(protoFlock);
             simulation->set_elapsedtimesecond(elapsedSec);
+
+            for (int j = 0; j < obstaclesVectors.size(); ++j) {
+                auto vector = simulation->add_obstaclesnormalvectors();
+                vector->set_x(obstaclesVectors[i].x);
+                vector->set_y(obstaclesVectors[i].y);
+            }
         }
 
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();

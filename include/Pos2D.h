@@ -31,6 +31,7 @@ struct Pos2D {
     float distanceWith(const Pos2D& other) const;
     float getCrossProduct(const Pos2D &other) const;
 
+    void limitToMinMagnitude(float min);
     void limitToMaxMagnitude(float max);
 };
 

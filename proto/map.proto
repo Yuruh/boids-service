@@ -20,10 +20,25 @@ message Pos2D {
 message Boid {
   Pos2D position = 1;
   Pos2D direction = 2;
+  Pos2D cohesion = 3;
+  Pos2D alignment = 4;
+  Pos2D separation = 5;
+  Pos2D avoidance = 6;
 }
 
 message Flock {
     repeated Boid boids = 1; // max 1000
+}
+
+message Parameters {
+    float separationScale = 1; // How prominent is separation factor. From 0 to 2, default to 1
+    float cohesionScale = 2; // How prominent is cohesion factor. From 0 to 2, default to 1
+    float alignmentScale = 3; // How prominent is alignment factor. From 0 to 2, default to 1
+    float avoidanceScale = 4; // How prominent is avoidance factor. From 0 to 2, default to 1
+
+    uint32 visionDistance = 5; // How far agents perceive local flock mates. Min 0
+    uint32 obstacleDistance = 6; // How far agents perceive obstacles. Min 0
+    uint32 separationDistance = 7; // Distance from which an agent tries to avoid an other one. Min 0
 }
 
 message Input {
@@ -31,11 +46,13 @@ message Input {
     Flock flock = 2;
     int32 simulationDurationSec = 3; // max 10
     int32 imagesPerSecond = 4; // max 60
+    Parameters parameters = 5;
 }
 
 message Simulation {
     Flock flock = 1;
     float elapsedTimeSecond = 2;
+    repeated Pos2D obstaclesNormalVectors = 3;
 }
 
 message Output {

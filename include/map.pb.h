@@ -47,7 +47,7 @@ struct TableStruct_map_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[9]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -73,6 +73,9 @@ extern MapDefaultTypeInternal _Map_default_instance_;
 class Output;
 class OutputDefaultTypeInternal;
 extern OutputDefaultTypeInternal _Output_default_instance_;
+class Parameters;
+class ParametersDefaultTypeInternal;
+extern ParametersDefaultTypeInternal _Parameters_default_instance_;
 class Pos2D;
 class Pos2DDefaultTypeInternal;
 extern Pos2DDefaultTypeInternal _Pos2D_default_instance_;
@@ -87,6 +90,7 @@ template<> ::Protobuf::Input* Arena::CreateMaybeMessage<::Protobuf::Input>(Arena
 template<> ::Protobuf::Line* Arena::CreateMaybeMessage<::Protobuf::Line>(Arena*);
 template<> ::Protobuf::Map* Arena::CreateMaybeMessage<::Protobuf::Map>(Arena*);
 template<> ::Protobuf::Output* Arena::CreateMaybeMessage<::Protobuf::Output>(Arena*);
+template<> ::Protobuf::Parameters* Arena::CreateMaybeMessage<::Protobuf::Parameters>(Arena*);
 template<> ::Protobuf::Pos2D* Arena::CreateMaybeMessage<::Protobuf::Pos2D>(Arena*);
 template<> ::Protobuf::Simulation* Arena::CreateMaybeMessage<::Protobuf::Simulation>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -689,6 +693,10 @@ class Boid PROTOBUF_FINAL :
   enum : int {
     kPositionFieldNumber = 1,
     kDirectionFieldNumber = 2,
+    kCohesionFieldNumber = 3,
+    kAlignmentFieldNumber = 4,
+    kSeparationFieldNumber = 5,
+    kAvoidanceFieldNumber = 6,
   };
   // .Protobuf.Pos2D position = 1;
   bool has_position() const;
@@ -726,6 +734,78 @@ class Boid PROTOBUF_FINAL :
       ::Protobuf::Pos2D* direction);
   ::Protobuf::Pos2D* unsafe_arena_release_direction();
 
+  // .Protobuf.Pos2D cohesion = 3;
+  bool has_cohesion() const;
+  private:
+  bool _internal_has_cohesion() const;
+  public:
+  void clear_cohesion();
+  const ::Protobuf::Pos2D& cohesion() const;
+  ::Protobuf::Pos2D* release_cohesion();
+  ::Protobuf::Pos2D* mutable_cohesion();
+  void set_allocated_cohesion(::Protobuf::Pos2D* cohesion);
+  private:
+  const ::Protobuf::Pos2D& _internal_cohesion() const;
+  ::Protobuf::Pos2D* _internal_mutable_cohesion();
+  public:
+  void unsafe_arena_set_allocated_cohesion(
+      ::Protobuf::Pos2D* cohesion);
+  ::Protobuf::Pos2D* unsafe_arena_release_cohesion();
+
+  // .Protobuf.Pos2D alignment = 4;
+  bool has_alignment() const;
+  private:
+  bool _internal_has_alignment() const;
+  public:
+  void clear_alignment();
+  const ::Protobuf::Pos2D& alignment() const;
+  ::Protobuf::Pos2D* release_alignment();
+  ::Protobuf::Pos2D* mutable_alignment();
+  void set_allocated_alignment(::Protobuf::Pos2D* alignment);
+  private:
+  const ::Protobuf::Pos2D& _internal_alignment() const;
+  ::Protobuf::Pos2D* _internal_mutable_alignment();
+  public:
+  void unsafe_arena_set_allocated_alignment(
+      ::Protobuf::Pos2D* alignment);
+  ::Protobuf::Pos2D* unsafe_arena_release_alignment();
+
+  // .Protobuf.Pos2D separation = 5;
+  bool has_separation() const;
+  private:
+  bool _internal_has_separation() const;
+  public:
+  void clear_separation();
+  const ::Protobuf::Pos2D& separation() const;
+  ::Protobuf::Pos2D* release_separation();
+  ::Protobuf::Pos2D* mutable_separation();
+  void set_allocated_separation(::Protobuf::Pos2D* separation);
+  private:
+  const ::Protobuf::Pos2D& _internal_separation() const;
+  ::Protobuf::Pos2D* _internal_mutable_separation();
+  public:
+  void unsafe_arena_set_allocated_separation(
+      ::Protobuf::Pos2D* separation);
+  ::Protobuf::Pos2D* unsafe_arena_release_separation();
+
+  // .Protobuf.Pos2D avoidance = 6;
+  bool has_avoidance() const;
+  private:
+  bool _internal_has_avoidance() const;
+  public:
+  void clear_avoidance();
+  const ::Protobuf::Pos2D& avoidance() const;
+  ::Protobuf::Pos2D* release_avoidance();
+  ::Protobuf::Pos2D* mutable_avoidance();
+  void set_allocated_avoidance(::Protobuf::Pos2D* avoidance);
+  private:
+  const ::Protobuf::Pos2D& _internal_avoidance() const;
+  ::Protobuf::Pos2D* _internal_mutable_avoidance();
+  public:
+  void unsafe_arena_set_allocated_avoidance(
+      ::Protobuf::Pos2D* avoidance);
+  ::Protobuf::Pos2D* unsafe_arena_release_avoidance();
+
   // @@protoc_insertion_point(class_scope:Protobuf.Boid)
  private:
   class _Internal;
@@ -735,6 +815,10 @@ class Boid PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::Protobuf::Pos2D* position_;
   ::Protobuf::Pos2D* direction_;
+  ::Protobuf::Pos2D* cohesion_;
+  ::Protobuf::Pos2D* alignment_;
+  ::Protobuf::Pos2D* separation_;
+  ::Protobuf::Pos2D* avoidance_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_map_2eproto;
 };
@@ -886,6 +970,209 @@ class Flock PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class Parameters PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protobuf.Parameters) */ {
+ public:
+  inline Parameters() : Parameters(nullptr) {};
+  virtual ~Parameters();
+
+  Parameters(const Parameters& from);
+  Parameters(Parameters&& from) noexcept
+    : Parameters() {
+    *this = ::std::move(from);
+  }
+
+  inline Parameters& operator=(const Parameters& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Parameters& operator=(Parameters&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const Parameters& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Parameters* internal_default_instance() {
+    return reinterpret_cast<const Parameters*>(
+               &_Parameters_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(Parameters& a, Parameters& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Parameters* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Parameters* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Parameters* New() const final {
+    return CreateMaybeMessage<Parameters>(nullptr);
+  }
+
+  Parameters* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Parameters>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const Parameters& from);
+  void MergeFrom(const Parameters& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Parameters* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protobuf.Parameters";
+  }
+  protected:
+  explicit Parameters(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_map_2eproto);
+    return ::descriptor_table_map_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSeparationScaleFieldNumber = 1,
+    kCohesionScaleFieldNumber = 2,
+    kAlignmentScaleFieldNumber = 3,
+    kAvoidanceScaleFieldNumber = 4,
+    kVisionDistanceFieldNumber = 5,
+    kObstacleDistanceFieldNumber = 6,
+    kSeparationDistanceFieldNumber = 7,
+  };
+  // float separationScale = 1;
+  void clear_separationscale();
+  float separationscale() const;
+  void set_separationscale(float value);
+  private:
+  float _internal_separationscale() const;
+  void _internal_set_separationscale(float value);
+  public:
+
+  // float cohesionScale = 2;
+  void clear_cohesionscale();
+  float cohesionscale() const;
+  void set_cohesionscale(float value);
+  private:
+  float _internal_cohesionscale() const;
+  void _internal_set_cohesionscale(float value);
+  public:
+
+  // float alignmentScale = 3;
+  void clear_alignmentscale();
+  float alignmentscale() const;
+  void set_alignmentscale(float value);
+  private:
+  float _internal_alignmentscale() const;
+  void _internal_set_alignmentscale(float value);
+  public:
+
+  // float avoidanceScale = 4;
+  void clear_avoidancescale();
+  float avoidancescale() const;
+  void set_avoidancescale(float value);
+  private:
+  float _internal_avoidancescale() const;
+  void _internal_set_avoidancescale(float value);
+  public:
+
+  // uint32 visionDistance = 5;
+  void clear_visiondistance();
+  ::PROTOBUF_NAMESPACE_ID::uint32 visiondistance() const;
+  void set_visiondistance(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_visiondistance() const;
+  void _internal_set_visiondistance(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 obstacleDistance = 6;
+  void clear_obstacledistance();
+  ::PROTOBUF_NAMESPACE_ID::uint32 obstacledistance() const;
+  void set_obstacledistance(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_obstacledistance() const;
+  void _internal_set_obstacledistance(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint32 separationDistance = 7;
+  void clear_separationdistance();
+  ::PROTOBUF_NAMESPACE_ID::uint32 separationdistance() const;
+  void set_separationdistance(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_separationdistance() const;
+  void _internal_set_separationdistance(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protobuf.Parameters)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  float separationscale_;
+  float cohesionscale_;
+  float alignmentscale_;
+  float avoidancescale_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 visiondistance_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 obstacledistance_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 separationdistance_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_map_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Input PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protobuf.Input) */ {
  public:
@@ -928,7 +1215,7 @@ class Input PROTOBUF_FINAL :
                &_Input_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(Input& a, Input& b) {
     a.Swap(&b);
@@ -1001,6 +1288,7 @@ class Input PROTOBUF_FINAL :
   enum : int {
     kMapFieldNumber = 1,
     kFlockFieldNumber = 2,
+    kParametersFieldNumber = 5,
     kSimulationDurationSecFieldNumber = 3,
     kImagesPerSecondFieldNumber = 4,
   };
@@ -1040,6 +1328,24 @@ class Input PROTOBUF_FINAL :
       ::Protobuf::Flock* flock);
   ::Protobuf::Flock* unsafe_arena_release_flock();
 
+  // .Protobuf.Parameters parameters = 5;
+  bool has_parameters() const;
+  private:
+  bool _internal_has_parameters() const;
+  public:
+  void clear_parameters();
+  const ::Protobuf::Parameters& parameters() const;
+  ::Protobuf::Parameters* release_parameters();
+  ::Protobuf::Parameters* mutable_parameters();
+  void set_allocated_parameters(::Protobuf::Parameters* parameters);
+  private:
+  const ::Protobuf::Parameters& _internal_parameters() const;
+  ::Protobuf::Parameters* _internal_mutable_parameters();
+  public:
+  void unsafe_arena_set_allocated_parameters(
+      ::Protobuf::Parameters* parameters);
+  ::Protobuf::Parameters* unsafe_arena_release_parameters();
+
   // int32 simulationDurationSec = 3;
   void clear_simulationdurationsec();
   ::PROTOBUF_NAMESPACE_ID::int32 simulationdurationsec() const;
@@ -1067,6 +1373,7 @@ class Input PROTOBUF_FINAL :
   typedef void DestructorSkippable_;
   ::Protobuf::Map* map_;
   ::Protobuf::Flock* flock_;
+  ::Protobuf::Parameters* parameters_;
   ::PROTOBUF_NAMESPACE_ID::int32 simulationdurationsec_;
   ::PROTOBUF_NAMESPACE_ID::int32 imagespersecond_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -1116,7 +1423,7 @@ class Simulation PROTOBUF_FINAL :
                &_Simulation_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(Simulation& a, Simulation& b) {
     a.Swap(&b);
@@ -1187,9 +1494,28 @@ class Simulation PROTOBUF_FINAL :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kObstaclesNormalVectorsFieldNumber = 3,
     kFlockFieldNumber = 1,
     kElapsedTimeSecondFieldNumber = 2,
   };
+  // repeated .Protobuf.Pos2D obstaclesNormalVectors = 3;
+  int obstaclesnormalvectors_size() const;
+  private:
+  int _internal_obstaclesnormalvectors_size() const;
+  public:
+  void clear_obstaclesnormalvectors();
+  ::Protobuf::Pos2D* mutable_obstaclesnormalvectors(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >*
+      mutable_obstaclesnormalvectors();
+  private:
+  const ::Protobuf::Pos2D& _internal_obstaclesnormalvectors(int index) const;
+  ::Protobuf::Pos2D* _internal_add_obstaclesnormalvectors();
+  public:
+  const ::Protobuf::Pos2D& obstaclesnormalvectors(int index) const;
+  ::Protobuf::Pos2D* add_obstaclesnormalvectors();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >&
+      obstaclesnormalvectors() const;
+
   // .Protobuf.Flock flock = 1;
   bool has_flock() const;
   private:
@@ -1224,6 +1550,7 @@ class Simulation PROTOBUF_FINAL :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D > obstaclesnormalvectors_;
   ::Protobuf::Flock* flock_;
   float elapsedtimesecond_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -1273,7 +1600,7 @@ class Output PROTOBUF_FINAL :
                &_Output_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(Output& a, Output& b) {
     a.Swap(&b);
@@ -1882,6 +2209,330 @@ inline void Boid::set_allocated_direction(::Protobuf::Pos2D* direction) {
   // @@protoc_insertion_point(field_set_allocated:Protobuf.Boid.direction)
 }
 
+// .Protobuf.Pos2D cohesion = 3;
+inline bool Boid::_internal_has_cohesion() const {
+  return this != internal_default_instance() && cohesion_ != nullptr;
+}
+inline bool Boid::has_cohesion() const {
+  return _internal_has_cohesion();
+}
+inline void Boid::clear_cohesion() {
+  if (GetArena() == nullptr && cohesion_ != nullptr) {
+    delete cohesion_;
+  }
+  cohesion_ = nullptr;
+}
+inline const ::Protobuf::Pos2D& Boid::_internal_cohesion() const {
+  const ::Protobuf::Pos2D* p = cohesion_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::Protobuf::Pos2D*>(
+      &::Protobuf::_Pos2D_default_instance_);
+}
+inline const ::Protobuf::Pos2D& Boid::cohesion() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Boid.cohesion)
+  return _internal_cohesion();
+}
+inline void Boid::unsafe_arena_set_allocated_cohesion(
+    ::Protobuf::Pos2D* cohesion) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(cohesion_);
+  }
+  cohesion_ = cohesion;
+  if (cohesion) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protobuf.Boid.cohesion)
+}
+inline ::Protobuf::Pos2D* Boid::release_cohesion() {
+  auto temp = unsafe_arena_release_cohesion();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protobuf::Pos2D* Boid::unsafe_arena_release_cohesion() {
+  // @@protoc_insertion_point(field_release:Protobuf.Boid.cohesion)
+  
+  ::Protobuf::Pos2D* temp = cohesion_;
+  cohesion_ = nullptr;
+  return temp;
+}
+inline ::Protobuf::Pos2D* Boid::_internal_mutable_cohesion() {
+  
+  if (cohesion_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protobuf::Pos2D>(GetArena());
+    cohesion_ = p;
+  }
+  return cohesion_;
+}
+inline ::Protobuf::Pos2D* Boid::mutable_cohesion() {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Boid.cohesion)
+  return _internal_mutable_cohesion();
+}
+inline void Boid::set_allocated_cohesion(::Protobuf::Pos2D* cohesion) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete cohesion_;
+  }
+  if (cohesion) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(cohesion);
+    if (message_arena != submessage_arena) {
+      cohesion = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, cohesion, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  cohesion_ = cohesion;
+  // @@protoc_insertion_point(field_set_allocated:Protobuf.Boid.cohesion)
+}
+
+// .Protobuf.Pos2D alignment = 4;
+inline bool Boid::_internal_has_alignment() const {
+  return this != internal_default_instance() && alignment_ != nullptr;
+}
+inline bool Boid::has_alignment() const {
+  return _internal_has_alignment();
+}
+inline void Boid::clear_alignment() {
+  if (GetArena() == nullptr && alignment_ != nullptr) {
+    delete alignment_;
+  }
+  alignment_ = nullptr;
+}
+inline const ::Protobuf::Pos2D& Boid::_internal_alignment() const {
+  const ::Protobuf::Pos2D* p = alignment_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::Protobuf::Pos2D*>(
+      &::Protobuf::_Pos2D_default_instance_);
+}
+inline const ::Protobuf::Pos2D& Boid::alignment() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Boid.alignment)
+  return _internal_alignment();
+}
+inline void Boid::unsafe_arena_set_allocated_alignment(
+    ::Protobuf::Pos2D* alignment) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(alignment_);
+  }
+  alignment_ = alignment;
+  if (alignment) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protobuf.Boid.alignment)
+}
+inline ::Protobuf::Pos2D* Boid::release_alignment() {
+  auto temp = unsafe_arena_release_alignment();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protobuf::Pos2D* Boid::unsafe_arena_release_alignment() {
+  // @@protoc_insertion_point(field_release:Protobuf.Boid.alignment)
+  
+  ::Protobuf::Pos2D* temp = alignment_;
+  alignment_ = nullptr;
+  return temp;
+}
+inline ::Protobuf::Pos2D* Boid::_internal_mutable_alignment() {
+  
+  if (alignment_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protobuf::Pos2D>(GetArena());
+    alignment_ = p;
+  }
+  return alignment_;
+}
+inline ::Protobuf::Pos2D* Boid::mutable_alignment() {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Boid.alignment)
+  return _internal_mutable_alignment();
+}
+inline void Boid::set_allocated_alignment(::Protobuf::Pos2D* alignment) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete alignment_;
+  }
+  if (alignment) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(alignment);
+    if (message_arena != submessage_arena) {
+      alignment = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, alignment, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  alignment_ = alignment;
+  // @@protoc_insertion_point(field_set_allocated:Protobuf.Boid.alignment)
+}
+
+// .Protobuf.Pos2D separation = 5;
+inline bool Boid::_internal_has_separation() const {
+  return this != internal_default_instance() && separation_ != nullptr;
+}
+inline bool Boid::has_separation() const {
+  return _internal_has_separation();
+}
+inline void Boid::clear_separation() {
+  if (GetArena() == nullptr && separation_ != nullptr) {
+    delete separation_;
+  }
+  separation_ = nullptr;
+}
+inline const ::Protobuf::Pos2D& Boid::_internal_separation() const {
+  const ::Protobuf::Pos2D* p = separation_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::Protobuf::Pos2D*>(
+      &::Protobuf::_Pos2D_default_instance_);
+}
+inline const ::Protobuf::Pos2D& Boid::separation() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Boid.separation)
+  return _internal_separation();
+}
+inline void Boid::unsafe_arena_set_allocated_separation(
+    ::Protobuf::Pos2D* separation) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(separation_);
+  }
+  separation_ = separation;
+  if (separation) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protobuf.Boid.separation)
+}
+inline ::Protobuf::Pos2D* Boid::release_separation() {
+  auto temp = unsafe_arena_release_separation();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protobuf::Pos2D* Boid::unsafe_arena_release_separation() {
+  // @@protoc_insertion_point(field_release:Protobuf.Boid.separation)
+  
+  ::Protobuf::Pos2D* temp = separation_;
+  separation_ = nullptr;
+  return temp;
+}
+inline ::Protobuf::Pos2D* Boid::_internal_mutable_separation() {
+  
+  if (separation_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protobuf::Pos2D>(GetArena());
+    separation_ = p;
+  }
+  return separation_;
+}
+inline ::Protobuf::Pos2D* Boid::mutable_separation() {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Boid.separation)
+  return _internal_mutable_separation();
+}
+inline void Boid::set_allocated_separation(::Protobuf::Pos2D* separation) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete separation_;
+  }
+  if (separation) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(separation);
+    if (message_arena != submessage_arena) {
+      separation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, separation, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  separation_ = separation;
+  // @@protoc_insertion_point(field_set_allocated:Protobuf.Boid.separation)
+}
+
+// .Protobuf.Pos2D avoidance = 6;
+inline bool Boid::_internal_has_avoidance() const {
+  return this != internal_default_instance() && avoidance_ != nullptr;
+}
+inline bool Boid::has_avoidance() const {
+  return _internal_has_avoidance();
+}
+inline void Boid::clear_avoidance() {
+  if (GetArena() == nullptr && avoidance_ != nullptr) {
+    delete avoidance_;
+  }
+  avoidance_ = nullptr;
+}
+inline const ::Protobuf::Pos2D& Boid::_internal_avoidance() const {
+  const ::Protobuf::Pos2D* p = avoidance_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::Protobuf::Pos2D*>(
+      &::Protobuf::_Pos2D_default_instance_);
+}
+inline const ::Protobuf::Pos2D& Boid::avoidance() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Boid.avoidance)
+  return _internal_avoidance();
+}
+inline void Boid::unsafe_arena_set_allocated_avoidance(
+    ::Protobuf::Pos2D* avoidance) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(avoidance_);
+  }
+  avoidance_ = avoidance;
+  if (avoidance) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protobuf.Boid.avoidance)
+}
+inline ::Protobuf::Pos2D* Boid::release_avoidance() {
+  auto temp = unsafe_arena_release_avoidance();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protobuf::Pos2D* Boid::unsafe_arena_release_avoidance() {
+  // @@protoc_insertion_point(field_release:Protobuf.Boid.avoidance)
+  
+  ::Protobuf::Pos2D* temp = avoidance_;
+  avoidance_ = nullptr;
+  return temp;
+}
+inline ::Protobuf::Pos2D* Boid::_internal_mutable_avoidance() {
+  
+  if (avoidance_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protobuf::Pos2D>(GetArena());
+    avoidance_ = p;
+  }
+  return avoidance_;
+}
+inline ::Protobuf::Pos2D* Boid::mutable_avoidance() {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Boid.avoidance)
+  return _internal_mutable_avoidance();
+}
+inline void Boid::set_allocated_avoidance(::Protobuf::Pos2D* avoidance) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete avoidance_;
+  }
+  if (avoidance) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(avoidance);
+    if (message_arena != submessage_arena) {
+      avoidance = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, avoidance, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  avoidance_ = avoidance;
+  // @@protoc_insertion_point(field_set_allocated:Protobuf.Boid.avoidance)
+}
+
 // -------------------------------------------------------------------
 
 // Flock
@@ -1923,6 +2574,150 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Boid >&
 Flock::boids() const {
   // @@protoc_insertion_point(field_list:Protobuf.Flock.boids)
   return boids_;
+}
+
+// -------------------------------------------------------------------
+
+// Parameters
+
+// float separationScale = 1;
+inline void Parameters::clear_separationscale() {
+  separationscale_ = 0;
+}
+inline float Parameters::_internal_separationscale() const {
+  return separationscale_;
+}
+inline float Parameters::separationscale() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Parameters.separationScale)
+  return _internal_separationscale();
+}
+inline void Parameters::_internal_set_separationscale(float value) {
+  
+  separationscale_ = value;
+}
+inline void Parameters::set_separationscale(float value) {
+  _internal_set_separationscale(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Parameters.separationScale)
+}
+
+// float cohesionScale = 2;
+inline void Parameters::clear_cohesionscale() {
+  cohesionscale_ = 0;
+}
+inline float Parameters::_internal_cohesionscale() const {
+  return cohesionscale_;
+}
+inline float Parameters::cohesionscale() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Parameters.cohesionScale)
+  return _internal_cohesionscale();
+}
+inline void Parameters::_internal_set_cohesionscale(float value) {
+  
+  cohesionscale_ = value;
+}
+inline void Parameters::set_cohesionscale(float value) {
+  _internal_set_cohesionscale(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Parameters.cohesionScale)
+}
+
+// float alignmentScale = 3;
+inline void Parameters::clear_alignmentscale() {
+  alignmentscale_ = 0;
+}
+inline float Parameters::_internal_alignmentscale() const {
+  return alignmentscale_;
+}
+inline float Parameters::alignmentscale() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Parameters.alignmentScale)
+  return _internal_alignmentscale();
+}
+inline void Parameters::_internal_set_alignmentscale(float value) {
+  
+  alignmentscale_ = value;
+}
+inline void Parameters::set_alignmentscale(float value) {
+  _internal_set_alignmentscale(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Parameters.alignmentScale)
+}
+
+// float avoidanceScale = 4;
+inline void Parameters::clear_avoidancescale() {
+  avoidancescale_ = 0;
+}
+inline float Parameters::_internal_avoidancescale() const {
+  return avoidancescale_;
+}
+inline float Parameters::avoidancescale() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Parameters.avoidanceScale)
+  return _internal_avoidancescale();
+}
+inline void Parameters::_internal_set_avoidancescale(float value) {
+  
+  avoidancescale_ = value;
+}
+inline void Parameters::set_avoidancescale(float value) {
+  _internal_set_avoidancescale(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Parameters.avoidanceScale)
+}
+
+// uint32 visionDistance = 5;
+inline void Parameters::clear_visiondistance() {
+  visiondistance_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Parameters::_internal_visiondistance() const {
+  return visiondistance_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Parameters::visiondistance() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Parameters.visionDistance)
+  return _internal_visiondistance();
+}
+inline void Parameters::_internal_set_visiondistance(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  visiondistance_ = value;
+}
+inline void Parameters::set_visiondistance(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_visiondistance(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Parameters.visionDistance)
+}
+
+// uint32 obstacleDistance = 6;
+inline void Parameters::clear_obstacledistance() {
+  obstacledistance_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Parameters::_internal_obstacledistance() const {
+  return obstacledistance_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Parameters::obstacledistance() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Parameters.obstacleDistance)
+  return _internal_obstacledistance();
+}
+inline void Parameters::_internal_set_obstacledistance(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  obstacledistance_ = value;
+}
+inline void Parameters::set_obstacledistance(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_obstacledistance(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Parameters.obstacleDistance)
+}
+
+// uint32 separationDistance = 7;
+inline void Parameters::clear_separationdistance() {
+  separationdistance_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Parameters::_internal_separationdistance() const {
+  return separationdistance_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Parameters::separationdistance() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Parameters.separationDistance)
+  return _internal_separationdistance();
+}
+inline void Parameters::_internal_set_separationdistance(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  separationdistance_ = value;
+}
+inline void Parameters::set_separationdistance(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_separationdistance(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Parameters.separationDistance)
 }
 
 // -------------------------------------------------------------------
@@ -2131,6 +2926,87 @@ inline void Input::set_imagespersecond(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:Protobuf.Input.imagesPerSecond)
 }
 
+// .Protobuf.Parameters parameters = 5;
+inline bool Input::_internal_has_parameters() const {
+  return this != internal_default_instance() && parameters_ != nullptr;
+}
+inline bool Input::has_parameters() const {
+  return _internal_has_parameters();
+}
+inline void Input::clear_parameters() {
+  if (GetArena() == nullptr && parameters_ != nullptr) {
+    delete parameters_;
+  }
+  parameters_ = nullptr;
+}
+inline const ::Protobuf::Parameters& Input::_internal_parameters() const {
+  const ::Protobuf::Parameters* p = parameters_;
+  return p != nullptr ? *p : *reinterpret_cast<const ::Protobuf::Parameters*>(
+      &::Protobuf::_Parameters_default_instance_);
+}
+inline const ::Protobuf::Parameters& Input::parameters() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Input.parameters)
+  return _internal_parameters();
+}
+inline void Input::unsafe_arena_set_allocated_parameters(
+    ::Protobuf::Parameters* parameters) {
+  if (GetArena() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(parameters_);
+  }
+  parameters_ = parameters;
+  if (parameters) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protobuf.Input.parameters)
+}
+inline ::Protobuf::Parameters* Input::release_parameters() {
+  auto temp = unsafe_arena_release_parameters();
+  if (GetArena() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+  return temp;
+}
+inline ::Protobuf::Parameters* Input::unsafe_arena_release_parameters() {
+  // @@protoc_insertion_point(field_release:Protobuf.Input.parameters)
+  
+  ::Protobuf::Parameters* temp = parameters_;
+  parameters_ = nullptr;
+  return temp;
+}
+inline ::Protobuf::Parameters* Input::_internal_mutable_parameters() {
+  
+  if (parameters_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protobuf::Parameters>(GetArena());
+    parameters_ = p;
+  }
+  return parameters_;
+}
+inline ::Protobuf::Parameters* Input::mutable_parameters() {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Input.parameters)
+  return _internal_mutable_parameters();
+}
+inline void Input::set_allocated_parameters(::Protobuf::Parameters* parameters) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArena();
+  if (message_arena == nullptr) {
+    delete parameters_;
+  }
+  if (parameters) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+      ::PROTOBUF_NAMESPACE_ID::Arena::GetArena(parameters);
+    if (message_arena != submessage_arena) {
+      parameters = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, parameters, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  parameters_ = parameters;
+  // @@protoc_insertion_point(field_set_allocated:Protobuf.Input.parameters)
+}
+
 // -------------------------------------------------------------------
 
 // Simulation
@@ -2236,6 +3112,45 @@ inline void Simulation::set_elapsedtimesecond(float value) {
   // @@protoc_insertion_point(field_set:Protobuf.Simulation.elapsedTimeSecond)
 }
 
+// repeated .Protobuf.Pos2D obstaclesNormalVectors = 3;
+inline int Simulation::_internal_obstaclesnormalvectors_size() const {
+  return obstaclesnormalvectors_.size();
+}
+inline int Simulation::obstaclesnormalvectors_size() const {
+  return _internal_obstaclesnormalvectors_size();
+}
+inline void Simulation::clear_obstaclesnormalvectors() {
+  obstaclesnormalvectors_.Clear();
+}
+inline ::Protobuf::Pos2D* Simulation::mutable_obstaclesnormalvectors(int index) {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Simulation.obstaclesNormalVectors)
+  return obstaclesnormalvectors_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >*
+Simulation::mutable_obstaclesnormalvectors() {
+  // @@protoc_insertion_point(field_mutable_list:Protobuf.Simulation.obstaclesNormalVectors)
+  return &obstaclesnormalvectors_;
+}
+inline const ::Protobuf::Pos2D& Simulation::_internal_obstaclesnormalvectors(int index) const {
+  return obstaclesnormalvectors_.Get(index);
+}
+inline const ::Protobuf::Pos2D& Simulation::obstaclesnormalvectors(int index) const {
+  // @@protoc_insertion_point(field_get:Protobuf.Simulation.obstaclesNormalVectors)
+  return _internal_obstaclesnormalvectors(index);
+}
+inline ::Protobuf::Pos2D* Simulation::_internal_add_obstaclesnormalvectors() {
+  return obstaclesnormalvectors_.Add();
+}
+inline ::Protobuf::Pos2D* Simulation::add_obstaclesnormalvectors() {
+  // @@protoc_insertion_point(field_add:Protobuf.Simulation.obstaclesNormalVectors)
+  return _internal_add_obstaclesnormalvectors();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >&
+Simulation::obstaclesnormalvectors() const {
+  // @@protoc_insertion_point(field_list:Protobuf.Simulation.obstaclesNormalVectors)
+  return obstaclesnormalvectors_;
+}
+
 // -------------------------------------------------------------------
 
 // Output
@@ -2282,6 +3197,8 @@ Output::simulations() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
