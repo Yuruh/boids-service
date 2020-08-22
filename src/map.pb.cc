@@ -269,6 +269,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_map_2eproto::offsets[] PROTOBU
   PROTOBUF_FIELD_OFFSET(::Protobuf::Simulation, flock_),
   PROTOBUF_FIELD_OFFSET(::Protobuf::Simulation, elapsedtimesecond_),
   PROTOBUF_FIELD_OFFSET(::Protobuf::Simulation, obstaclesnormalvectors_),
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Simulation, obstaclesposition_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protobuf::Output, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -285,7 +286,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 38, -1, sizeof(::Protobuf::Parameters)},
   { 50, -1, sizeof(::Protobuf::Input)},
   { 60, -1, sizeof(::Protobuf::Simulation)},
-  { 68, -1, sizeof(::Protobuf::Output)},
+  { 69, -1, sizeof(::Protobuf::Output)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -321,11 +322,13 @@ const char descriptor_table_protodef_map_2eproto[] PROTOBUF_SECTION_VARIABLE(pro
   "uf.Map\022\036\n\005flock\030\002 \001(\0132\017.Protobuf.Flock\022\035"
   "\n\025simulationDurationSec\030\003 \001(\005\022\027\n\017imagesP"
   "erSecond\030\004 \001(\005\022(\n\nparameters\030\005 \001(\0132\024.Pro"
-  "tobuf.Parameters\"x\n\nSimulation\022\036\n\005flock\030"
-  "\001 \001(\0132\017.Protobuf.Flock\022\031\n\021elapsedTimeSec"
-  "ond\030\002 \001(\002\022/\n\026obstaclesNormalVectors\030\003 \003("
-  "\0132\017.Protobuf.Pos2D\"3\n\006Output\022)\n\013simulati"
-  "ons\030\001 \003(\0132\024.Protobuf.Simulationb\006proto3"
+  "tobuf.Parameters\"\244\001\n\nSimulation\022\036\n\005flock"
+  "\030\001 \001(\0132\017.Protobuf.Flock\022\031\n\021elapsedTimeSe"
+  "cond\030\002 \001(\002\022/\n\026obstaclesNormalVectors\030\003 \003"
+  "(\0132\017.Protobuf.Pos2D\022*\n\021obstaclesPosition"
+  "\030\004 \003(\0132\017.Protobuf.Pos2D\"3\n\006Output\022)\n\013sim"
+  "ulations\030\001 \003(\0132\024.Protobuf.Simulationb\006pr"
+  "oto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_map_2eproto_deps[1] = {
 };
@@ -342,7 +345,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_map
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_map_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_map_2eproto = {
-  false, false, descriptor_table_protodef_map_2eproto, "map.proto", 999,
+  false, false, descriptor_table_protodef_map_2eproto, "map.proto", 1044,
   &descriptor_table_map_2eproto_once, descriptor_table_map_2eproto_sccs, descriptor_table_map_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_map_2eproto::offsets,
   file_level_metadata_map_2eproto, 9, file_level_enum_descriptors_map_2eproto, file_level_service_descriptors_map_2eproto,
@@ -2438,14 +2441,16 @@ Simulation::_Internal::flock(const Simulation* msg) {
 }
 Simulation::Simulation(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  obstaclesnormalvectors_(arena) {
+  obstaclesnormalvectors_(arena),
+  obstaclesposition_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:Protobuf.Simulation)
 }
 Simulation::Simulation(const Simulation& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
-      obstaclesnormalvectors_(from.obstaclesnormalvectors_) {
+      obstaclesnormalvectors_(from.obstaclesnormalvectors_),
+      obstaclesposition_(from.obstaclesposition_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_flock()) {
     flock_ = new ::Protobuf::Flock(*from.flock_);
@@ -2496,6 +2501,7 @@ void Simulation::Clear() {
   (void) cached_has_bits;
 
   obstaclesnormalvectors_.Clear();
+  obstaclesposition_.Clear();
   if (GetArena() == nullptr && flock_ != nullptr) {
     delete flock_;
   }
@@ -2536,6 +2542,18 @@ const char* Simulation::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // repeated .Protobuf.Pos2D obstaclesPosition = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_obstaclesposition(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -2588,6 +2606,14 @@ failure:
       InternalWriteMessage(3, this->_internal_obstaclesnormalvectors(i), target, stream);
   }
 
+  // repeated .Protobuf.Pos2D obstaclesPosition = 4;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_obstaclesposition_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(4, this->_internal_obstaclesposition(i), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2607,6 +2633,13 @@ size_t Simulation::ByteSizeLong() const {
   // repeated .Protobuf.Pos2D obstaclesNormalVectors = 3;
   total_size += 1UL * this->_internal_obstaclesnormalvectors_size();
   for (const auto& msg : this->obstaclesnormalvectors_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .Protobuf.Pos2D obstaclesPosition = 4;
+  total_size += 1UL * this->_internal_obstaclesposition_size();
+  for (const auto& msg : this->obstaclesposition_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -2655,6 +2688,7 @@ void Simulation::MergeFrom(const Simulation& from) {
   (void) cached_has_bits;
 
   obstaclesnormalvectors_.MergeFrom(from.obstaclesnormalvectors_);
+  obstaclesposition_.MergeFrom(from.obstaclesposition_);
   if (from.has_flock()) {
     _internal_mutable_flock()->::Protobuf::Flock::MergeFrom(from._internal_flock());
   }
@@ -2685,6 +2719,7 @@ void Simulation::InternalSwap(Simulation* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   obstaclesnormalvectors_.InternalSwap(&other->obstaclesnormalvectors_);
+  obstaclesposition_.InternalSwap(&other->obstaclesposition_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Simulation, elapsedtimesecond_)
       + sizeof(Simulation::elapsedtimesecond_)

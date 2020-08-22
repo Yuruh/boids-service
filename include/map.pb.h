@@ -1495,6 +1495,7 @@ class Simulation PROTOBUF_FINAL :
 
   enum : int {
     kObstaclesNormalVectorsFieldNumber = 3,
+    kObstaclesPositionFieldNumber = 4,
     kFlockFieldNumber = 1,
     kElapsedTimeSecondFieldNumber = 2,
   };
@@ -1515,6 +1516,24 @@ class Simulation PROTOBUF_FINAL :
   ::Protobuf::Pos2D* add_obstaclesnormalvectors();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >&
       obstaclesnormalvectors() const;
+
+  // repeated .Protobuf.Pos2D obstaclesPosition = 4;
+  int obstaclesposition_size() const;
+  private:
+  int _internal_obstaclesposition_size() const;
+  public:
+  void clear_obstaclesposition();
+  ::Protobuf::Pos2D* mutable_obstaclesposition(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >*
+      mutable_obstaclesposition();
+  private:
+  const ::Protobuf::Pos2D& _internal_obstaclesposition(int index) const;
+  ::Protobuf::Pos2D* _internal_add_obstaclesposition();
+  public:
+  const ::Protobuf::Pos2D& obstaclesposition(int index) const;
+  ::Protobuf::Pos2D* add_obstaclesposition();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >&
+      obstaclesposition() const;
 
   // .Protobuf.Flock flock = 1;
   bool has_flock() const;
@@ -1551,6 +1570,7 @@ class Simulation PROTOBUF_FINAL :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D > obstaclesnormalvectors_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D > obstaclesposition_;
   ::Protobuf::Flock* flock_;
   float elapsedtimesecond_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -3149,6 +3169,45 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >&
 Simulation::obstaclesnormalvectors() const {
   // @@protoc_insertion_point(field_list:Protobuf.Simulation.obstaclesNormalVectors)
   return obstaclesnormalvectors_;
+}
+
+// repeated .Protobuf.Pos2D obstaclesPosition = 4;
+inline int Simulation::_internal_obstaclesposition_size() const {
+  return obstaclesposition_.size();
+}
+inline int Simulation::obstaclesposition_size() const {
+  return _internal_obstaclesposition_size();
+}
+inline void Simulation::clear_obstaclesposition() {
+  obstaclesposition_.Clear();
+}
+inline ::Protobuf::Pos2D* Simulation::mutable_obstaclesposition(int index) {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Simulation.obstaclesPosition)
+  return obstaclesposition_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >*
+Simulation::mutable_obstaclesposition() {
+  // @@protoc_insertion_point(field_mutable_list:Protobuf.Simulation.obstaclesPosition)
+  return &obstaclesposition_;
+}
+inline const ::Protobuf::Pos2D& Simulation::_internal_obstaclesposition(int index) const {
+  return obstaclesposition_.Get(index);
+}
+inline const ::Protobuf::Pos2D& Simulation::obstaclesposition(int index) const {
+  // @@protoc_insertion_point(field_get:Protobuf.Simulation.obstaclesPosition)
+  return _internal_obstaclesposition(index);
+}
+inline ::Protobuf::Pos2D* Simulation::_internal_add_obstaclesposition() {
+  return obstaclesposition_.Add();
+}
+inline ::Protobuf::Pos2D* Simulation::add_obstaclesposition() {
+  // @@protoc_insertion_point(field_add:Protobuf.Simulation.obstaclesPosition)
+  return _internal_add_obstaclesposition();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Pos2D >&
+Simulation::obstaclesposition() const {
+  // @@protoc_insertion_point(field_list:Protobuf.Simulation.obstaclesPosition)
+  return obstaclesposition_;
 }
 
 // -------------------------------------------------------------------

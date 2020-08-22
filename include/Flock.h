@@ -23,7 +23,7 @@ public:
     friend Flock& operator<<(Flock &out, const Protobuf::Flock &protobufFlock);
     friend Protobuf::Flock& operator>>(const Flock &out, Protobuf::Flock &protobufFlock);
 
-    std::vector<Pos2D> getCloseObstaclesNormalVectors(const Map &map) const;
+    std::pair<std::vector<Pos2D>, std::vector<Pos2D>> getCloseObstaclesNormalVectors(const Map &map) const;
 };
 
 

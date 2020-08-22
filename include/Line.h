@@ -20,11 +20,14 @@ public:
     Pos2D getNormalVector(const Pos2D &src) const;
     Pos2D reflectedVector(const Pos2D& vector) const;
 
+    std::pair<Pos2D, Pos2D> getVectors() const;
+
     bool intersectsWith(const Line& other) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Line& line);
 
 
+    Pos2D getHalfPoint() const;
 };
 
 

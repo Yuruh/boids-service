@@ -24,7 +24,7 @@ Boid::Boid(): direction(Pos2D(1, 1)), position(0, 0)
     this->maxSteerAngle = M_PI / 4; // 45°
 
     this->maxSpeed = 1;
-    this->minSpeed = 0.3;
+    this->minSpeed = 0.4;
     this->weight = 1;
 }
 
@@ -163,7 +163,7 @@ void Boid::update(float elapsedTimeSec, const std::vector<Line> &obstacles) {
     direction.limitToMaxMagnitude(maxSpeed);
 
     // TODO ? have a max rotation instead
-//    direction.limitToMinMagnitude(minSpeed);
+    direction.limitToMinMagnitude(minSpeed);
 
     Line mvt(posBefore, posAfter);
     for (const auto obstacle: obstacles) {
@@ -181,21 +181,48 @@ void Boid::addAcceleration(const Pos2D &acc) {
     acceleration = acceleration + acc;
 }
 
+/*
+ * Ok j'ai une idée: le vecteur doit être a moitié le vecteur normal et a moitié longer la ligne avec la quelle on a l'angle le plus petit
+ */
 Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     Pos2D ret;
 
+    Line currentMovement(this->position, this->position + this->direction * OBSTACLE_DISTANCE);
+    int count = 0;
+
     for (const auto obstacle: obstacles) {
 
+        /*
+ * We trace a virutal line from the position to the direction + the distance to find obstacles
+ * If it collides with an obstacles, we try to steer away from it
+ * This code could be in the close obstacles function
+ */
+      //  if (currentMovement.intersectsWith(obstacle)) {
+            count++;
             Pos2D normalVector = obstacle.getNormalVector(position);
 
-            normalVector = normalVector / std::sqrt(std::sqrt(obstacle.distanceToPoint(position))); // The closer the obstacle is, the more we want to steer
-//            normalVector = normalVector / (obstacle.distanceToPoint(position) * obstacle.distanceToPoint(position)); // The closer the obstacle is, the more we want to steer
+/*            auto vectors = obstacle.getVectors();
+
+            auto vec1 = vectors.first + normalVector;
+            auto vec2 = vectors.second + normalVector;
+
+            if (std::abs(vectors.first.angleWithVector(this->direction)) > std::abs(vectors.second.angleWithVector(this->direction))) {
+                normalVector = vec1;
+            } else {
+                normalVector = vec2;
+            }*/
+
+
+            normalVector = normalVector / std::sqrt(
+                    obstacle.distanceToPoint(position)); // The closer the obstacle is, the more we want to steer
+            //  normalVector = normalVector / (obstacle.distanceToPoint(position)); // The closer the obstacle is, the more we want to steer
 
             ret = ret + normalVector;
+        }
 
-    }
-    if (!obstacles.empty()) {
-        ret = ret / obstacles.size();
+//    }
+    if (count > 0) {
+        ret = ret / count;
 
         return this->steerToGoal(ret);
     }
@@ -207,17 +234,17 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
 Pos2D Boid::steerToGoal(Pos2D goal) const {
     // Scale to max speed fixme i think its dumb
     // Fixme should be limited to maxSpeed
-//    goal.setMagnitude(this->maxSpeed);
+    goal.setMagnitude(this->maxSpeed);
 
-    goal.limitToMaxMagnitude(this->maxSpeed);
+//    goal.limitToMaxMagnitude(this->maxSpeed);
+
+
+  //  goal.limitToMinMagnitude(direction.getMagnitude());
 
     Pos2D steer;
 
     // Steering = Desired minus Velocity
- //   std::cout << "goal " << goal << std::endl;
-//    std::cout << "direction " << direction << std::endl;
     steer = goal - direction;
-//    std::cout << "steer " << steer << std::endl;
 
     steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
     return steer;

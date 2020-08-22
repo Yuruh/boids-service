@@ -80,8 +80,11 @@ Protobuf::Flock &operator>>(const Flock &out, Protobuf::Flock &protobufFlock) {
     return protobufFlock;
 }
 
-std::vector<Pos2D> Flock::getCloseObstaclesNormalVectors(const Map &map) const {
-    std::vector<Pos2D> ret;
+std::pair<std::vector<Pos2D>, std::vector<Pos2D>> Flock::getCloseObstaclesNormalVectors(const Map &map) const {
+//    std::vector<Pos2D> ret;
+    std::vector<Pos2D> positions;
+
+    std::pair<std::vector<Pos2D>, std::vector<Pos2D>> ret;
 
     for (const Boid &boid : this->boids) {
         std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
@@ -91,10 +94,21 @@ std::vector<Pos2D> Flock::getCloseObstaclesNormalVectors(const Map &map) const {
             // TODO got to also send the point in the middle of the line
             Pos2D normalVector = obstacle.getNormalVector(boid.getPosition());
 
-            normalVector = normalVector / std::sqrt(std::sqrt(obstacle.distanceToPoint(boid.getPosition()))); // The closer the obstacle is, the more we want to steer
-//            normalVector = normalVector / (obstacle.distanceToPoint(position) * obstacle.distanceToPoint(position)); // The closer the obstacle is, the more we want to steer
 
-            ret.push_back(normalVector);
+
+/*            auto vectors = obstacle.getVectors();
+
+            if (std::abs(vectors.first.angleWithVector(boid.getDirection())) > std::abs(vectors.second.angleWithVector(boid.getDirection()))) {
+                normalVector = vectors.first + normalVector;
+            } else {
+                normalVector = vectors.second + normalVector;
+            }*/
+
+            normalVector = normalVector / std::sqrt(obstacle.distanceToPoint(boid.getPosition())); // The closer the obstacle is, the more we want to steer
+
+
+            ret.first.push_back(normalVector);
+            ret.second.push_back(obstacle.getHalfPoint());
         }
     }
 

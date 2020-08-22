@@ -52,7 +52,10 @@ message Input {
 message Simulation {
     Flock flock = 1;
     float elapsedTimeSecond = 2;
+
+    // for debugging purposes
     repeated Pos2D obstaclesNormalVectors = 3;
+    repeated Pos2D obstaclesPosition = 4;
 }
 
 message Output {
