@@ -7,7 +7,7 @@
 
 
 #include <iostream>
-#include "../map.pb.h"
+#include "map.pb.h"
 
 struct Pos2D {
     Pos2D();
@@ -27,9 +27,11 @@ struct Pos2D {
     void normalize();
     double angleWithVector(const Pos2D &other) const;
     float getMagnitude() const;
+    void setMagnitude(float mag);
     float distanceWith(const Pos2D& other) const;
     float getCrossProduct(const Pos2D &other) const;
 
+    void limitToMinMagnitude(float min);
     void limitToMaxMagnitude(float max);
 };
 

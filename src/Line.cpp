@@ -36,7 +36,6 @@ Pos2D Line::reflectedVector(const Pos2D &vector) const {
     if ((angle > -EPSILON && angle < EPSILON) ||
         (angle > M_PI - EPSILON && angle < M_PI + EPSILON) ||
         (angle > -M_PI - EPSILON && angle < -M_PI + EPSILON)) {
-        std::cout << "longe un mur" << std::endl;
         return Pos2D();
     }
     // The direction of the normal vector doesn't affect reflection
@@ -131,4 +130,20 @@ bool doIntersect(Pos2D p1, Pos2D q1, Pos2D p2, Pos2D q2)
 
 bool Line::intersectsWith(const Line &other) const {
     return doIntersect(a, b, other.a, other.b);
+}
+
+std::pair<Pos2D, Pos2D> Line::getVectors() const {
+    std::pair<Pos2D, Pos2D> ret;
+
+    ret.first = this->b - this->a;
+    ret.second = this->a - this->b;
+
+    ret.first.normalize();
+    ret.second.normalize();
+
+    return ret;
+}
+
+Pos2D Line::getHalfPoint() const {
+    return Pos2D((a.x + b.x) / 2, (a.y + b.y) / 2);
 }

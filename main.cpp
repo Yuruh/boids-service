@@ -7,7 +7,7 @@
 #include "include/Map.h"
 #include "include/Macros.h"
 #include "include/HttpServer.h"
-#include "map.pb.h"
+#include "include/map.pb.h"
 
 std::unique_ptr<HttpServer> g_httpHandler;
 
@@ -88,7 +88,7 @@ int main() {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
     std::string port = "8080";
-    std::string address = "http://127.0.0.1:";
+    std::string address = "http://0.0.0.0:";
     address.append(port);
 
     on_initialize(address);
