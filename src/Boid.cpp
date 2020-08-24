@@ -19,17 +19,17 @@ Pos2D Boid::getPosition() const {
 
 Boid::Boid(): direction(Pos2D(1, 1)), position(0, 0)
 {
-    this->maxForce = 0.2;
+    this->maxForce = 0.1;
 
     this->maxSteerAngle = M_PI / 4; // 45°
 
     this->maxSpeed = 1;
-    this->minSpeed = 0.4;
+    this->minSpeed = 0.7;
     this->weight = 1;
 }
 
 /*
- * We consider two boids equal if they have the same location (they should never overlap)
+ * We consider two boids equal if they have the same location
  */
 bool Boid::operator==(const Boid &boid) const {
     return static_cast<int>(boid.position.x) == static_cast<int>(this->position.x) &&
@@ -102,7 +102,7 @@ Pos2D Boid::getCohesion(const std::vector<Boid> &boids) const {
         // Vector from location to target
         Pos2D goal = res - position;
 
-        return this->steerToGoal(goal);
+        return this->steerToDirection(goal);
     }
     return Pos2D();
 }
@@ -116,7 +116,7 @@ Pos2D Boid::getAlignment(const std::vector<Boid> &boids) const {
     if (!boids.empty()) {
         res = res / boids.size();
 
-        return this->steerToGoal(res);
+        return this->steerToDirection(res);
     }
     return res;
 }
@@ -130,7 +130,7 @@ Pos2D Boid::getSeparation(const std::vector<Boid> &boids) const {
         Pos2D diff = this->position - boid.getPosition();
 
         if (distance > EPSILON) {
-            diff = diff / distance;
+            diff = diff / std::sqrt(std::sqrt(distance));
         }
         ret += diff;
 //        Pos2D oppositeWay = ret - (boid.getPosition() - this->getPosition());
@@ -145,7 +145,7 @@ Pos2D Boid::getSeparation(const std::vector<Boid> &boids) const {
 
         ret = ret / boids.size();
 
-        return this->steerToGoal(ret);
+        return this->steerToDirection(ret);
     }
 
     return ret;
@@ -156,7 +156,7 @@ void Boid::update(float elapsedTimeSec, const std::vector<Line> &obstacles) {
 
 
     Pos2D posBefore = position;
-    Pos2D posAfter = position + direction * elapsedTimeSec * 250;
+    Pos2D posAfter = position + direction * elapsedTimeSec * 200;
 
     direction = direction + acceleration;
     acceleration = acceleration * 0;
@@ -181,24 +181,14 @@ void Boid::addAcceleration(const Pos2D &acc) {
     acceleration = acceleration + acc;
 }
 
-/*
- * Ok j'ai une idée: le vecteur doit être a moitié le vecteur normal et a moitié longer la ligne avec la quelle on a l'angle le plus petit
- */
 Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     Pos2D ret;
 
-    Line currentMovement(this->position, this->position + this->direction * OBSTACLE_DISTANCE);
-    int count = 0;
-
     for (const auto obstacle: obstacles) {
 
-        /*
- * We trace a virutal line from the position to the direction + the distance to find obstacles
- * If it collides with an obstacles, we try to steer away from it
- * This code could be in the close obstacles function
- */
-      //  if (currentMovement.intersectsWith(obstacle)) {
-            count++;
+        // To go along the wall instead of directly avoid it
+        // Sort of works but requires more work
+        // Todo
             Pos2D normalVector = obstacle.getNormalVector(position);
 
 /*            auto vectors = obstacle.getVectors();
@@ -213,39 +203,36 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
             }*/
 
 
-            normalVector = normalVector / std::sqrt(
-                    obstacle.distanceToPoint(position)); // The closer the obstacle is, the more we want to steer
-            //  normalVector = normalVector / (obstacle.distanceToPoint(position)); // The closer the obstacle is, the more we want to steer
+            normalVector = normalVector / std::sqrt(std::sqrt(obstacle.distanceToPoint(position))); // The closer the obstacle is, the more we want to steer
 
             ret = ret + normalVector;
         }
 
 //    }
-    if (count > 0) {
-        ret = ret / count;
+    if (!obstacles.empty()) {
+        ret = ret / obstacles.size();
 
-        return this->steerToGoal(ret);
+        return this->steerToDirection(ret);
     }
     return ret;
 
 }
 
 // We send the desired direction. Goal is a vector
-Pos2D Boid::steerToGoal(Pos2D goal) const {
-    // Scale to max speed fixme i think its dumb
-    // Fixme should be limited to maxSpeed
-    goal.setMagnitude(this->maxSpeed);
+Pos2D Boid::steerToDirection(Pos2D desiredDirection) const {
 
-//    goal.limitToMaxMagnitude(this->maxSpeed);
+    float mag = desiredDirection.getMagnitude();
 
+    desiredDirection.normalize();
+    Pos2D dir = this->direction;
+    dir.normalize();
 
-  //  goal.limitToMinMagnitude(direction.getMagnitude());
 
     Pos2D steer;
 
     // Steering = Desired minus Velocity
-    steer = goal - direction;
-
+    steer = desiredDirection - direction;
+    steer.setMagnitude(mag);
     steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
     return steer;
 }

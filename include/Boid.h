@@ -75,7 +75,10 @@ public:
     friend Boid& operator<<(Boid &out, const Protobuf::Boid &protobufBoid);
     friend Protobuf::Boid& operator>>(const Boid &out, Protobuf::Boid &protobufBoid);
 
-    Pos2D steerToGoal(Pos2D goal) const;
+    /*
+     * Returns the normalized direction
+     */
+    Pos2D steerToDirection(Pos2D direction) const;
 
 };
 
