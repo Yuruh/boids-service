@@ -14,36 +14,49 @@ const std::vector<Boid> Flock::getBoids() const {
     return this->boids;
 }
 
-// TODO take map as input or smth
 void Flock::update(float elapsedTimeSec, const Map &map) {
 
+
     for (Boid &boid : this->boids) {
-        Pos2D dir = boid.getDirection();
-        dir.normalize();
-        boid.setDirection(dir);
+        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
 
+        auto closeBoids = boid.getClosestBoids(boids, VISION_DISTANCE, MAX_LOCAL_FLOCKMATES);
+
+
+        // steer to avoid obstacle
+        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * OBSTACLES_COEFF;
+        boid.addAcceleration(avoidObstacle);
+
+
+
+
+        // If we meet an obstacle, it becomes priority to avoid it
         // steer to move towards the average position (center of mass) of local flockmates
-        Pos2D cohesion = boid.getCohesion(boids) * 0.1;
-
+        Pos2D cohesion = boid.getCohesion(closeBoids) * COHESION_COEFF;
         boid.addAcceleration(cohesion);
 
+        auto closeBoidsToAvoid = boid.getClosestBoids(boids, VISION_DISTANCE / 2, MAX_LOCAL_FLOCKMATES);
         // steer to avoid crowding local flockmates
-        Pos2D separation = boid.getSeparation(boids) * 0.18;
+        Pos2D separation = boid.getSeparation(closeBoidsToAvoid) * SEPARATION_COEFF;
         boid.addAcceleration(separation);
 
+
+
         // steer towards the average heading of local flockmates
-        Pos2D alignment = boid.getAlignment(boids) * 0.1;
+        Pos2D alignment = boid.getAlignment(closeBoids) * ALIGNMENT_COEFF;
         boid.addAcceleration(alignment);
 
-        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
-        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * 0.2;
+        boid.setRulesResult(cohesion, alignment, separation, avoidObstacle);
 
-        //std::cout << "avoid direction: " << avoidObstacle << std::endl;
-        boid.addAcceleration(avoidObstacle);
+        // Boids always try to speed up to their max speed
+        auto dir = boid.getDirection();
+        dir.normalize();
+        boid.addAcceleration(dir * STANDARD_ACCELERATION);
 
         boid.update(elapsedTimeSec, closeObstacles);
     }
-}
+}        // If We are avoiding an obstacle, other rules should matter less
+
 
 Flock &operator<<(Flock &out, const Protobuf::Flock &protobufFlock) {
     protobufFlock.boids().size();
@@ -59,10 +72,45 @@ Flock &operator<<(Flock &out, const Protobuf::Flock &protobufFlock) {
 Protobuf::Flock &operator>>(const Flock &out, Protobuf::Flock &protobufFlock) {
     protobufFlock.clear_boids();
 
-    for (int i = 0; i < out.boids.size(); ++i) {
+    for (const auto &i : out.boids) {
         auto *boid = protobufFlock.add_boids();
 
-        out.boids[i] >> *boid;
+        i >> *boid;
     }
     return protobufFlock;
+}
+
+std::pair<std::vector<Pos2D>, std::vector<Pos2D>> Flock::getCloseObstaclesNormalVectors(const Map &map) const {
+//    std::vector<Pos2D> ret;
+    std::vector<Pos2D> positions;
+
+    std::pair<std::vector<Pos2D>, std::vector<Pos2D>> ret;
+
+    for (const Boid &boid : this->boids) {
+        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
+
+        for (const auto obstacle: closeObstacles) {
+
+            // TODO got to also send the point in the middle of the line
+            Pos2D normalVector = obstacle.getNormalVector(boid.getPosition());
+
+
+
+/*            auto vectors = obstacle.getVectors();
+
+            if (std::abs(vectors.first.angleWithVector(boid.getDirection())) > std::abs(vectors.second.angleWithVector(boid.getDirection()))) {
+                normalVector = vectors.first + normalVector;
+            } else {
+                normalVector = vectors.second + normalVector;
+            }*/
+
+            normalVector = normalVector / std::sqrt(obstacle.distanceToPoint(boid.getPosition())); // The closer the obstacle is, the more we want to steer
+
+
+            ret.first.push_back(normalVector);
+            ret.second.push_back(obstacle.getHalfPoint());
+        }
+    }
+
+    return ret;
 }
