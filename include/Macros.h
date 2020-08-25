@@ -13,12 +13,12 @@
 
 // Most of those values could / should be in the protocol, so client can adapt with canvas size
 
-#define OBSTACLE_DISTANCE 200
+#define OBSTACLE_DISTANCE 100
 #define VISION_DISTANCE 150
 #define MAX_LOCAL_FLOCKMATES 20
 
 
-#define MAX_NUMBER_BOIDS 1000
+#define MAX_NUMBER_BOIDS 500
 #define MAX_FPS 60
 #define MAX_SIM_SECONDS 30
 

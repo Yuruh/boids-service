@@ -39,7 +39,7 @@ public:
     Pos2D getDimensions() const;
     const std::vector<Line> &getObstacles() const;
     const Line &closestObstacle(const Pos2D& pos) const;
-    const std::vector<Line> closeObstacles(const Pos2D& pos) const;
+    const std::vector<Line> closeObstacles(const Pos2D& pos, unsigned int obstacleDistance) const;
     friend Map& operator<<(Map &out, const Protobuf::Map &protobufMap);
 };
 

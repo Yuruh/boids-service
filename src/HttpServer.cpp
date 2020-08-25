@@ -7,6 +7,7 @@
 #include "../include/Map.h"
 #include "../include/Flock.h"
 #include "../include/Macros.h"
+#include "../include/Parameters.h"
 
 HttpServer::HttpServer() = default;
 
@@ -46,6 +47,12 @@ void HttpServer::handle_post(http_request message) {
         Map map;
 
         map << input.map();
+
+        Parameters params;
+
+        params << input.parameters();
+
+        flock.setParams(params);
 
         std::cout << input.flock().boids().size() << " boids" << std::endl;
         std::cout << input.map().obstacles().size() + 4 << " obstacles" << std::endl;

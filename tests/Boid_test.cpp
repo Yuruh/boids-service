@@ -14,6 +14,4 @@ TEST_CASE( "Boid Class", "[plop]" ) {
 
 
     REQUIRE(boid.getPosition() == Pos2D(50, 50));
-
-    REQUIRE(boid.steerToGoal(Pos2D(50, 100)) == Pos2D(1, 1));
 }

@@ -251,6 +251,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_map_2eproto::offsets[] PROTOBU
   PROTOBUF_FIELD_OFFSET(::Protobuf::Parameters, visiondistance_),
   PROTOBUF_FIELD_OFFSET(::Protobuf::Parameters, obstacledistance_),
   PROTOBUF_FIELD_OFFSET(::Protobuf::Parameters, separationdistance_),
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Parameters, maxlocalflockmates_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protobuf::Input, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -284,9 +285,9 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 21, -1, sizeof(::Protobuf::Boid)},
   { 32, -1, sizeof(::Protobuf::Flock)},
   { 38, -1, sizeof(::Protobuf::Parameters)},
-  { 50, -1, sizeof(::Protobuf::Input)},
-  { 60, -1, sizeof(::Protobuf::Simulation)},
-  { 69, -1, sizeof(::Protobuf::Output)},
+  { 51, -1, sizeof(::Protobuf::Input)},
+  { 61, -1, sizeof(::Protobuf::Simulation)},
+  { 70, -1, sizeof(::Protobuf::Output)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -313,22 +314,22 @@ const char descriptor_table_protodef_map_2eproto[] PROTOBUF_SECTION_VARIABLE(pro
   "ent\030\004 \001(\0132\017.Protobuf.Pos2D\022#\n\nseparation"
   "\030\005 \001(\0132\017.Protobuf.Pos2D\022\"\n\tavoidance\030\006 \001"
   "(\0132\017.Protobuf.Pos2D\"&\n\005Flock\022\035\n\005boids\030\001 "
-  "\003(\0132\016.Protobuf.Boid\"\272\001\n\nParameters\022\027\n\017se"
+  "\003(\0132\016.Protobuf.Boid\"\326\001\n\nParameters\022\027\n\017se"
   "parationScale\030\001 \001(\002\022\025\n\rcohesionScale\030\002 \001"
   "(\002\022\026\n\016alignmentScale\030\003 \001(\002\022\026\n\016avoidanceS"
   "cale\030\004 \001(\002\022\026\n\016visionDistance\030\005 \001(\r\022\030\n\020ob"
   "stacleDistance\030\006 \001(\r\022\032\n\022separationDistan"
-  "ce\030\007 \001(\r\"\245\001\n\005Input\022\032\n\003map\030\001 \001(\0132\r.Protob"
-  "uf.Map\022\036\n\005flock\030\002 \001(\0132\017.Protobuf.Flock\022\035"
-  "\n\025simulationDurationSec\030\003 \001(\005\022\027\n\017imagesP"
-  "erSecond\030\004 \001(\005\022(\n\nparameters\030\005 \001(\0132\024.Pro"
-  "tobuf.Parameters\"\244\001\n\nSimulation\022\036\n\005flock"
-  "\030\001 \001(\0132\017.Protobuf.Flock\022\031\n\021elapsedTimeSe"
-  "cond\030\002 \001(\002\022/\n\026obstaclesNormalVectors\030\003 \003"
-  "(\0132\017.Protobuf.Pos2D\022*\n\021obstaclesPosition"
-  "\030\004 \003(\0132\017.Protobuf.Pos2D\"3\n\006Output\022)\n\013sim"
-  "ulations\030\001 \003(\0132\024.Protobuf.Simulationb\006pr"
-  "oto3"
+  "ce\030\007 \001(\r\022\032\n\022maxLocalFlockmates\030\010 \001(\r\"\245\001\n"
+  "\005Input\022\032\n\003map\030\001 \001(\0132\r.Protobuf.Map\022\036\n\005fl"
+  "ock\030\002 \001(\0132\017.Protobuf.Flock\022\035\n\025simulation"
+  "DurationSec\030\003 \001(\005\022\027\n\017imagesPerSecond\030\004 \001"
+  "(\005\022(\n\nparameters\030\005 \001(\0132\024.Protobuf.Parame"
+  "ters\"\244\001\n\nSimulation\022\036\n\005flock\030\001 \001(\0132\017.Pro"
+  "tobuf.Flock\022\031\n\021elapsedTimeSecond\030\002 \001(\002\022/"
+  "\n\026obstaclesNormalVectors\030\003 \003(\0132\017.Protobu"
+  "f.Pos2D\022*\n\021obstaclesPosition\030\004 \003(\0132\017.Pro"
+  "tobuf.Pos2D\"3\n\006Output\022)\n\013simulations\030\001 \003"
+  "(\0132\024.Protobuf.Simulationb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_map_2eproto_deps[1] = {
 };
@@ -345,7 +346,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_map
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_map_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_map_2eproto = {
-  false, false, descriptor_table_protodef_map_2eproto, "map.proto", 1044,
+  false, false, descriptor_table_protodef_map_2eproto, "map.proto", 1072,
   &descriptor_table_map_2eproto_once, descriptor_table_map_2eproto_sccs, descriptor_table_map_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_map_2eproto::offsets,
   file_level_metadata_map_2eproto, 9, file_level_enum_descriptors_map_2eproto, file_level_service_descriptors_map_2eproto,
@@ -1746,15 +1747,15 @@ Parameters::Parameters(const Parameters& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&separationscale_, &from.separationscale_,
-    static_cast<size_t>(reinterpret_cast<char*>(&separationdistance_) -
-    reinterpret_cast<char*>(&separationscale_)) + sizeof(separationdistance_));
+    static_cast<size_t>(reinterpret_cast<char*>(&maxlocalflockmates_) -
+    reinterpret_cast<char*>(&separationscale_)) + sizeof(maxlocalflockmates_));
   // @@protoc_insertion_point(copy_constructor:Protobuf.Parameters)
 }
 
 void Parameters::SharedCtor() {
   ::memset(&separationscale_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&separationdistance_) -
-      reinterpret_cast<char*>(&separationscale_)) + sizeof(separationdistance_));
+      reinterpret_cast<char*>(&maxlocalflockmates_) -
+      reinterpret_cast<char*>(&separationscale_)) + sizeof(maxlocalflockmates_));
 }
 
 Parameters::~Parameters() {
@@ -1789,8 +1790,8 @@ void Parameters::Clear() {
   (void) cached_has_bits;
 
   ::memset(&separationscale_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&separationdistance_) -
-      reinterpret_cast<char*>(&separationscale_)) + sizeof(separationdistance_));
+      reinterpret_cast<char*>(&maxlocalflockmates_) -
+      reinterpret_cast<char*>(&separationscale_)) + sizeof(maxlocalflockmates_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1848,6 +1849,13 @@ const char* Parameters::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
           separationdistance_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // uint32 maxLocalFlockmates = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
+          maxlocalflockmates_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1921,6 +1929,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(7, this->_internal_separationdistance(), target);
   }
 
+  // uint32 maxLocalFlockmates = 8;
+  if (this->maxlocalflockmates() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(8, this->_internal_maxlocalflockmates(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1978,6 +1992,13 @@ size_t Parameters::ByteSizeLong() const {
         this->_internal_separationdistance());
   }
 
+  // uint32 maxLocalFlockmates = 8;
+  if (this->maxlocalflockmates() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_maxlocalflockmates());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -2030,6 +2051,9 @@ void Parameters::MergeFrom(const Parameters& from) {
   if (from.separationdistance() != 0) {
     _internal_set_separationdistance(from._internal_separationdistance());
   }
+  if (from.maxlocalflockmates() != 0) {
+    _internal_set_maxlocalflockmates(from._internal_maxlocalflockmates());
+  }
 }
 
 void Parameters::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -2054,8 +2078,8 @@ void Parameters::InternalSwap(Parameters* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Parameters, separationdistance_)
-      + sizeof(Parameters::separationdistance_)
+      PROTOBUF_FIELD_OFFSET(Parameters, maxlocalflockmates_)
+      + sizeof(Parameters::maxlocalflockmates_)
       - PROTOBUF_FIELD_OFFSET(Parameters, separationscale_)>(
           reinterpret_cast<char*>(&separationscale_),
           reinterpret_cast<char*>(&other->separationscale_));

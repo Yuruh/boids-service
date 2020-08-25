@@ -38,7 +38,9 @@ message Parameters {
 
     uint32 visionDistance = 5; // How far agents perceive local flock mates. Min 0
     uint32 obstacleDistance = 6; // How far agents perceive obstacles. Min 0
-    uint32 separationDistance = 7; // Distance from which an agent tries to avoid an other one. Min 0
+    uint32 separationDistance = 7; // Distance from which an agent tries to avoid an other one
+
+    uint32 maxLocalFlockmates = 8; // Max nb of peers a boid can use to make a decision
 }
 
 message Input {

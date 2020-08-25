@@ -1090,6 +1090,7 @@ class Parameters PROTOBUF_FINAL :
     kVisionDistanceFieldNumber = 5,
     kObstacleDistanceFieldNumber = 6,
     kSeparationDistanceFieldNumber = 7,
+    kMaxLocalFlockmatesFieldNumber = 8,
   };
   // float separationScale = 1;
   void clear_separationscale();
@@ -1154,6 +1155,15 @@ class Parameters PROTOBUF_FINAL :
   void _internal_set_separationdistance(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
+  // uint32 maxLocalFlockmates = 8;
+  void clear_maxlocalflockmates();
+  ::PROTOBUF_NAMESPACE_ID::uint32 maxlocalflockmates() const;
+  void set_maxlocalflockmates(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_maxlocalflockmates() const;
+  void _internal_set_maxlocalflockmates(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protobuf.Parameters)
  private:
   class _Internal;
@@ -1168,6 +1178,7 @@ class Parameters PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::uint32 visiondistance_;
   ::PROTOBUF_NAMESPACE_ID::uint32 obstacledistance_;
   ::PROTOBUF_NAMESPACE_ID::uint32 separationdistance_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 maxlocalflockmates_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_map_2eproto;
 };
@@ -2738,6 +2749,26 @@ inline void Parameters::_internal_set_separationdistance(::PROTOBUF_NAMESPACE_ID
 inline void Parameters::set_separationdistance(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_separationdistance(value);
   // @@protoc_insertion_point(field_set:Protobuf.Parameters.separationDistance)
+}
+
+// uint32 maxLocalFlockmates = 8;
+inline void Parameters::clear_maxlocalflockmates() {
+  maxlocalflockmates_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Parameters::_internal_maxlocalflockmates() const {
+  return maxlocalflockmates_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Parameters::maxlocalflockmates() const {
+  // @@protoc_insertion_point(field_get:Protobuf.Parameters.maxLocalFlockmates)
+  return _internal_maxlocalflockmates();
+}
+inline void Parameters::_internal_set_maxlocalflockmates(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  maxlocalflockmates_ = value;
+}
+inline void Parameters::set_maxlocalflockmates(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_maxlocalflockmates(value);
+  // @@protoc_insertion_point(field_set:Protobuf.Parameters.maxLocalFlockmates)
 }
 
 // -------------------------------------------------------------------

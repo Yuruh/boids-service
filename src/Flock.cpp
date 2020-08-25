@@ -18,13 +18,13 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
 
 
     for (Boid &boid : this->boids) {
-        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
+        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition(), this->params.obstacleDistance);
 
-        auto closeBoids = boid.getClosestBoids(boids, VISION_DISTANCE, MAX_LOCAL_FLOCKMATES);
+        auto closeBoids = boid.getClosestBoids(boids, this->params.visionDistance, this->params.maxLocalFlockmates);
 
 
         // steer to avoid obstacle
-        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * OBSTACLES_COEFF;
+        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * OBSTACLES_COEFF * this->params.obstacleDistance;
         boid.addAcceleration(avoidObstacle);
 
 
@@ -32,18 +32,18 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
 
         // If we meet an obstacle, it becomes priority to avoid it
         // steer to move towards the average position (center of mass) of local flockmates
-        Pos2D cohesion = boid.getCohesion(closeBoids) * COHESION_COEFF;
+        Pos2D cohesion = boid.getCohesion(closeBoids) * COHESION_COEFF * this->params.cohesionScale;
         boid.addAcceleration(cohesion);
 
-        auto closeBoidsToAvoid = boid.getClosestBoids(boids, VISION_DISTANCE / 2, MAX_LOCAL_FLOCKMATES);
+        auto closeBoidsToAvoid = boid.getClosestBoids(boids, this->params.separationDistance, this->params.maxLocalFlockmates);
         // steer to avoid crowding local flockmates
-        Pos2D separation = boid.getSeparation(closeBoidsToAvoid) * SEPARATION_COEFF;
+        Pos2D separation = boid.getSeparation(closeBoidsToAvoid) * SEPARATION_COEFF * this->params.separationScale;
         boid.addAcceleration(separation);
 
 
 
         // steer towards the average heading of local flockmates
-        Pos2D alignment = boid.getAlignment(closeBoids) * ALIGNMENT_COEFF;
+        Pos2D alignment = boid.getAlignment(closeBoids) * ALIGNMENT_COEFF * this->params.alignmentScale;
         boid.addAcceleration(alignment);
 
         boid.setRulesResult(cohesion, alignment, separation, avoidObstacle);
@@ -87,7 +87,7 @@ std::pair<std::vector<Pos2D>, std::vector<Pos2D>> Flock::getCloseObstaclesNormal
     std::pair<std::vector<Pos2D>, std::vector<Pos2D>> ret;
 
     for (const Boid &boid : this->boids) {
-        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition());
+        std::vector<Line> closeObstacles = map.closeObstacles(boid.getPosition(), this->params.obstacleDistance);
 
         for (const auto obstacle: closeObstacles) {
 
@@ -113,4 +113,9 @@ std::pair<std::vector<Pos2D>, std::vector<Pos2D>> Flock::getCloseObstaclesNormal
     }
 
     return ret;
+}
+
+void Flock::setParams(const Parameters &params) {
+    this->params = params;
+
 }

@@ -92,7 +92,6 @@ int Map::getBoidIndex(int x, int y) const {
     return -1;
 }
 
-//TODO either build corneer automatically or improve steering obstacles
 Map &operator<<(Map &out, const Protobuf::Map &protobufMap) {
     out.dimensions << protobufMap.dimensions();
 
@@ -162,12 +161,12 @@ const Line &Map::closestObstacle(const Pos2D &pos) const {
     return obstacles[idx];
 }
 
-const std::vector<Line> Map::closeObstacles(const Pos2D &pos) const {
+const std::vector<Line> Map::closeObstacles(const Pos2D &pos, unsigned int obstacleDistance) const {
     std::vector<Line> ret;
 
     for (auto obstacle : obstacles) {
         float distance = obstacle.distanceToPoint(pos);
-        if (distance < OBSTACLE_DISTANCE) {
+        if (distance < obstacleDistance) {
             ret.push_back(obstacle);
         }
     }
