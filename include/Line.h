@@ -28,6 +28,8 @@ public:
 
 
     Pos2D getHalfPoint() const;
+    float length() const;
+    float lengthSquared() const;
 };
 
 

@@ -5,15 +5,28 @@
 #include <cmath>
 #include "../include/Line.h"
 #include "../include/Macros.h"
+#include <algorithm>
 
+/*
+ * Implem from https://stackoverflow.com/a/1501725/13167478
+ */
 float Line::distanceToPoint(const Pos2D &point) const {
 
-    Pos2D ab = b - a;
-    Pos2D ap = point - a;
+    // Return minimum distance between line segment vw and point p
+    const float l2 = this->lengthSquared();  // i.e. |w-v|^2 -  avoid a sqrt
+    if (l2 == 0.0) return this->a.distanceWith(this->b);   // v == w case
+    // Consider the line extending the segment, parameterized as v + t (w - v).
+    // We find projection of point p onto the line.
+    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
+    // We clamp t from [0,1] to handle points outside the segment vw.
 
 
-    float area = ab.getCrossProduct(ap);
-    return std::abs(area / ab.getMagnitude());
+    Pos2D lineVector = this->b - this->a;
+    Pos2D aToPoint = point - this->a;
+
+    const float t = std::max(0.f, std::min(1.f, aToPoint * lineVector / l2));
+    auto projection = this->a + lineVector * t;  // Projection falls on the segment
+    return point.distanceWith(projection);
 }
 
 double Line::angleWithVector(const Pos2D &vector) const {
@@ -147,3 +160,16 @@ std::pair<Pos2D, Pos2D> Line::getVectors() const {
 Pos2D Line::getHalfPoint() const {
     return Pos2D((a.x + b.x) / 2, (a.y + b.y) / 2);
 }
+
+float Line::length() const {
+    return std::sqrt(this->lengthSquared());
+}
+
+float square(float value) {
+    return value * value;
+}
+
+float Line::lengthSquared() const {
+    return square(this->b.x - this->a.x) + square(this->b.y - this->a.y);
+}
+

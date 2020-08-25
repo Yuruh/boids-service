@@ -24,7 +24,7 @@
 
 #define SEPARATION_COEFF 1.2
 #define COHESION_COEFF 1
-#define ALIGNMENT_COEFF 0.7
+#define ALIGNMENT_COEFF 0.75
 #define OBSTACLES_COEFF 1
 
 // base acceleration

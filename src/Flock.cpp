@@ -104,7 +104,9 @@ std::pair<std::vector<Pos2D>, std::vector<Pos2D>> Flock::getCloseObstaclesNormal
                 normalVector = vectors.second + normalVector;
             }*/
 
-            normalVector = normalVector / std::sqrt(obstacle.distanceToPoint(boid.getPosition())); // The closer the obstacle is, the more we want to steer
+
+
+            normalVector = normalVector / std::sqrt(std::sqrt(obstacle.distanceToPoint(boid.getPosition()))); // The closer the obstacle is, the more we want to steer
 
 
             ret.first.push_back(normalVector);

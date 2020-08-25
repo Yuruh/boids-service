@@ -184,13 +184,16 @@ void Boid::addAcceleration(const Pos2D &acc) {
 Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
     Pos2D ret;
 
+
+    int count = 0;
+
     for (const auto obstacle: obstacles) {
+         count++;
+
+            Pos2D normalVector = obstacle.getNormalVector(position);
 
         // To go along the wall instead of directly avoid it
         // Sort of works but requires more work
-        // Todo
-            Pos2D normalVector = obstacle.getNormalVector(position);
-
 /*            auto vectors = obstacle.getVectors();
 
             auto vec1 = vectors.first + normalVector;
@@ -203,14 +206,15 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
             }*/
 
 
-            normalVector = normalVector / std::sqrt(std::sqrt(obstacle.distanceToPoint(position))); // The closer the obstacle is, the more we want to steer
+            normalVector = normalVector / std::sqrt(std::sqrt(
+                    obstacle.distanceToPoint(position))); // The closer the obstacle is, the more we want to steer
 
             ret = ret + normalVector;
-        }
+    }
 
-// fixme we don't need to divise since the magnitudes depends on how close we are to the obstacle
-    if (!obstacles.empty()) {
-        ret = ret / obstacles.size();
+// fixme do we need to divise ? since the magnitudes depends on how close we are to the obstacle
+    if (count > 0) {
+        ret = ret / count;
 
         return this->steerToDirection(ret);
     }
