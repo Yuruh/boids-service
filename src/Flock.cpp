@@ -24,7 +24,7 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
 
 
         // steer to avoid obstacle
-        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * OBSTACLES_COEFF * this->params.obstacleDistance;
+        Pos2D avoidObstacle = boid.getSteerFromObstacles(closeObstacles) * OBSTACLES_COEFF * this->params.avoidanceScale;
         boid.addAcceleration(avoidObstacle);
 
 

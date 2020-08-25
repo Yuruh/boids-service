@@ -208,7 +208,7 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
             ret = ret + normalVector;
         }
 
-//    }
+// fixme we don't need to divise since the magnitudes depends on how close we are to the obstacle
     if (!obstacles.empty()) {
         ret = ret / obstacles.size();
 
