@@ -69,10 +69,10 @@ Flock &operator<<(Flock &out, const Protobuf::Flock &protobufFlock) {
     return out;
 }
 
-Protobuf::Flock &operator>>(const Flock &out, Protobuf::Flock &protobufFlock) {
+Protobuf::Flock &operator>>(const Flock &in, Protobuf::Flock &protobufFlock) {
     protobufFlock.clear_boids();
 
-    for (const auto &i : out.boids) {
+    for (const auto &i : in.boids) {
         auto *boid = protobufFlock.add_boids();
 
         i >> *boid;

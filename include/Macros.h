@@ -9,14 +9,6 @@
 
 #define EPSILON 0.000001
 
-#define SEPARATION_DISTANCE 50
-
-// Most of those values could / should be in the protocol, so client can adapt with canvas size
-
-#define OBSTACLE_DISTANCE 100
-#define VISION_DISTANCE 150
-#define MAX_LOCAL_FLOCKMATES 20
-
 
 #define MAX_NUMBER_BOIDS 500
 #define MAX_FPS 60
@@ -26,6 +18,8 @@
 #define COHESION_COEFF 1
 #define ALIGNMENT_COEFF 0.75
 #define OBSTACLES_COEFF 1
+
+#define MIN_QUADNODE_SIZE 10
 
 // base acceleration
 #define STANDARD_ACCELERATION 0.01

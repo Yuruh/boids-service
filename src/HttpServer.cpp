@@ -8,6 +8,7 @@
 #include "../include/Flock.h"
 #include "../include/Macros.h"
 #include "../include/Parameters.h"
+#include "../include/QuadTreeNode.h"
 
 HttpServer::HttpServer() = default;
 
@@ -83,9 +84,21 @@ void HttpServer::handle_post(http_request message) {
             auto obstaclesVectors = flock.getCloseObstaclesNormalVectors(map);
             flock.update(timePerFrame, map);
 
+            auto *root = new QuadTreeNode<Boid>(Pos2D(0, 0), map.getDimensions());
+
+            for (auto boid: flock.getBoids()) {
+                auto *nodeData = new NodeData<Boid>(boid.getPosition(), &boid);
+
+                root->insert(nodeData);
+            }
+
+
             Protobuf::Simulation *simulation = output.add_simulations();
             auto *protoFlock = new Protobuf::Flock();
+
             flock >> *protoFlock;
+            *root >> *protoFlock;
+
             simulation->set_allocated_flock(protoFlock);
             simulation->set_elapsedtimesecond(elapsedSec);
 

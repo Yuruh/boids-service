@@ -173,3 +173,15 @@ float Line::lengthSquared() const {
     return square(this->b.x - this->a.x) + square(this->b.y - this->a.y);
 }
 
+Protobuf::Line &operator>>(const Line &in, Protobuf::Line &protobufLine) {
+    auto *a = new Protobuf::Pos2D();
+    in.a >> *a;
+    protobufLine.set_allocated_a(a);
+
+    auto *b = new Protobuf::Pos2D();
+    in.b >> *b;
+    protobufLine.set_allocated_b(b);
+
+    return protobufLine;
+}
+

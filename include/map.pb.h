@@ -938,6 +938,7 @@ class Flock PROTOBUF_FINAL :
 
   enum : int {
     kBoidsFieldNumber = 1,
+    kQuadTreeFieldNumber = 2,
   };
   // repeated .Protobuf.Boid boids = 1;
   int boids_size() const;
@@ -957,6 +958,24 @@ class Flock PROTOBUF_FINAL :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Boid >&
       boids() const;
 
+  // repeated .Protobuf.Line quadTree = 2;
+  int quadtree_size() const;
+  private:
+  int _internal_quadtree_size() const;
+  public:
+  void clear_quadtree();
+  ::Protobuf::Line* mutable_quadtree(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line >*
+      mutable_quadtree();
+  private:
+  const ::Protobuf::Line& _internal_quadtree(int index) const;
+  ::Protobuf::Line* _internal_add_quadtree();
+  public:
+  const ::Protobuf::Line& quadtree(int index) const;
+  ::Protobuf::Line* add_quadtree();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line >&
+      quadtree() const;
+
   // @@protoc_insertion_point(class_scope:Protobuf.Flock)
  private:
   class _Internal;
@@ -965,6 +984,7 @@ class Flock PROTOBUF_FINAL :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Boid > boids_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line > quadtree_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_map_2eproto;
 };
@@ -2605,6 +2625,45 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Boid >&
 Flock::boids() const {
   // @@protoc_insertion_point(field_list:Protobuf.Flock.boids)
   return boids_;
+}
+
+// repeated .Protobuf.Line quadTree = 2;
+inline int Flock::_internal_quadtree_size() const {
+  return quadtree_.size();
+}
+inline int Flock::quadtree_size() const {
+  return _internal_quadtree_size();
+}
+inline void Flock::clear_quadtree() {
+  quadtree_.Clear();
+}
+inline ::Protobuf::Line* Flock::mutable_quadtree(int index) {
+  // @@protoc_insertion_point(field_mutable:Protobuf.Flock.quadTree)
+  return quadtree_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line >*
+Flock::mutable_quadtree() {
+  // @@protoc_insertion_point(field_mutable_list:Protobuf.Flock.quadTree)
+  return &quadtree_;
+}
+inline const ::Protobuf::Line& Flock::_internal_quadtree(int index) const {
+  return quadtree_.Get(index);
+}
+inline const ::Protobuf::Line& Flock::quadtree(int index) const {
+  // @@protoc_insertion_point(field_get:Protobuf.Flock.quadTree)
+  return _internal_quadtree(index);
+}
+inline ::Protobuf::Line* Flock::_internal_add_quadtree() {
+  return quadtree_.Add();
+}
+inline ::Protobuf::Line* Flock::add_quadtree() {
+  // @@protoc_insertion_point(field_add:Protobuf.Flock.quadTree)
+  return _internal_add_quadtree();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protobuf::Line >&
+Flock::quadtree() const {
+  // @@protoc_insertion_point(field_list:Protobuf.Flock.quadTree)
+  return quadtree_;
 }
 
 // -------------------------------------------------------------------

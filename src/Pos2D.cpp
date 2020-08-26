@@ -65,8 +65,6 @@ void Pos2D::limitToMinMagnitude(float min) {
     }
 }
 
-
-
 void Pos2D::limitToMaxMagnitude(float max) {
     float mag = this->getMagnitude();
     if (mag > max) {

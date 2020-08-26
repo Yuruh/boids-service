@@ -22,7 +22,7 @@ C++ Microservice exposing HTTP endpoint to compute flocking simulation
 
 ## To come
 
-* Quadtree optimisation
+* QuadTreeNode optimisation
 * Better field of view (boids shouldn't see right behind)
 * Better obstacle evasion
 * Better steering physic (avoid clipping)

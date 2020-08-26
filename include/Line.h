@@ -30,6 +30,9 @@ public:
     Pos2D getHalfPoint() const;
     float length() const;
     float lengthSquared() const;
+
+    friend Protobuf::Line &operator>>(const Line &in, Protobuf::Line &protobufLine);
+
 };
 
 

@@ -28,6 +28,8 @@ message Boid {
 
 message Flock {
     repeated Boid boids = 1; // max 1000
+    repeated Line quadTree = 2; // The lines that form the quadtree. For debugging / showcase purposes
+
 }
 
 message Parameters {

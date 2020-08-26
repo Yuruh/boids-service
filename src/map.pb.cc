@@ -15,7 +15,7 @@
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Boid_map_2eproto;
-extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Flock_map_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Flock_map_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Line_map_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Map_map_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_map_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Parameters_map_2eproto;
@@ -85,9 +85,10 @@ static void InitDefaultsscc_info_Flock_map_2eproto() {
   ::Protobuf::Flock::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_Flock_map_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_Flock_map_2eproto}, {
-      &scc_info_Boid_map_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Flock_map_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, 0, InitDefaultsscc_info_Flock_map_2eproto}, {
+      &scc_info_Boid_map_2eproto.base,
+      &scc_info_Line_map_2eproto.base,}};
 
 static void InitDefaultsscc_info_Input_map_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -239,6 +240,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_map_2eproto::offsets[] PROTOBU
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::Protobuf::Flock, boids_),
+  PROTOBUF_FIELD_OFFSET(::Protobuf::Flock, quadtree_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protobuf::Parameters, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -284,10 +286,10 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 14, -1, sizeof(::Protobuf::Pos2D)},
   { 21, -1, sizeof(::Protobuf::Boid)},
   { 32, -1, sizeof(::Protobuf::Flock)},
-  { 38, -1, sizeof(::Protobuf::Parameters)},
-  { 51, -1, sizeof(::Protobuf::Input)},
-  { 61, -1, sizeof(::Protobuf::Simulation)},
-  { 70, -1, sizeof(::Protobuf::Output)},
+  { 39, -1, sizeof(::Protobuf::Parameters)},
+  { 52, -1, sizeof(::Protobuf::Input)},
+  { 62, -1, sizeof(::Protobuf::Simulation)},
+  { 71, -1, sizeof(::Protobuf::Output)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -313,23 +315,24 @@ const char descriptor_table_protodef_map_2eproto[] PROTOBUF_SECTION_VARIABLE(pro
   "ohesion\030\003 \001(\0132\017.Protobuf.Pos2D\022\"\n\talignm"
   "ent\030\004 \001(\0132\017.Protobuf.Pos2D\022#\n\nseparation"
   "\030\005 \001(\0132\017.Protobuf.Pos2D\022\"\n\tavoidance\030\006 \001"
-  "(\0132\017.Protobuf.Pos2D\"&\n\005Flock\022\035\n\005boids\030\001 "
-  "\003(\0132\016.Protobuf.Boid\"\326\001\n\nParameters\022\027\n\017se"
-  "parationScale\030\001 \001(\002\022\025\n\rcohesionScale\030\002 \001"
-  "(\002\022\026\n\016alignmentScale\030\003 \001(\002\022\026\n\016avoidanceS"
-  "cale\030\004 \001(\002\022\026\n\016visionDistance\030\005 \001(\r\022\030\n\020ob"
-  "stacleDistance\030\006 \001(\r\022\032\n\022separationDistan"
-  "ce\030\007 \001(\r\022\032\n\022maxLocalFlockmates\030\010 \001(\r\"\245\001\n"
-  "\005Input\022\032\n\003map\030\001 \001(\0132\r.Protobuf.Map\022\036\n\005fl"
-  "ock\030\002 \001(\0132\017.Protobuf.Flock\022\035\n\025simulation"
-  "DurationSec\030\003 \001(\005\022\027\n\017imagesPerSecond\030\004 \001"
-  "(\005\022(\n\nparameters\030\005 \001(\0132\024.Protobuf.Parame"
-  "ters\"\244\001\n\nSimulation\022\036\n\005flock\030\001 \001(\0132\017.Pro"
-  "tobuf.Flock\022\031\n\021elapsedTimeSecond\030\002 \001(\002\022/"
-  "\n\026obstaclesNormalVectors\030\003 \003(\0132\017.Protobu"
-  "f.Pos2D\022*\n\021obstaclesPosition\030\004 \003(\0132\017.Pro"
-  "tobuf.Pos2D\"3\n\006Output\022)\n\013simulations\030\001 \003"
-  "(\0132\024.Protobuf.Simulationb\006proto3"
+  "(\0132\017.Protobuf.Pos2D\"H\n\005Flock\022\035\n\005boids\030\001 "
+  "\003(\0132\016.Protobuf.Boid\022 \n\010quadTree\030\002 \003(\0132\016."
+  "Protobuf.Line\"\326\001\n\nParameters\022\027\n\017separati"
+  "onScale\030\001 \001(\002\022\025\n\rcohesionScale\030\002 \001(\002\022\026\n\016"
+  "alignmentScale\030\003 \001(\002\022\026\n\016avoidanceScale\030\004"
+  " \001(\002\022\026\n\016visionDistance\030\005 \001(\r\022\030\n\020obstacle"
+  "Distance\030\006 \001(\r\022\032\n\022separationDistance\030\007 \001"
+  "(\r\022\032\n\022maxLocalFlockmates\030\010 \001(\r\"\245\001\n\005Input"
+  "\022\032\n\003map\030\001 \001(\0132\r.Protobuf.Map\022\036\n\005flock\030\002 "
+  "\001(\0132\017.Protobuf.Flock\022\035\n\025simulationDurati"
+  "onSec\030\003 \001(\005\022\027\n\017imagesPerSecond\030\004 \001(\005\022(\n\n"
+  "parameters\030\005 \001(\0132\024.Protobuf.Parameters\"\244"
+  "\001\n\nSimulation\022\036\n\005flock\030\001 \001(\0132\017.Protobuf."
+  "Flock\022\031\n\021elapsedTimeSecond\030\002 \001(\002\022/\n\026obst"
+  "aclesNormalVectors\030\003 \003(\0132\017.Protobuf.Pos2"
+  "D\022*\n\021obstaclesPosition\030\004 \003(\0132\017.Protobuf."
+  "Pos2D\"3\n\006Output\022)\n\013simulations\030\001 \003(\0132\024.P"
+  "rotobuf.Simulationb\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_map_2eproto_deps[1] = {
 };
@@ -346,7 +349,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_map
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_map_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_map_2eproto = {
-  false, false, descriptor_table_protodef_map_2eproto, "map.proto", 1072,
+  false, false, descriptor_table_protodef_map_2eproto, "map.proto", 1106,
   &descriptor_table_map_2eproto_once, descriptor_table_map_2eproto_sccs, descriptor_table_map_2eproto_deps, 9, 0,
   schemas, file_default_instances, TableStruct_map_2eproto::offsets,
   file_level_metadata_map_2eproto, 9, file_level_enum_descriptors_map_2eproto, file_level_service_descriptors_map_2eproto,
@@ -1536,14 +1539,16 @@ class Flock::_Internal {
 
 Flock::Flock(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  boids_(arena) {
+  boids_(arena),
+  quadtree_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:Protobuf.Flock)
 }
 Flock::Flock(const Flock& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
-      boids_(from.boids_) {
+      boids_(from.boids_),
+      quadtree_(from.quadtree_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:Protobuf.Flock)
 }
@@ -1584,6 +1589,7 @@ void Flock::Clear() {
   (void) cached_has_bits;
 
   boids_.Clear();
+  quadtree_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1605,6 +1611,18 @@ const char* Flock::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inte
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // repeated .Protobuf.Line quadTree = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_quadtree(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -1643,6 +1661,14 @@ failure:
       InternalWriteMessage(1, this->_internal_boids(i), target, stream);
   }
 
+  // repeated .Protobuf.Line quadTree = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_quadtree_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, this->_internal_quadtree(i), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1662,6 +1688,13 @@ size_t Flock::ByteSizeLong() const {
   // repeated .Protobuf.Boid boids = 1;
   total_size += 1UL * this->_internal_boids_size();
   for (const auto& msg : this->boids_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .Protobuf.Line quadTree = 2;
+  total_size += 1UL * this->_internal_quadtree_size();
+  for (const auto& msg : this->quadtree_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -1698,6 +1731,7 @@ void Flock::MergeFrom(const Flock& from) {
   (void) cached_has_bits;
 
   boids_.MergeFrom(from.boids_);
+  quadtree_.MergeFrom(from.quadtree_);
 }
 
 void Flock::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -1722,6 +1756,7 @@ void Flock::InternalSwap(Flock* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   boids_.InternalSwap(&other->boids_);
+  quadtree_.InternalSwap(&other->quadtree_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Flock::GetMetadata() const {
