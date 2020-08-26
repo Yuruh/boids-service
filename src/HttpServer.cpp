@@ -42,12 +42,13 @@ void HttpServer::handle_post(http_request message) {
         input.ParseFromString(s);
 
 
-        Flock flock;
-        flock << input.flock();
-
         Map map;
 
         map << input.map();
+
+
+        Flock flock(map);
+        flock << input.flock();
 
         Parameters params;
 
@@ -84,20 +85,14 @@ void HttpServer::handle_post(http_request message) {
             auto obstaclesVectors = flock.getCloseObstaclesNormalVectors(map);
             flock.update(timePerFrame, map);
 
-            auto *root = new QuadTreeNode<Boid>(Pos2D(0, 0), map.getDimensions());
-
-            for (auto boid: flock.getBoids()) {
-                auto *nodeData = new NodeData<Boid>(boid.getPosition(), &boid);
-
-                root->insert(nodeData);
-            }
+            flock.restructureQuadtree();
 
 
             Protobuf::Simulation *simulation = output.add_simulations();
             auto *protoFlock = new Protobuf::Flock();
 
             flock >> *protoFlock;
-            *root >> *protoFlock;
+            //*root >> *protoFlock;
 
             simulation->set_allocated_flock(protoFlock);
             simulation->set_elapsedtimesecond(elapsedSec);

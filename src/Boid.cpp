@@ -76,10 +76,10 @@ Protobuf::Boid &operator>>(const Boid &in, Protobuf::Boid &protobufBoid) {
 }
 
 
-Pos2D Boid::getCohesion(const std::vector<Boid> &boids) const {
+Pos2D Boid::getCohesion(const std::vector<Boid*> &boids) const {
     Pos2D res;
-    for (const Boid &boid : boids) {
-        res = res + boid.position;
+    for (const Boid *boid : boids) {
+        res = res + boid->position;
     }
     if (!boids.empty()) {
         res = res / boids.size();
@@ -92,10 +92,10 @@ Pos2D Boid::getCohesion(const std::vector<Boid> &boids) const {
     return Pos2D();
 }
 
-Pos2D Boid::getAlignment(const std::vector<Boid> &boids) const {
+Pos2D Boid::getAlignment(const std::vector<Boid*> &boids) const {
     Pos2D res;
-    for (const Boid &boid : boids) {
-        res = res + boid.direction;
+    for (const Boid *boid : boids) {
+        res = res + boid->direction;
     }
 
     if (!boids.empty()) {
@@ -106,13 +106,13 @@ Pos2D Boid::getAlignment(const std::vector<Boid> &boids) const {
     return res;
 }
 
-Pos2D Boid::getSeparation(const std::vector<Boid> &boids) const {
+Pos2D Boid::getSeparation(const std::vector<Boid*> &boids) const {
     Pos2D ret;
 
-    for (const Boid &boid : boids) {
-        float distance = boid.getPosition().distanceWith(this->getPosition());
+    for (const Boid *boid : boids) {
+        float distance = boid->getPosition().distanceWith(this->getPosition());
 
-        Pos2D diff = this->position - boid.getPosition();
+        Pos2D diff = this->position - boid->getPosition();
 
         if (distance > EPSILON) {
             diff = diff / std::sqrt(std::sqrt(distance));

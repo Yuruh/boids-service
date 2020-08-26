@@ -60,13 +60,13 @@ public:
     void addAcceleration(const Pos2D &acc);
 
     // Boid rule: Boids should try to steer to move toward the average position of local flockmates
-    Pos2D getCohesion(const std::vector<Boid> &boids) const;
+    Pos2D getCohesion(const std::vector<Boid*> &boids) const;
 
     // Boid rule: Boids should try to steer towards the average heading of local flockmates
-    Pos2D getAlignment(const std::vector<Boid> &boids) const;
+    Pos2D getAlignment(const std::vector<Boid*> &boids) const;
 
     // Boid rule: Boids should try to steer to avoid crowding local flockmates
-    Pos2D getSeparation(const std::vector<Boid> &boids) const;
+    Pos2D getSeparation(const std::vector<Boid*> &boids) const;
 
     // Custom boid rule: boids should try to steer away from obstacles
     Pos2D getSteerFromObstacles(const std::vector<Line> &obstacles) const;

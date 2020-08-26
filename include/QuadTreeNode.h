@@ -24,7 +24,8 @@ struct NodeData {
 template <class T>
 class QuadTreeNode {
 private:
-    NodeData<T> *node;
+    std::vector<NodeData<T> *> nodesData;
+//    NodeData<T> *node;
 
     QuadTreeNode *topLeftNode;
     QuadTreeNode *topRightNode;
@@ -34,12 +35,23 @@ private:
     Pos2D topLeft;
     Pos2D botRight;
 
+    // TODO free old nodeData;
 
 
 public:
     void insert(NodeData<T> *node);
-    std::vector<NodeData<T>*> searchInRadius(Pos2D center, float radius) const;
+
+    std::vector<T*> searchInRadius(Pos2D center, float radius) const;
+
     bool inBoundary(Pos2D point);
+
+    // Assert if a point is within the QuadTreeNode
+    bool withinRadius(Pos2D center, float radius = 0);
+
+    std::vector<T*> toItemsVector() const;
+
+    // Reset everything, frees nodes and return all items;
+    std::vector<T*> clear();
 
 
     // Serialize to protobuf
@@ -51,13 +63,19 @@ public:
 
     QuadTreeNode(Pos2D topL, Pos2D botR)
     {
-        node = NULL;
+        //node = NULL;
         topLeftNode  = NULL;
         topRightNode = NULL;
         botLeftNode  = NULL;
         botRightNode = NULL;
         topLeft = topL;
         botRight = botR;
+    }
+
+    ~QuadTreeNode() {
+        this->clear();
+
+        // todo delete boids ?
     }
 };
 
@@ -74,13 +92,12 @@ void QuadTreeNode<T>::insert(NodeData<T> *newNode) {
 
     // We are at a quad of unit area
     // We cannot subdivide this quad further
-    // TODO replace 1 by max width ?
-
     if (std::abs(this->topLeft.x - this->botRight.x) <= MIN_QUADNODE_SIZE &&
         std::abs(this->topLeft.y - this->botRight.y) <= MIN_QUADNODE_SIZE) {
-        if (this->node == NULL)
-            this->node = newNode;
-        // FIXME and else ?? We should store a list of boids int he node i think
+        this->nodesData.push_back(newNode);
+//        if (this->node == NULL)
+  //          this->node = newNode;
+        // FIXME We should store a list of boids int the node
         return;
     }
 
@@ -138,11 +155,6 @@ void QuadTreeNode<T>::insert(NodeData<T> *newNode) {
 }
 
 template<class T>
-std::vector<NodeData<T> *> QuadTreeNode<T>::searchInRadius(Pos2D center, float radius) const {
-    return std::vector<NodeData<T> *>();
-}
-
-template<class T>
 bool QuadTreeNode<T>::inBoundary(Pos2D p) {
     return (p.x >= this->topLeft.x &&
             p.x <= this->botRight.x &&
@@ -187,6 +199,95 @@ std::array<Line, 4> QuadTreeNode<T>::toLines() const {
             Line(this->botRight, botLeft), // bottom
             Line(botLeft, this->topLeft), // left
     };
+    return ret;
+}
+
+template<class T>
+std::vector<T*> childSearch(QuadTreeNode<T> *node, Pos2D center, float radius) {
+    auto ret = std::vector<T*>();
+
+    if (node && node->withinRadius(center, radius)) {
+        return node->searchInRadius(center, radius);
+    }
+    return ret;
+}
+
+template<class T>
+std::vector<T*> QuadTreeNode<T>::searchInRadius(Pos2D center, float radius) const {
+    auto ret = std::vector<T*>();
+
+    for (int i = 0; i < this->nodesData.size(); ++i) {
+        // TODO check within extent of radius for each node + check distance > EPSILON
+        ret.push_back(this->nodesData[i]->data);
+    }
+
+    auto childRes = childSearch(this->botRightNode, center, radius);
+    ret.insert(ret.end(), childRes.begin(), childRes.end());
+
+    childRes = childSearch(this->botLeftNode, center, radius);
+    ret.insert(ret.end(), childRes.begin(), childRes.end());
+
+    childRes = childSearch(this->topRightNode, center, radius);
+    ret.insert(ret.end(), childRes.begin(), childRes.end());
+
+    childRes = childSearch(this->topLeftNode, center, radius);
+    ret.insert(ret.end(), childRes.begin(), childRes.end());
+
+    return ret;
+}
+
+template<class T>
+bool QuadTreeNode<T>::withinRadius(Pos2D center, float radius) {
+    return center.x >= this->topLeft.x - radius && center.x < this->botRight.x + radius &&
+            center.y >= this->topLeft.y - radius && center.y < this->botRight.y + radius;
+}
+
+template<class T>
+std::vector<T *> QuadTreeNode<T>::toItemsVector() const {
+    // Quick and dirty
+    return this->searchInRadius(Pos2D(0, 0), INT32_MAX / 2);
+
+    auto ret = std::vector<T *>();
+
+    return ret;
+}
+
+template<class T>
+std::vector<T *> QuadTreeNode<T>::clear() {
+    auto ret = std::vector<T*>();
+
+    for (int i = 0; i < this->nodesData.size(); ++i) {
+        ret.push_back(this->nodesData[i]->data);
+        delete this->nodesData[i];
+    }
+
+
+    if (this->botRightNode) {
+        auto childRes = this->botRightNode->clear();
+        ret.insert(ret.end(), childRes.begin(), childRes.end());
+    }
+
+    if (this->topRightNode) {
+        auto childRes = this->topRightNode->clear();
+        ret.insert(ret.end(), childRes.begin(), childRes.end());
+    }
+
+    if (this->topLeftNode) {
+        auto childRes = this->topLeftNode->clear();
+        ret.insert(ret.end(), childRes.begin(), childRes.end());
+    }
+
+    if (this->botLeftNode) {
+        auto childRes = this->botLeftNode->clear();
+        ret.insert(ret.end(), childRes.begin(), childRes.end());
+    }
+
+    this->nodesData.clear();
+    this->botLeftNode = NULL;
+    this->topLeftNode = NULL;
+    this->topRightNode = NULL;
+    this->botRightNode = NULL;
+
     return ret;
 }
 
