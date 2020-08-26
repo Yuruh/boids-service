@@ -57,7 +57,7 @@ Protobuf::Boid &operator>>(const Boid &in, Protobuf::Boid &protobufBoid) {
     protobufBoid.set_allocated_direction(direction);
     protobufBoid.set_allocated_position(position);
 
-    auto *cohesion = new Protobuf::Pos2D;
+/*    auto *cohesion = new Protobuf::Pos2D;
     auto *alignment = new Protobuf::Pos2D;
     auto *separation = new Protobuf::Pos2D;
     auto *avoidance = new Protobuf::Pos2D;
@@ -70,7 +70,7 @@ Protobuf::Boid &operator>>(const Boid &in, Protobuf::Boid &protobufBoid) {
     protobufBoid.set_allocated_cohesion(cohesion);
     protobufBoid.set_allocated_alignment(alignment);
     protobufBoid.set_allocated_separation(separation);
-    protobufBoid.set_allocated_avoidance(avoidance);
+    protobufBoid.set_allocated_avoidance(avoidance);*/
 
     return protobufBoid;
 }

@@ -3,7 +3,8 @@
 [![size](https://img.shields.io/docker/image-size/yuruh/boids?color=blueviolet)](https://hub.docker.com/r/yuruh/boids)
 
 # boids-service
-C++ Microservice exposing HTTP endpoint to compute flocking simulation
+
+C++ service exposing HTTP endpoint to compute flocking simulation
 
 ![Simulation gif](showcase/boids.gif)
 
@@ -19,11 +20,11 @@ C++ Microservice exposing HTTP endpoint to compute flocking simulation
 * Custom protocol to build simulation using protobuf.
 * Boids rules implementation: cohesion, separation and alignment
 * Custom rule: obstacle evasion
+* Quad Tree optimisation
 
 ## To come
 
-* QuadTreeNode optimisation
-* Better field of view (boids shouldn't see right behind)
+* Better field of view (boids shouldn't see right behind them)
 * Better obstacle evasion
-* Better steering physic (avoid clipping)
+* Better steering physics (avoid clipping)
 * Additional herd behaviour (predation, feeding, ...) 

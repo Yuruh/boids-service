@@ -11,8 +11,6 @@
 #include "Line.h"
 #include "Macros.h"
 
-// TODO export to protobuf for debug / showcase
-
 template <class T>
 struct NodeData {
     Pos2D   pos;
@@ -35,10 +33,14 @@ private:
     Pos2D botRight;
 
 public:
+    // Add and smart store the node
     void insert(NodeData<T> *node);
 
-    std::vector<T*> searchInRadius(Pos2D center, float radius) const;
+    // Find items T within radius, limited by maxResults
+    std::vector<T*> searchInRadius(Pos2D center, float radius, uint32_t maxResults, uint32_t currentResult = 0) const;
 
+
+    // Could use withinRadius instead (with 0 radius)
     bool inBoundary(Pos2D point);
 
     // Assert if a point is within the QuadTreeNode
@@ -46,7 +48,6 @@ public:
 
     // Reset everything, frees nodes and return all items;
     std::vector<T*> clear();
-
 
     // Serialize to protobuf
     template<class U>
@@ -73,7 +74,6 @@ public:
         delete this->botRightNode;
         delete this->topLeftNode;
         delete this->topRightNode;
-
     }
 };
 
@@ -93,9 +93,6 @@ void QuadTreeNode<T>::insert(NodeData<T> *newNode) {
     if (std::abs(this->topLeft.x - this->botRight.x) <= MIN_QUADNODE_SIZE &&
         std::abs(this->topLeft.y - this->botRight.y) <= MIN_QUADNODE_SIZE) {
         this->nodesData.push_back(newNode);
-//        if (this->node == NULL)
-  //          this->node = newNode;
-        // FIXME We should store a list of boids int the node
         return;
     }
 
@@ -201,17 +198,17 @@ std::array<Line, 4> QuadTreeNode<T>::toLines() const {
 }
 
 template<class T>
-std::vector<T*> childSearch(QuadTreeNode<T> *node, Pos2D center, float radius) {
+std::vector<T*> childSearch(QuadTreeNode<T> *node, Pos2D center, float radius,  uint32_t maxResults, uint32_t currentResult) {
     auto ret = std::vector<T*>();
 
     if (node && node->withinRadius(center, radius)) {
-        return node->searchInRadius(center, radius);
+        return node->searchInRadius(center, radius, maxResults, currentResult);
     }
     return ret;
 }
 
 template<class T>
-std::vector<T*> QuadTreeNode<T>::searchInRadius(Pos2D center, float radius) const {
+std::vector<T*> QuadTreeNode<T>::searchInRadius(Pos2D center, float radius, uint32_t maxResults, uint32_t currentResult) const {
     auto ret = std::vector<T*>();
 
     for (int i = 0; i < this->nodesData.size(); ++i) {
@@ -219,19 +216,32 @@ std::vector<T*> QuadTreeNode<T>::searchInRadius(Pos2D center, float radius) cons
         auto distance = itemPos.distanceWith(center);
         if (distance > EPSILON && distance <= radius) {
             ret.push_back(this->nodesData[i]->data);
+
+            currentResult++;
+            // We stop at max result
+            if (currentResult >= maxResults) {
+                return ret;
+            }
         }
     }
 
-    auto childRes = childSearch(this->botRightNode, center, radius);
-    ret.insert(ret.end(), childRes.begin(), childRes.end());
+    // TODO Improve this, all the time is spent here, and the maxResults system is inccorect
 
-    childRes = childSearch(this->botLeftNode, center, radius);
+    // Stopping at max results may prioritize botRightNode.
+    // Maybe we could choose which box to prioritize based on the boid direction ?
+    auto childRes = childSearch(this->botRightNode, center, radius, maxResults, currentResult);
     ret.insert(ret.end(), childRes.begin(), childRes.end());
+    currentResult += childRes.size();
 
-    childRes = childSearch(this->topRightNode, center, radius);
+    childRes = childSearch(this->botLeftNode, center, radius, maxResults, currentResult);
     ret.insert(ret.end(), childRes.begin(), childRes.end());
+    currentResult += childRes.size();
 
-    childRes = childSearch(this->topLeftNode, center, radius);
+    childRes = childSearch(this->topRightNode, center, radius, maxResults, currentResult);
+    ret.insert(ret.end(), childRes.begin(), childRes.end());
+    currentResult += childRes.size();
+
+    childRes = childSearch(this->topLeftNode, center, radius, maxResults, currentResult);
     ret.insert(ret.end(), childRes.begin(), childRes.end());
 
     return ret;

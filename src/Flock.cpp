@@ -12,10 +12,11 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
     for (Boid *boid : this->allBoids) {
         std::vector<Line> closeObstacles = map.closeObstacles(boid->getPosition(), this->params.obstacleDistance);
 
-//    OLD    auto closeBoids = boid.getClosestBoids(boids, this->params.visionDistance, this->params.maxLocalFlockmates);
 
-        // TODO max local
-        auto closeBoids = this->boids.searchInRadius(boid->getPosition(), this->params.visionDistance);
+        auto closeBoids = this->boids.searchInRadius(boid->getPosition(), this->params.visionDistance, this->params.maxLocalFlockmates);
+        if (closeBoids.size() > this->params.maxLocalFlockmates) {
+            closeBoids = std::vector<Boid*>(closeBoids.begin(), closeBoids.begin() + this->params.maxLocalFlockmates);
+        }
 
         // steer to avoid obstacle
         Pos2D avoidObstacle = boid->getSteerFromObstacles(closeObstacles) * OBSTACLES_COEFF * this->params.avoidanceScale;
@@ -26,10 +27,7 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         Pos2D cohesion = boid->getCohesion(closeBoids) * COHESION_COEFF * this->params.cohesionScale;
         boid->addAcceleration(cohesion);
 
-//  OLD      auto closeBoidsToAvoid = boid->getClosestBoids(boids, this->params.separationDistance, this->params.maxLocalFlockmates);
-
-        // TODO max local
-        auto closeBoidsToAvoid = this->boids.searchInRadius(boid->getPosition(), this->params.separationDistance);
+        auto closeBoidsToAvoid = this->boids.searchInRadius(boid->getPosition(), this->params.separationDistance, this->params.maxLocalFlockmates);
 
         // steer to avoid crowding local flockmates
         Pos2D separation = boid->getSeparation(closeBoidsToAvoid) * SEPARATION_COEFF * this->params.separationScale;
@@ -78,7 +76,7 @@ Protobuf::Flock &operator>>(const Flock &in, Protobuf::Flock &protobufFlock) {
     }
 
     // TODO only do this if "debug / demo mode is enabled"
-    in.boids >> protobufFlock;
+//    in.boids >> protobufFlock;
     return protobufFlock;
 }
 
