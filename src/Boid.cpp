@@ -6,13 +6,8 @@
 #include "../include/Boid.h"
 #include "../include/Macros.h"
 
+// All signatures explained on Boid.h
 
-/*
- * todo
- * quadtree optimization: chaque case de la taille de la distance de vision, et on ne check que notre case et les cases aux alentours.
- * radius vision, and don't see across obstacles
- *
- */
 Pos2D Boid::getPosition() const {
     return this->position;
 }
@@ -20,17 +15,10 @@ Pos2D Boid::getPosition() const {
 Boid::Boid(): direction(Pos2D(1, 1)), position(0, 0)
 {
     this->maxForce = 0.1;
-
-    this->maxSteerAngle = M_PI / 4; // 45°
-
     this->maxSpeed = 1;
     this->minSpeed = 0.7;
-    this->weight = 1;
 }
 
-/*
- * We consider two boids equal if they have the same location
- */
 bool Boid::operator==(const Boid &boid) const {
     return static_cast<int>(boid.position.x) == static_cast<int>(this->position.x) &&
             static_cast<int>(boid.position.y) == static_cast<int>(this->position.y);
@@ -46,7 +34,6 @@ Pos2D Boid::getDirection() const {
 
 void Boid::setDirection(const Pos2D &dir) {
     this->direction = dir;
-//    this->direction.normalize();
 }
 
 bool Boid::operator!=(const Boid &boid) const {
@@ -56,11 +43,9 @@ bool Boid::operator!=(const Boid &boid) const {
 Boid &operator<<(Boid &out, const Protobuf::Boid &protobufBoid) {
     out.direction << protobufBoid.direction();
     out.position << protobufBoid.position();
- //   std::cout << "Boid pos " << out.position << std::endl;
 
     return out;
 }
-
 
 Protobuf::Boid &operator>>(const Boid &in, Protobuf::Boid &protobufBoid) {
     auto *direction = new Protobuf::Pos2D;
@@ -133,12 +118,6 @@ Pos2D Boid::getSeparation(const std::vector<Boid> &boids) const {
             diff = diff / std::sqrt(std::sqrt(distance));
         }
         ret += diff;
-//        Pos2D oppositeWay = ret - (boid.getPosition() - this->getPosition());
-
-//        oppositeWay.normalize();
-//        oppositeWay = oppositeWay / distance; // The closer the other boid is, the more we want to steer
- //       ret += oppositeWay;
-
     }
 
     if (!boids.empty()) {
@@ -155,6 +134,7 @@ void Boid::update(float elapsedTimeSec, const std::vector<Line> &obstacles) {
     //acceleration = acceleration * 0.4;
 
 
+    // FIXME should i use acceleration here ?
     Pos2D posBefore = position;
     Pos2D posAfter = position + direction * elapsedTimeSec * 200;
 
@@ -193,7 +173,7 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
             Pos2D normalVector = obstacle.getNormalVector(position);
 
         // To go along the wall instead of directly avoid it
-        // Sort of works but requires more work
+        // Sort of works but requires more work, and may not be needed
 /*            auto vectors = obstacle.getVectors();
 
             auto vec1 = vectors.first + normalVector;
@@ -212,7 +192,6 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
             ret = ret + normalVector;
     }
 
-// fixme do we need to divise ? since the magnitudes depends on how close we are to the obstacle
     if (count > 0) {
         ret = ret / count;
 
@@ -222,20 +201,20 @@ Pos2D Boid::getSteerFromObstacles(const std::vector<Line> &obstacles) const {
 
 }
 
-// We send the desired direction. Goal is a vector
 Pos2D Boid::steerToDirection(Pos2D desiredDirection) const {
 
     float mag = desiredDirection.getMagnitude();
 
+    // We compute steering on normalized vectors, we don't want magnitude to influence direction
     desiredDirection.normalize();
     Pos2D dir = this->direction;
     dir.normalize();
 
-
     Pos2D steer;
 
-    // Steering = Desired minus Velocity
     steer = desiredDirection - direction;
+
+    // We use the magnitude of the desired direction for the steering
     steer.setMagnitude(mag);
     steer.limitToMaxMagnitude(maxForce); // Limit to max steering force
     return steer;
@@ -249,6 +228,7 @@ const std::vector<Boid> Boid::getClosestBoids(const std::vector<Boid> &boids, fl
     for (const Boid &boid : boids) {
         float distance = boid.getPosition().distanceWith(this->getPosition());
 
+        // Exclude current boid and only accept boids closer than maxDistance
         if ((distance > EPSILON) && (distance < maxDistance)) {
             distanceToBoids[distance] = boid;
         }
@@ -269,6 +249,5 @@ void Boid::setRulesResult(const Pos2D &cohesion, const Pos2D &alignment, const P
     this->currentAlignment = alignment;
     this->currentSeparation = separation;
     this->currentAvoidance = avoidance;
-
 }
 
