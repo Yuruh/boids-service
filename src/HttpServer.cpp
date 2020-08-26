@@ -82,11 +82,12 @@ void HttpServer::handle_post(http_request message) {
         for (int i = 0; i < refreshRate * secondsOfSimulation; ++i) {
             elapsedSec += timePerFrame;
 
+
+            auto boids = flock.restructureQuadtree();
+
             auto obstaclesVectors = flock.getCloseObstaclesNormalVectors(map);
+
             flock.update(timePerFrame, map);
-
-            flock.restructureQuadtree();
-
 
             Protobuf::Simulation *simulation = output.add_simulations();
             auto *protoFlock = new Protobuf::Flock();

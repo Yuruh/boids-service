@@ -25,7 +25,6 @@ template <class T>
 class QuadTreeNode {
 private:
     std::vector<NodeData<T> *> nodesData;
-//    NodeData<T> *node;
 
     QuadTreeNode *topLeftNode;
     QuadTreeNode *topRightNode;
@@ -34,9 +33,6 @@ private:
 
     Pos2D topLeft;
     Pos2D botRight;
-
-    // TODO free old nodeData;
-
 
 public:
     void insert(NodeData<T> *node);
@@ -47,8 +43,6 @@ public:
 
     // Assert if a point is within the QuadTreeNode
     bool withinRadius(Pos2D center, float radius = 0);
-
-    std::vector<T*> toItemsVector() const;
 
     // Reset everything, frees nodes and return all items;
     std::vector<T*> clear();
@@ -75,7 +69,11 @@ public:
     ~QuadTreeNode() {
         this->clear();
 
-        // todo delete boids ?
+        delete this->botLeftNode;
+        delete this->botRightNode;
+        delete this->topLeftNode;
+        delete this->topRightNode;
+
     }
 };
 
@@ -217,8 +215,11 @@ std::vector<T*> QuadTreeNode<T>::searchInRadius(Pos2D center, float radius) cons
     auto ret = std::vector<T*>();
 
     for (int i = 0; i < this->nodesData.size(); ++i) {
-        // TODO check within extent of radius for each node + check distance > EPSILON
-        ret.push_back(this->nodesData[i]->data);
+        Pos2D itemPos = this->nodesData[i]->pos;
+        auto distance = itemPos.distanceWith(center);
+        if (distance > EPSILON && distance <= radius) {
+            ret.push_back(this->nodesData[i]->data);
+        }
     }
 
     auto childRes = childSearch(this->botRightNode, center, radius);
@@ -240,16 +241,6 @@ template<class T>
 bool QuadTreeNode<T>::withinRadius(Pos2D center, float radius) {
     return center.x >= this->topLeft.x - radius && center.x < this->botRight.x + radius &&
             center.y >= this->topLeft.y - radius && center.y < this->botRight.y + radius;
-}
-
-template<class T>
-std::vector<T *> QuadTreeNode<T>::toItemsVector() const {
-    // Quick and dirty
-    return this->searchInRadius(Pos2D(0, 0), INT32_MAX / 2);
-
-    auto ret = std::vector<T *>();
-
-    return ret;
 }
 
 template<class T>
@@ -283,6 +274,11 @@ std::vector<T *> QuadTreeNode<T>::clear() {
     }
 
     this->nodesData.clear();
+    delete this->botLeftNode;
+    delete this->botRightNode;
+    delete this->topLeftNode;
+    delete this->topRightNode;
+
     this->botLeftNode = NULL;
     this->topLeftNode = NULL;
     this->topRightNode = NULL;

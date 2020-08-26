@@ -9,9 +9,7 @@
 
 void Flock::update(float elapsedTimeSec, const Map &map) {
 
-    auto allBoids = this->boids.toItemsVector();
-
-    for (Boid *boid : allBoids) {
+    for (Boid *boid : this->allBoids) {
         std::vector<Line> closeObstacles = map.closeObstacles(boid->getPosition(), this->params.obstacleDistance);
 
 //    OLD    auto closeBoids = boid.getClosestBoids(boids, this->params.visionDistance, this->params.maxLocalFlockmates);
@@ -73,11 +71,13 @@ Flock &operator<<(Flock &out, const Protobuf::Flock &protobufFlock) {
 Protobuf::Flock &operator>>(const Flock &in, Protobuf::Flock &protobufFlock) {
     protobufFlock.clear_boids();
 
-    for (const auto &i : in.boids.toItemsVector()) {
+    for (const auto &i : in.allBoids) {
         auto *boid = protobufFlock.add_boids();
 
         *i >> *boid;
     }
+
+    // TODO only do this if "debug / demo mode is enabled"
     in.boids >> protobufFlock;
     return protobufFlock;
 }
@@ -88,7 +88,7 @@ std::pair<std::vector<Pos2D>, std::vector<Pos2D>> Flock::getCloseObstaclesNormal
 
     std::pair<std::vector<Pos2D>, std::vector<Pos2D>> ret;
 
-    for (const Boid *boid : this->boids.toItemsVector()) {
+    for (const Boid *boid : this->allBoids) {
         std::vector<Line> closeObstacles = map.closeObstacles(boid->getPosition(), this->params.obstacleDistance);
 
         for (const auto obstacle: closeObstacles) {
@@ -128,7 +128,10 @@ Flock::Flock(const Map &map): boids(QuadTreeNode<Boid>(Pos2D(0, 0), map.getDimen
 
 }
 
-void Flock::restructureQuadtree() {
+/*
+ * We return boids so we don't have to retrieve them again
+ */
+std::vector<Boid*> Flock::restructureQuadtree() {
     auto boids = this->boids.clear();
 
     for (auto *boid: boids) {
@@ -136,4 +139,13 @@ void Flock::restructureQuadtree() {
         this->boids.insert(nodeData);
     }
 
+    this->allBoids = boids;
+
+    return boids;
+}
+
+Flock::~Flock() {
+    for (auto *boid: this->allBoids) {
+        delete boid;
+    }
 }

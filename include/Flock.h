@@ -14,7 +14,9 @@
 
 class Flock {
 private:
-//    std::vector<Boid> boids;
+
+    // We store a vector of pointer to all boids, as we regularly need to go through them
+    std::vector<Boid*> allBoids;
 
     QuadTreeNode<Boid> boids;
 
@@ -22,6 +24,8 @@ private:
 
 public:
     Flock(const Map &map);
+
+    ~Flock();
 
 //    explicit Flock(const Map &map);
     void addBoid(const Boid &boid);
@@ -35,7 +39,7 @@ public:
 
     std::pair<std::vector<Pos2D>, std::vector<Pos2D>> getCloseObstaclesNormalVectors(const Map &map) const;
 
-    void restructureQuadtree();
+    std::vector<Boid*> restructureQuadtree();
 };
 
 
