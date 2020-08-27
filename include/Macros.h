@@ -10,7 +10,7 @@
 #define EPSILON 0.000001
 
 
-#define MAX_NUMBER_BOIDS 500
+#define MAX_NUMBER_BOIDS 100000000
 #define MAX_FPS 60
 #define MAX_SIM_SECONDS 30
 
@@ -23,6 +23,9 @@
 
 // base acceleration
 #define STANDARD_ACCELERATION 0.01
+
+// Boids make a decision every BOIDS_DECISION_RATE seconds
+#define BOIDS_DECISION_RATE 0.1 // 10 times per second
 
 // Converts degrees to radians.
 #define DEG_TO_RAD(angleDegrees) (angleDegrees * M_PI / 180.0)

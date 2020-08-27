@@ -12,6 +12,8 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
     for (Boid *boid : this->allBoids) {
         std::vector<Line> closeObstacles = map.closeObstacles(boid->getPosition(), this->params.obstacleDistance);
 
+        boid->setAcceleration(Pos2D());
+
 /*        std::sort(v.begin(), v.end(), [](auto &left, auto &right) {
             return left.second < right.second;
         });*/
@@ -60,6 +62,8 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
         auto dir = boid->getDirection();
         dir.normalize();
         boid->addAcceleration(dir * STANDARD_ACCELERATION);
+
+        boid->storeCourse();
 
         boid->update(elapsedTimeSec, closeObstacles);
     }
@@ -138,7 +142,6 @@ void Flock::setParams(const Parameters &params) {
 }
 
 Flock::Flock(const Map &map): boids(QuadTreeNode<Boid>(Pos2D(0, 0), map.getDimensions())) {
-
 }
 
 /*
@@ -161,4 +164,13 @@ Flock::~Flock() {
     for (auto *boid: this->allBoids) {
         delete boid;
     }
+}
+
+void Flock::updateStayOnCourse(float elapsedTimeSec, const Map &map) {
+    for (Boid *boid : this->allBoids) {
+        std::vector<Line> closeObstacles = map.closeObstacles(boid->getPosition(), this->params.obstacleDistance);
+
+        boid->update(elapsedTimeSec, closeObstacles);
+    }
+
 }
