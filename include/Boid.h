@@ -68,6 +68,9 @@ public:
     // Boid rule: Boids should try to steer to avoid crowding local flockmates
     Pos2D getSeparation(const std::vector<Boid*> &boids) const;
 
+    // Same prev but with distance as param
+    Pos2D getSeparation(const std::vector<std::pair<Boid*, float>> &boids) const;
+
     // Custom boid rule: boids should try to steer away from obstacles
     Pos2D getSteerFromObstacles(const std::vector<Line> &obstacles) const;
 

@@ -19,7 +19,7 @@
 #define ALIGNMENT_COEFF 0.75
 #define OBSTACLES_COEFF 1
 
-#define MIN_QUADNODE_SIZE 10
+#define MIN_QUADNODE_SIZE 24
 
 // base acceleration
 #define STANDARD_ACCELERATION 0.01

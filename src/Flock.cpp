@@ -12,8 +12,23 @@ void Flock::update(float elapsedTimeSec, const Map &map) {
     for (Boid *boid : this->allBoids) {
         std::vector<Line> closeObstacles = map.closeObstacles(boid->getPosition(), this->params.obstacleDistance);
 
+/*        std::sort(v.begin(), v.end(), [](auto &left, auto &right) {
+            return left.second < right.second;
+        });*/
 
-        auto closeBoids = this->boids.searchInRadius(boid->getPosition(), this->params.visionDistance, this->params.maxLocalFlockmates);
+
+        /*
+         * FIXME : We sort by distance and slice the resulting vector, because searchInRadius produce too many results
+         */
+        auto searchResult = this->boids.searchInRadius(boid->getPosition(), this->params.visionDistance, this->params.maxLocalFlockmates);
+        std::sort(searchResult.begin(), searchResult.end(), [](auto &left, auto &right) {
+            return left.second < right.second;
+        });
+        std::vector<Boid*> closeBoids;
+        std::transform(searchResult.begin(),
+                                         searchResult.end(),
+                                         std::back_inserter(closeBoids),
+                                         [](const std::pair<Boid*, float>& p) { return p.first; });
         if (closeBoids.size() > this->params.maxLocalFlockmates) {
             closeBoids = std::vector<Boid*>(closeBoids.begin(), closeBoids.begin() + this->params.maxLocalFlockmates);
         }

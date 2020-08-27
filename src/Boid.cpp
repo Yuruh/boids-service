@@ -106,18 +106,22 @@ Pos2D Boid::getAlignment(const std::vector<Boid*> &boids) const {
     return res;
 }
 
+Pos2D computeSeparation(Pos2D boidPos, Pos2D otherBoidPs, float distance) {
+    Pos2D diff = boidPos - otherBoidPs;
+
+    if (distance > EPSILON) {
+        diff = diff / std::sqrt(std::sqrt(distance));
+    }
+    return diff;
+}
+
 Pos2D Boid::getSeparation(const std::vector<Boid*> &boids) const {
     Pos2D ret;
 
     for (const Boid *boid : boids) {
         float distance = boid->getPosition().distanceWith(this->getPosition());
+        ret += computeSeparation(this->position, boid->getPosition(), distance);
 
-        Pos2D diff = this->position - boid->getPosition();
-
-        if (distance > EPSILON) {
-            diff = diff / std::sqrt(std::sqrt(distance));
-        }
-        ret += diff;
     }
 
     if (!boids.empty()) {
@@ -129,6 +133,22 @@ Pos2D Boid::getSeparation(const std::vector<Boid*> &boids) const {
 
     return ret;
 }
+
+
+Pos2D Boid::getSeparation(const std::vector<std::pair<Boid *, float>> &boids) const {
+    Pos2D ret;
+    for (const auto elem: boids) {
+        ret += computeSeparation(this->position, elem.first->position, elem.second);
+    }
+    if (!boids.empty()) {
+
+        ret = ret / boids.size();
+
+        return this->steerToDirection(ret);
+    }
+    return Pos2D();
+}
+
 
 void Boid::update(float elapsedTimeSec, const std::vector<Line> &obstacles) {
     //acceleration = acceleration * 0.4;

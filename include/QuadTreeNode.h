@@ -36,8 +36,8 @@ public:
     // Add and smart store the node
     void insert(NodeData<T> *node);
 
-    // Find items T within radius, limited by maxResults
-    std::vector<T*> searchInRadius(Pos2D center, float radius, uint32_t maxResults, uint32_t currentResult = 0) const;
+    // Find items T within radius, limited by maxResults. Returns pair of item and distance
+    std::vector<std::pair<T*, float>> searchInRadius(Pos2D center, float radius, uint32_t maxResults, uint32_t currentResult = 0) const;
 
 
     // Could use withinRadius instead (with 0 radius)
@@ -198,8 +198,8 @@ std::array<Line, 4> QuadTreeNode<T>::toLines() const {
 }
 
 template<class T>
-std::vector<T*> childSearch(QuadTreeNode<T> *node, Pos2D center, float radius,  uint32_t maxResults, uint32_t currentResult) {
-    auto ret = std::vector<T*>();
+std::vector<std::pair<T*, float>> childSearch(QuadTreeNode<T> *node, Pos2D center, float radius,  uint32_t maxResults, uint32_t currentResult) {
+    auto ret = std::vector<std::pair<T*, float>>();
 
     if (node && node->withinRadius(center, radius)) {
         return node->searchInRadius(center, radius, maxResults, currentResult);
@@ -208,26 +208,31 @@ std::vector<T*> childSearch(QuadTreeNode<T> *node, Pos2D center, float radius,  
 }
 
 template<class T>
-std::vector<T*> QuadTreeNode<T>::searchInRadius(Pos2D center, float radius, uint32_t maxResults, uint32_t currentResult) const {
-    auto ret = std::vector<T*>();
+std::vector<std::pair<T*, float>> QuadTreeNode<T>::searchInRadius(Pos2D center, float radius, uint32_t maxResults, uint32_t currentResult) const {
+    auto ret = std::vector<std::pair<T*, float>>();
 
     for (int i = 0; i < this->nodesData.size(); ++i) {
         Pos2D itemPos = this->nodesData[i]->pos;
         auto distance = itemPos.distanceWith(center);
         if (distance > EPSILON && distance <= radius) {
-            ret.push_back(this->nodesData[i]->data);
+            ret.push_back(std::make_pair(this->nodesData[i]->data, distance));
 
             currentResult++;
             // We stop at max result
-            if (currentResult >= maxResults) {
-                return ret;
-            }
+//            if (currentResult >= maxResults) {
+  //              return ret;
+    //        }
         }
     }
 
     // TODO Improve this, all the time is spent here, and the maxResults system is inccorect
+    // That's even a fixme actually, even setting max local flockmates outside prioritize botrightnode. We must pick the closest one.
 
-    // Stopping at max results may prioritize botRightNode.
+    /*
+     * To improve this, we could store distanceWith: so we could sort and take the 20 closest, and we wouldn't have to compute it again for getSeparation
+     */
+
+    // Stopping at max results prioritize botRightNode.
     // Maybe we could choose which box to prioritize based on the boid direction ?
     auto childRes = childSearch(this->botRightNode, center, radius, maxResults, currentResult);
     ret.insert(ret.end(), childRes.begin(), childRes.end());
