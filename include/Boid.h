@@ -26,6 +26,9 @@ private:
     // Vector added to direction on each update.
     Pos2D acceleration;
 
+    // Current course of the boid, for update with decisions
+    Pos2D course;
+
     // Min magnitude of direction vector
     float minSpeed;
 
@@ -59,6 +62,8 @@ public:
 
     void addAcceleration(const Pos2D &acc);
 
+    void storeCourse();
+
     // Boid rule: Boids should try to steer to move toward the average position of local flockmates
     Pos2D getCohesion(const std::vector<Boid*> &boids) const;
 
@@ -71,7 +76,7 @@ public:
     // Same prev but with distance as param
     Pos2D getSeparation(const std::vector<std::pair<Boid*, float>> &boids) const;
 
-    // Custom boid rule: boids should try to steer away from obstacles
+    // Custom boid rule: Boids should try to steer away from obstacles
     Pos2D getSteerFromObstacles(const std::vector<Line> &obstacles) const;
 
     void setRulesResult(const Pos2D &cohesion, const Pos2D &alignment, const Pos2D &separation, const Pos2D &avoidance);
@@ -95,6 +100,7 @@ public:
     // Computes the steering vector to join desired direction
     Pos2D steerToDirection(Pos2D direction) const;
 
+    void setAcceleration(Pos2D acc);
 };
 
 #endif //BOIDS_BOID_H

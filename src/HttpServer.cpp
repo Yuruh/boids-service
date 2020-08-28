@@ -79,26 +79,45 @@ void HttpServer::handle_post(http_request message) {
          * To change this, we could set a variable "decisionRate", run the update every tick, and set the simulation at the appropriate interval
          * Additionally, how long it takes to compute would not be based on the FPS anymore
          */
+        /*
+         * Smth that i could also try: Boids choose to "commit" to a certain steer, and for the next X frames they have to steer that way
+         * The goal being to make large turn instead of so many small ones
+         * Ou plus simplement, ne pas reprendre une décision à chaque frame. Ça ferait une belle opti en plus
+         *
+         */
+        float lastDecision = BOIDS_DECISION_RATE;
         for (int i = 0; i < refreshRate * secondsOfSimulation; ++i) {
             elapsedSec += timePerFrame;
 
+            if (lastDecision >= BOIDS_DECISION_RATE) {
+                lastDecision = 0;
+                auto boids = flock.restructureQuadtree();
 
-            auto boids = flock.restructureQuadtree();
+                auto obstaclesVectors = flock.getCloseObstaclesNormalVectors(map);
+
+                flock.update(timePerFrame, map);
+            } else {
+                flock.updateStayOnCourse(timePerFrame, map);
+                lastDecision += timePerFrame;
+            }
+
+/*            auto boids = flock.restructureQuadtree();
 
             auto obstaclesVectors = flock.getCloseObstaclesNormalVectors(map);
 
-            flock.update(timePerFrame, map);
+            flock.update(timePerFrame, map);*/
 
             Protobuf::Simulation *simulation = output.add_simulations();
             auto *protoFlock = new Protobuf::Flock();
 
             flock >> *protoFlock;
-            //*root >> *protoFlock;
 
             simulation->set_allocated_flock(protoFlock);
             simulation->set_elapsedtimesecond(elapsedSec);
 
-            for (int j = 0; j < obstaclesVectors.first.size(); ++j) {
+/*
+ * todo for interactive debug
+ for (int j = 0; j < obstaclesVectors.first.size(); ++j) {
                 auto vector = simulation->add_obstaclesnormalvectors();
                 vector->set_x(obstaclesVectors.first[j].x);
                 vector->set_y(obstaclesVectors.first[j].y);
@@ -106,7 +125,7 @@ void HttpServer::handle_post(http_request message) {
                 auto pos = simulation->add_obstaclesposition();
                 pos->set_x(obstaclesVectors.second[j].x);
                 pos->set_y(obstaclesVectors.second[j].y);
-            }
+            }*/
         }
 
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();

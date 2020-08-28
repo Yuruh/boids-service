@@ -14,9 +14,9 @@ Pos2D Boid::getPosition() const {
 
 Boid::Boid(): direction(Pos2D(1, 1)), position(0, 0)
 {
-    this->maxForce = 0.1;
-    this->maxSpeed = 1;
-    this->minSpeed = 0.7;
+    this->maxForce = 0.02;
+    this->maxSpeed = 1.5;
+    this->minSpeed = 0.1;
 }
 
 bool Boid::operator==(const Boid &boid) const {
@@ -159,7 +159,9 @@ void Boid::update(float elapsedTimeSec, const std::vector<Line> &obstacles) {
     Pos2D posAfter = position + direction * elapsedTimeSec * 200;
 
     direction = direction + acceleration;
-    acceleration = acceleration * 0;
+
+    // We don't reset acceleration as we want to stay on course
+//    acceleration = acceleration * 0;
     direction.limitToMaxMagnitude(maxSpeed);
 
     // TODO ? have a max rotation instead
@@ -175,6 +177,11 @@ void Boid::update(float elapsedTimeSec, const std::vector<Line> &obstacles) {
     }
 
     position = posAfter;
+}
+
+void Boid::setAcceleration(Pos2D acc) {
+    this->acceleration = acc;
+
 }
 
 void Boid::addAcceleration(const Pos2D &acc) {
@@ -269,5 +276,9 @@ void Boid::setRulesResult(const Pos2D &cohesion, const Pos2D &alignment, const P
     this->currentAlignment = alignment;
     this->currentSeparation = separation;
     this->currentAvoidance = avoidance;
+}
+
+void Boid::storeCourse() {
+    this->course = this->acceleration;
 }
 
